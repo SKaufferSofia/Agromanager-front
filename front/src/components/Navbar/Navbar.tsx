@@ -21,33 +21,33 @@ const Navbar: React.FC = () => {
 							<li>
 								<a
 									href="#"
-									className="block py-2 px-3 text-white rounded md:bg-transparent md:p-0"
+									className="block py-2 px-3 text-white rounded md:bg-transparent  md:hover:text-black-700 md:p-0"
 									aria-current="page"
 								>
-									Home
+									INICIO
 								</a>
 							</li>
 							<li>
 								<a
 									href="#"
-									className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"
+									className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-black-700 md:p-0"
 								>
-									About us
+									SOBRE NOSOTROS
 								</a>
 							</li>
 							<li>
 								<a
 									href="#"
-									className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"
+									className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-black-700 md:p-0"
 								>
-									Contact
+									CONTACTO
 								</a>
 							</li>
 						</ul>
 					</div>
 					<div className="font-medium flex flex-col p-4 md:p-0 md:flex-row md:space-x-8 ">
-						<p className="text-white">sign in</p>
-						<p className="text-white">sign up</p>
+						<p className="text-white">INICIAR SESIÓN</p>
+						<p className="text-white">REGISTRARSE</p>
 					</div>
 				</div>
 			</nav>
