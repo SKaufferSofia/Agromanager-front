@@ -11,27 +11,27 @@ const TeamComponent: React.FC = () => {
     {
       name: "Nicolas Pedernera",
       gitHub: "https://github.com/Nicopedeer",
-      imageUrl: "/team/jane-cooper.jpg",
+      imageUrl: "/image4.png",
     },
     {
       name: "Juan Andres Gomez",
       gitHub: "https://github.com/JuanGom01",
-      imageUrl: "/team/jane-cooper.jpg",
+      imageUrl: "/image4.png",
     },
     {
       name: "Valentin Simon",
       gitHub: "https://github.com/valentinsimon",
-      imageUrl: "/team/jane-cooper.jpg",
+      imageUrl: "/image4.png",
     },
     {
       name: "Max Robles",
       gitHub: "https://github.com/ByteBiteChef",
-      imageUrl: "/team/jane-cooper.jpg",
+      imageUrl: "/image4.png",
     },
     {
       name: "Sofia Kauffer",
       gitHub: "https://github.com/SKaufferSofia",
-      imageUrl: "/team/jane-cooper.jpg",
+      imageUrl: "/image4.png",
     },
   ];
 
