@@ -45,7 +45,7 @@ const Navbar: React.FC = () => {
               <li>
                 <a
                   href="/home"
-                  className="block py-2 px-3 text-white rounded md:bg-transparent  md:hover:text-black-700 md:p-0"
+                  className="block py-2 px-3 text-white rounded md:bg-transparent md:hover:scale-105 md:hover:ease-in-out md:p-0"
                   aria-current="page"
                 >
                   INICIO
@@ -54,7 +54,7 @@ const Navbar: React.FC = () => {
               <li>
                 <a
                   href="/about"
-                  className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-black-700 md:p-0"
+                  className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:scale-105 md:hover:ease-in-out md:p-0"
                 >
                   SOBRE NOSOTROS
                 </a>
@@ -62,7 +62,7 @@ const Navbar: React.FC = () => {
               <li>
                 <a
                   href="#"
-                  className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-black-700 md:p-0"
+                  className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:scale-105 md:hover:ease-in-out md:p-0"
                 >
                   CONTACTO
                 </a>
@@ -70,8 +70,16 @@ const Navbar: React.FC = () => {
             </ul>
           </div>
           <div className="font-medium flex flex-col p-4 md:p-8 md:flex-row md:space-x-8">
-            <p className="text-white">INICIAR SESIÓN</p>
-            <p className="text-white">REGISTRARSE</p>
+            <a href="#">
+              <p className="text-white md:hover:scale-105 md:hover:ease-in-out md:p-0">
+                INICIAR SESIÓN
+              </p>
+            </a>
+            <a href="#">
+              <p className="text-white md:hover:scale-105 md:hover:ease-in-out md:p-0">
+                REGISTRARSE
+              </p>
+            </a>
           </div>
         </div>
       </nav>
