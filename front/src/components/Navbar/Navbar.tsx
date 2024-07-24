@@ -61,7 +61,7 @@ const Navbar: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/contact"
                   className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:scale-105 md:hover:ease-in-out md:p-0"
                 >
                   CONTACTO
