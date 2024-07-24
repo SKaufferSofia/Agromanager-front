@@ -1,17 +1,23 @@
-import Image from "next/image";
 import React from "react";
+import Image from "next/image";
+
+//avatar team
+import avatarValentin from "../../assets/team/valentin-avatar.jpg";
+import avatarPando from "../../assets/team/pando-avatar.jpg";
+import avatarPedernera from "../../assets/team/pedernera-avatar.jpg";
+import avatarSofia from "../../assets/team/sofia-avatar.jpg";
 
 const TeamComponent: React.FC = () => {
   const team = [
     {
       name: "Nicolas Pando",
       gitHub: "https://github.com/NicolasPando",
-      imageUrl: "/image4.png",
+      imageUrl: avatarPando,
     },
     {
       name: "Nicolas Pedernera",
       gitHub: "https://github.com/Nicopedeer",
-      imageUrl: "/image4.png",
+      imageUrl: avatarPedernera,
     },
     {
       name: "Juan Andres Gomez",
@@ -21,7 +27,7 @@ const TeamComponent: React.FC = () => {
     {
       name: "Valentin Simon",
       gitHub: "https://github.com/valentinsimon",
-      imageUrl: "/image4.png",
+      imageUrl: avatarValentin,
     },
     {
       name: "Max Robles",
@@ -31,7 +37,7 @@ const TeamComponent: React.FC = () => {
     {
       name: "Sofia Kauffer",
       gitHub: "https://github.com/SKaufferSofia",
-      imageUrl: "/image4.png",
+      imageUrl: avatarSofia,
     },
   ];
 
