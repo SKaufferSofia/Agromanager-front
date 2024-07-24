@@ -10,13 +10,10 @@ export default function Landing() {
 	return (
 		<main className="flex">
 			<div className="relative">
-				<ImgContainer
-					src="/img-landing.png"
-					alt="Description for image"
-				>
+				<ImgContainer src="/img-landing.png" alt="scapelande-image">
 					<div className="text-white">
 						<h2 className="text-5xl mb-8 font-medium">
-							Landing Info
+							LANDING INFO
 						</h2>
 						<p className="p-10">
 							de relleno de las imprentas y archivos de texto.
@@ -29,7 +26,7 @@ export default function Landing() {
 						</p>
 					</div>
 				</ImgContainer>
-				<div className="w-full h-1/3 bg-[#E9E7DD]">
+				<div className="w-full h-1/3 bg-bgColor">
 					<LandingCarousel />
 				</div>
 				<div className="flex w-full bg-white">
@@ -40,7 +37,7 @@ export default function Landing() {
 							width={150}
 							height={150}
 						/>
-						<div className="text-[#585858]">
+						<div className="text-textColor">
 							<h2 className="text-2xl mb-8 font-medium">
 								Lotes Info
 							</h2>

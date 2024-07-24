@@ -60,7 +60,7 @@ const LandingCarousel: React.FC = () => {
 					}`}
 				>
 					<div className="flex items-center justify-center overflow-hidden">
-						<div className="w-3/4 md:w-3/4 text-[#585858]">
+						<div className="w-3/4 md:w-3/4 text-textColor">
 							<h1 className="mb-4 text-3xl md:text-3xl lg:text-4xl">
 								{slide.title}
 							</h1>
@@ -69,15 +69,14 @@ const LandingCarousel: React.FC = () => {
 							</p>
 						</div>
 					</div>
-					<Image
-						src={slide.src}
-						alt={slide.alt}
-						layout="responsive"
-						width={50}
-						height={50}
-						objectFit="cover"
-						className="mr-20"
-					/>
+					<div className="w-full hidden sm:block mr-10 ">
+						<Image
+							src={slide.src}
+							alt={slide.alt}
+							width={600}
+							height={600}
+						/>
+					</div>
 				</div>
 			))}
 			<button
