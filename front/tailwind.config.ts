@@ -18,6 +18,7 @@ const config: Config = {
         textColor: "#585858",
         navbarColor: "#636B3F",
         footerColor: "#747C5D",
+        textGreen: "#70823E",
       },
     },
   },
