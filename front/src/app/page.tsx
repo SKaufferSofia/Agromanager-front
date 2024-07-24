@@ -100,7 +100,9 @@ export default function Landing() {
 						</div>
 					</div>
 				</div>
-				<MainButton />
+				<div className="w-full flex justify-center p-8">
+					<MainButton text="Ver Más" path="/home" />
+				</div>
 			</div>
 		</main>
 	);
