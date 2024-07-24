@@ -49,7 +49,7 @@ const LandingCarousel: React.FC = () => {
 		return () => clearInterval(interval);
 	}, []);
 	return (
-		<div className="relative h-screen overflow-hidden">
+		<div className="relative h-[calc(70vh)] overflow-hidden">
 			{slides.map((slide, index) => (
 				<div
 					key={index}
@@ -82,15 +82,15 @@ const LandingCarousel: React.FC = () => {
 			))}
 			<button
 				onClick={prevSlide}
-				className="absolute top-1/4 left-10 transform -translate-y-1/2 p-2 rounded-full shadow-lg"
+				className="absolute top-1/3 left-10 transform -translate-y-1/2 p-2 rounded-full shadow-lg"
 			>
-				Prev
+				&lt;
 			</button>
 			<button
 				onClick={nextSlide}
-				className="absolute top-1/4 right-10 transform -translate-y-1/2 p-2 rounded-full shadow-lg"
+				className="absolute top-1/3 right-10 transform -translate-y-1/2 p-2 rounded-full shadow-lg"
 			>
-				Next
+				&gt;
 			</button>
 		</div>
 	);
