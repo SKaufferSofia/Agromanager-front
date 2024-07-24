@@ -10,13 +10,10 @@ export default function Landing() {
 	return (
 		<main className="flex">
 			<div className="relative">
-				<ImgContainer
-					src="/img-landing.png"
-					alt="Description for image"
-				>
+				<ImgContainer src="/img-landing.png" alt="landscape-image">
 					<div className="text-white">
 						<h2 className="text-5xl mb-8 font-medium">
-							Landing Info
+							LANDING INFO
 						</h2>
 						<p className="p-10">
 							de relleno de las imprentas y archivos de texto.

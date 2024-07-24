@@ -69,15 +69,14 @@ const LandingCarousel: React.FC = () => {
 							</p>
 						</div>
 					</div>
-					<Image
-						src={slide.src}
-						alt={slide.alt}
-						layout="responsive"
-						width={50}
-						height={50}
-						objectFit="cover"
-						className="mr-20"
-					/>
+					<div className="w-full hidden sm:block mr-8">
+						<Image
+							src={slide.src}
+							alt={slide.alt}
+							width={800}
+							height={800}
+						/>
+					</div>
 				</div>
 			))}
 			<button
