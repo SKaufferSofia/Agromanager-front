@@ -2,6 +2,9 @@ import ImgContainer from "@/components/ImgContainer/ImgContainer";
 import LandingCarousel from "@/components/LandingCarousel/LandingCarousel";
 import Image from "next/image";
 import icon1 from "../assets/icon-1.png";
+import icon2 from "../assets/icon-tractor.png";
+import icon3 from "../assets/icon-insumo.png";
+import MainButton from "@/components/MainButton/MainButton";
 
 export default function Landing() {
 	return (
@@ -39,7 +42,7 @@ export default function Landing() {
 					</div>
 					<div className="p-8 w-1/3 flex flex-col items-center text-center">
 						<Image
-							src={icon1}
+							src={icon2}
 							alt={"icon"}
 							width={150}
 							height={150}
@@ -61,7 +64,7 @@ export default function Landing() {
 					</div>
 					<div className="p-8 w-1/3 flex flex-col items-center text-center">
 						<Image
-							src={icon1}
+							src={icon3}
 							alt={"icon"}
 							width={150}
 							height={150}
@@ -82,6 +85,7 @@ export default function Landing() {
 						</div>
 					</div>
 				</div>
+				<MainButton />
 			</div>
 		</main>
 	);
