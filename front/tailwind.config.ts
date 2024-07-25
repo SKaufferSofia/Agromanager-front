@@ -20,6 +20,7 @@ const config: Config = withMT({
         navbarColor: "#636B3F",
         footerColor: "#747C5D",
         textGreen: "#70823E",
+        sideNavbarColor: "#8B8B8B",
       },
     },
   },
