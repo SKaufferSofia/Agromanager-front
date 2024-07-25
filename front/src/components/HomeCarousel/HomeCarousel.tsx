@@ -71,7 +71,7 @@ const HomeCarousel: React.FC = () => {
               </h1>
               <p className="mb-12 opacity-80">{itemCarousel.describe}</p>
               <div className="flex justify-center gap-2">
-                <MainButton text="Ver más" path="/" />
+                <MainButton text="Iniciar" path="/login" />
               </div>
             </div>
           </div>
