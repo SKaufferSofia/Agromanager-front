@@ -14,6 +14,7 @@ const Register: React.FC = () => {
 					src={image1}
 					alt="scapeland-image"
 					className="w-full h-full object-cover"
+					priority={true}
 				/>
 			</div>
 		</div>
