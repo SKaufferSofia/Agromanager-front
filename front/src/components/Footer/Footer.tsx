@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Footer: React.FC = () => {
 	return (
-		<footer className="bg-[#747C5D] text-white py-6">
+		<footer className="bg-footerColor text-white py-6">
 			<div className="flex items-center justify-between px-4 ">
 				<div className="flex flex-col items-center justify-center px-4 md:border-r md:border-white">
 					<Image
