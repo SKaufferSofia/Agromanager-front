@@ -2,6 +2,7 @@
 
 import React from "react";
 import PickSubscriptionListCard from "./PickSubscriptionListCard";
+import MainButton from "../MainButton/MainButton";
 
 const PickSubscriptionCard: React.FC = () => {
 	const subscriptions = [
@@ -31,7 +32,11 @@ const PickSubscriptionCard: React.FC = () => {
 				<div key={subscription.id}>
 					<PickSubscriptionListCard suscribe={subscription} />
 				</div>
+				
 			))}
+			<div className="p-14">
+				<MainButton text="SIGUIENTE" path="/subscriptions/accept-subscription" />
+			</div>
 		</div>
 	);
 };

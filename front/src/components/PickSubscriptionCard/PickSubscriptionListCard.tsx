@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
 	Card,
@@ -16,7 +14,7 @@ const PickSubscriptionListCard = ({
 }) => {
 	return (
 		<div className="w-4/5 mx-auto">
-			<a href="/your-link-here" className="block">
+			<a>
 				<Card
 					color="white"
 					variant="gradient"
