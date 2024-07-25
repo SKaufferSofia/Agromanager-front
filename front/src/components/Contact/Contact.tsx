@@ -1,6 +1,6 @@
 const ContactComponent: React.FC = () => {
   return (
-    <div>
+    <div className="max-w-[50%]">
       <h1>CONTACTANOS</h1>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet,
