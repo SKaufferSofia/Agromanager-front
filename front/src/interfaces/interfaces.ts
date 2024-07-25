@@ -5,3 +5,10 @@ export interface ISuscribe {
   unid: string;
   describe: string;
 }
+
+export interface ICreatePlot {
+  id: number;
+  surface: string; 
+  cereal: string;  
+  user: string;
+}
