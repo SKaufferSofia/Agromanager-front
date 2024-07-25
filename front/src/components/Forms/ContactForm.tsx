@@ -2,7 +2,7 @@ import React from "react";
 
 const ContactForm: React.FC = () => {
   return (
-    <div className="p-8 w-full flex flex-col min-h-screen justify-center items-center">
+    <div className="p-5 w-full flex flex-col justify-center items-center ">
       <div className="w-full max-w-md">
         <h2 className="text-4xl text-textColor font-semibold mb-4 text-center">
           Iniciar Sesión
@@ -11,6 +11,17 @@ const ContactForm: React.FC = () => {
           Comienza con tu prueba gratuita
         </h3>
         <form className="space-y-5 flex flex-col h-full">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Nombre
+            </label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Nombre"
+              className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+            />
+          </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
               E-mail
@@ -24,13 +35,13 @@ const ContactForm: React.FC = () => {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Contraseña
+              Mensaje
             </label>
             <input
-              type="password"
-              name="password"
-              placeholder="Contraseña"
-              className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+              type="text"
+              name="message"
+              placeholder="Mensage"
+              className="p-2 py-11 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
             />
           </div>
 
@@ -40,14 +51,6 @@ const ContactForm: React.FC = () => {
             </button>
           </div>
         </form>
-        <div className="flex justify-center mt-4">
-          <a
-            href="/register"
-            className="text-textColor md:hover:scale-105 md:hover:ease-in-out"
-          >
-            No tenes una cuenta? Suscribite aquí
-          </a>
-        </div>
       </div>
     </div>
   );
