@@ -27,7 +27,7 @@ const PlotDetailCard: React.FC<PlotDetailCardProps> = ({
           <span className="poppins-medium">Labors Quantity: </span>{" "}
           {labors?.length || "No labors"}
         </p>
-        <Link href={`/dashboard/plots/${id}`} className="py-2">
+        <Link href={`/dashboard/plots/pepe`} className="py-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24px"
