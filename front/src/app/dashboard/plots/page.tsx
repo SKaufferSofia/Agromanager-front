@@ -2,6 +2,7 @@ import React from "react";
 import { ICreatePlot } from "@/interfaces/interfaces";
 import AddSupplyInput from "@/components/AddSupplyInput/AddSupplyInput";
 import AddLaborInput from "@/components/AddLaborInput/AddLaborInput";
+import DetailSupplyLaborCard from "@/components/DetailSupplyLaborCard/DetailSupplyLaborCard";
 
 const mockPlots: ICreatePlot = {
 	id: 1,
@@ -13,7 +14,7 @@ const mockPlots: ICreatePlot = {
 const PlotDashboard: React.FC = () => {
 	return (
 		<div className="h-screen flex flex-col mt-40">
-			<div>
+			<div className="p-10">
 				<h2 className="text-4xl font-semibold text-center mb-4">
 					Lote {mockPlots.cereal}
 				</h2>
@@ -31,6 +32,9 @@ const PlotDashboard: React.FC = () => {
 					</h2>
 					<AddSupplyInput />
 				</div>
+			</div>
+			<div className="bg-footerColor h-1/2 flex flex-col">
+				<DetailSupplyLaborCard />
 			</div>
 		</div>
 	);
