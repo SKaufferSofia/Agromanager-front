@@ -91,20 +91,29 @@ const DetailSupplyLaborCard = () => {
 			{activeTab === "Insumos" && (
 				<TabsBody className="bg-white h-4/5 w-10/12 rounded-md mx-auto mt-8">
 					<div className="p-4">
+						<div className="flex font-bold  justify-around">
+							<div className="px-6 py-4 whitespace-nowrap">
+								Nombre
+							</div>
+							<div className="px-6 py-4 whitespace-nowrap">
+								Proveedor
+							</div>
+							<div className="px-6 py-4 whitespace-nowrap">
+								Cantidad
+							</div>
+							<div className="px-6 py-4 whitespace-nowrap">
+								Precio
+							</div>
+						</div>
 						{supplies.map((supply) => (
-							<div className="flex" key={supply.id}>
-								<div className="px-6 py-4 whitespace-nowrap">
-									{supply.name}
-								</div>
-								<div className="px-6 py-4 whitespace-nowrap">
-									{supply.provider}
-								</div>
-								<div className="px-6 py-4 whitespace-nowrap">
-									{supply.stock}
-								</div>
-								<div className="px-6 py-4 whitespace-nowrap">
-									{supply.price}
-								</div>
+							<div
+								className="flex justify-around p-4"
+								key={supply.id}
+							>
+								<div>{supply.name}</div>
+								<div>{supply.provider}</div>
+								<div>{supply.stock}</div>
+								<div>{supply.price}</div>
 							</div>
 						))}
 					</div>
@@ -112,21 +121,30 @@ const DetailSupplyLaborCard = () => {
 			)}
 			{activeTab === "Labores" && (
 				<TabsBody className="bg-white h-4/5 w-10/12 rounded-md mx-auto mt-8">
+					<div className="flex font-bold justify-around p-4">
+						<div className="px-6 py-4 whitespace-nowrap">
+							Nombre
+						</div>
+						<div className="px-6 py-4 whitespace-nowrap">
+							Contratista
+						</div>
+						<div className="px-6 py-4 whitespace-nowrap">
+							Precio
+						</div>
+						<div className="px-6 py-4 whitespace-nowrap">
+							Superficie
+						</div>
+					</div>
 					<div className="p-4">
 						{labors.map((labor) => (
-							<div className="flex" key={labor.id}>
-								<div className="px-6 py-4 whitespace-nowrap">
-									{labor.name}
-								</div>
-								<div className="px-6 py-4 whitespace-nowrap">
-									{labor.contractor}
-								</div>
-								<div className="px-6 py-4 whitespace-nowrap">
-									{labor.price}
-								</div>
-								<div className="px-6 py-4 whitespace-nowrap">
-									{labor.surface}
-								</div>
+							<div
+								className="flex justify-around p-4"
+								key={labor.id}
+							>
+								<div>{labor.name}</div>
+								<div>{labor.contractor}</div>
+								<div>{labor.price}</div>
+								<div>{labor.surface}</div>
 							</div>
 						))}
 					</div>
