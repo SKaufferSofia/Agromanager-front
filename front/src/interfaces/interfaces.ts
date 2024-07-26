@@ -90,9 +90,3 @@ export interface ISuscribe {
 
 export type SaveToken = (arg: string) => void;
 export type SaveUserData = (arg: IUser) => void;
-export interface ICreatePlot {
-  id: number;
-  surface: string; 
-  cereal: string;  
-  user: string;
-}
