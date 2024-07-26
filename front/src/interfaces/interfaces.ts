@@ -52,7 +52,7 @@ export interface IPlotsType {
   surface: number;
   cereal: string;
   labors: string[] | null;
-  supplies: Supply[] | null;
+  supplies: Supply[] | "";
 }
 
 export interface Labors {
@@ -73,7 +73,7 @@ export interface PlotDetailCardProps {
   surface: number;
   cereal: string;
   labors: string[] | null;
-  supplies: Supply[] | null;
+  supplies?: Supply[] | "";
 }
 
 export interface PlotPanelProps {
