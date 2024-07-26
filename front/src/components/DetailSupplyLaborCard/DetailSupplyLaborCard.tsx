@@ -1,13 +1,7 @@
 "use client";
 
 import React from "react";
-import {
-	Tabs,
-	TabsHeader,
-	TabsBody,
-	Tab,
-	TabPanel,
-} from "@material-tailwind/react";
+import { Tabs, TabsHeader, TabsBody, Tab } from "@material-tailwind/react";
 
 const DetailSupplyLaborCard = () => {
 	const [activeTab, setActiveTab] = React.useState("html");
