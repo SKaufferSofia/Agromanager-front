@@ -11,6 +11,32 @@ import {
 
 const DetailSupplyLaborCard = () => {
 	const [activeTab, setActiveTab] = React.useState("html");
+	const labors = [
+		{
+			id: "987e4567-e89b-12d3-a456-426614174000",
+			name: "Labor 1",
+			contractor: "Contractor A",
+			price: 500,
+			surface: 100,
+			plotId: "123e4567-e89b-12d3-a456-426614174012",
+		},
+		{
+			id: "987e4567-e89b-12d3-a456-426614174001",
+			name: "Labor 2",
+			contractor: "Contractor B",
+			price: 700,
+			surface: 200,
+			plotId: "123e4567-e89b-12d3-a456-426614174013",
+		},
+		{
+			id: "987e4567-e89b-12d3-a456-426614174002",
+			name: "Labor 3",
+			contractor: "Contractor C",
+			price: 900,
+			surface: 300,
+			plotId: "123e4567-e89b-12d3-a456-426614174014",
+		},
+	];
 
 	const supplies = [
 		{
@@ -68,24 +94,50 @@ const DetailSupplyLaborCard = () => {
 					Labores
 				</Tab>
 			</TabsHeader>
-			<TabsBody className="bg-white h-screen rounded-md">
-				{supplies.map((supply) => (
-					<div className="flex" key={supply.id}>
-						<div className="px-6 py-4 whitespace-nowrap">
-							{supply.name}
-						</div>
-						<div className="px-6 py-4 whitespace-nowrap">
-							{supply.provider}
-						</div>
-						<div className="px-6 py-4 whitespace-nowrap">
-							{supply.stock}
-						</div>
-						<div className="px-6 py-4 whitespace-nowrap">
-							{supply.price}
-						</div>
+			{activeTab === "Insumos" && (
+				<TabsBody className="bg-white h-4/5 w-10/12 rounded-md mx-auto mt-8">
+					<div className="p-4">
+						{supplies.map((supply) => (
+							<div className="flex" key={supply.id}>
+								<div className="px-6 py-4 whitespace-nowrap">
+									{supply.name}
+								</div>
+								<div className="px-6 py-4 whitespace-nowrap">
+									{supply.provider}
+								</div>
+								<div className="px-6 py-4 whitespace-nowrap">
+									{supply.stock}
+								</div>
+								<div className="px-6 py-4 whitespace-nowrap">
+									{supply.price}
+								</div>
+							</div>
+						))}
 					</div>
-				))}
-			</TabsBody>
+				</TabsBody>
+			)}
+			{activeTab === "Labores" && (
+				<TabsBody className="bg-white h-4/5 w-10/12 rounded-md mx-auto mt-8">
+					<div className="p-4">
+						{labors.map((labor) => (
+							<div className="flex" key={labor.id}>
+								<div className="px-6 py-4 whitespace-nowrap">
+									{labor.name}
+								</div>
+								<div className="px-6 py-4 whitespace-nowrap">
+									{labor.contractor}
+								</div>
+								<div className="px-6 py-4 whitespace-nowrap">
+									{labor.price}
+								</div>
+								<div className="px-6 py-4 whitespace-nowrap">
+									{labor.surface}
+								</div>
+							</div>
+						))}
+					</div>
+				</TabsBody>
+			)}
 		</Tabs>
 	);
 };
