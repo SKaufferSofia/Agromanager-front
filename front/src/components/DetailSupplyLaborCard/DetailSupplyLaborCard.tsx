@@ -1,10 +1,24 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Tabs, TabsHeader, TabsBody, Tab } from "@material-tailwind/react";
+import axios from "axios";
 
 const DetailSupplyLaborCard = () => {
 	const [activeTab, setActiveTab] = React.useState("html");
+
+	// useEffect(() => {
+	// 	const fetchData = async () => {
+	// 		try {
+	// 			const res = await axios.get("http://localhost:4000/supplies/1");
+	// 			console.log(res);
+	// 		} catch (error) {
+	// 			console.log("Error fetching:", error);
+	// 		}
+	// 	};
+	// 	fetchData();
+	// }, []);
+
 	const labors = [
 		{
 			id: "987e4567-e89b-12d3-a456-426614174000",
