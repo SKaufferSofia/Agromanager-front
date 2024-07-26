@@ -18,7 +18,7 @@ const PlotDashboard: React.FC = () => {
 				<h2 className="text-4xl font-semibold text-center mb-4">
 					Lote {mockPlots.cereal}
 				</h2>
-				<div className="m-10 flex ">
+				<div className="m-10 flex justify-around text-lg font-semibold">
 					<p>Superficie: {mockPlots.surface} HA</p>
 					<p>Cereal: {mockPlots.cereal}</p>
 				</div>
@@ -32,7 +32,7 @@ const PlotDashboard: React.FC = () => {
 					</h2>
 					<AddSupplyInput />
 				</div>
-				<div>
+				<div className="bg-footerColor h-5/6">
 					<DetailSupplyLaborCard />
 				</div>
 			</div>

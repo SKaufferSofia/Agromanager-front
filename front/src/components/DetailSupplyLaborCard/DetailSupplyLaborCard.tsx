@@ -85,7 +85,7 @@ const DetailSupplyLaborCard = () => {
 	const totalSupplyPrice = calculateTotalPrice(supplies);
 	const totalLaborPrice = calculateTotalPrice(labors);
 	return (
-		<div className="bg-footerColor h-full mt-8">
+		<div className="h-full mt-8">
 			<Tabs value={activeTab}>
 				<TabsHeader
 					className="rounded-none border-b border-blue-gray-50 bg-transparent p-0"

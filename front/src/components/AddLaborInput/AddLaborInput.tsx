@@ -3,8 +3,8 @@ import React from "react";
 const AddLaborInput: React.FC = () => {
 	return (
 		<div>
-			<form className="flex justify-around">
-				<div className="flex-1 mx-2">
+			<form className="flex ">
+				<div className="flex-1 mx-5">
 					<label className="block text-sm font-medium text-gray-700 ml-2">
 						Nombre del Labor
 					</label>
