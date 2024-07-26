@@ -87,6 +87,12 @@ export interface ISuscribe {
   unid: string;
   describe: string;
 }
+export interface ICreatePlot {
+  id: number;
+  surface: string;
+  cereal: string;
+  user: string;
+}
 
 export type SaveToken = (arg: string) => void;
 export type SaveUserData = (arg: IUser) => void;
