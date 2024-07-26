@@ -76,7 +76,7 @@ const TeamComponent: React.FC = () => {
                       </h3>
                       <a href={person.gitHub} target="_blank">
                         <p className="text-sm font-semibold leading-6 text-textGreen">
-                          Github
+                          GitHub
                         </p>
                       </a>
                     </div>
