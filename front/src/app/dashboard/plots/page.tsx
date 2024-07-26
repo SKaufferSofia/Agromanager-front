@@ -8,8 +8,6 @@ import SideNavbar from "@/components/Navbar/sideNavbar";
 
 console.log(plots);
 
-//axios get plots for user
-
 const PlotDashboard: React.FC = () => {
   return (
     <div className="  w-screen h-full flex flex-col sm:flex-row">
