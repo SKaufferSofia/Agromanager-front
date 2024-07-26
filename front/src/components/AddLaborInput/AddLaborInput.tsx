@@ -4,35 +4,46 @@ const AddLaborInput: React.FC = () => {
 	return (
 		<div>
 			<form className="flex justify-around">
-				<div className="w-1/4 mx-2">
+				<div className="flex-1 mx-2">
 					<label className="block text-sm font-medium text-gray-700 ml-2">
 						Nombre del Labor
 					</label>
 					<input
 						type="text"
-						name="supplyId"
-						placeholder="ID del insumo"
+						name="name"
+						placeholder="Nombre del insumo"
 						className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
 					/>
 				</div>
-				<div className="w-1/4 mx-2">
+				<div className="flex-1 mx-2">
 					<label className="block text-sm font-medium text-gray-700 ml-2">
-						ID del lote
+						Contratista
 					</label>
 					<input
 						type="text"
-						name="plotId"
-						placeholder="ID del lote"
+						name="contractor"
+						placeholder="Contratista"
 						className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
 					/>
 				</div>
-				<div className="w-1/4 mx-2">
+				<div className="flex-1 mx-2">
 					<label className="block text-sm font-medium text-gray-700 ml-2">
-						Cantidad
+						Precio
 					</label>
 					<input
 						type="number"
-						name="quantity"
+						name="price"
+						placeholder="Precio"
+						className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+					/>
+				</div>
+				<div className="flex-1 mx-2">
+					<label className="block text-sm font-medium text-gray-700 ml-2">
+						Superficie
+					</label>
+					<input
+						type="number"
+						name="surface"
 						placeholder="Cantidad"
 						className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
 					/>

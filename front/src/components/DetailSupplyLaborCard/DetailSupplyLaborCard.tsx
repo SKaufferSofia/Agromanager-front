@@ -64,6 +64,12 @@ const DetailSupplyLaborCard = () => {
 			userId: "123e4567-e89b-12d3-a456-426614174011",
 		},
 	];
+	const calculateTotalPrice = (items: { price: number }[]): number => {
+		return items.reduce((total, item) => total + item.price, 0);
+	};
+
+	const totalSupplyPrice = calculateTotalPrice(supplies);
+	const totalLaborPrice = calculateTotalPrice(labors);
 	return (
 		<Tabs value={activeTab}>
 			<TabsHeader
@@ -91,49 +97,38 @@ const DetailSupplyLaborCard = () => {
 			{activeTab === "Insumos" && (
 				<TabsBody className="bg-white h-4/5 w-10/12 rounded-md mx-auto mt-8">
 					<div className="p-4">
-						<div className="flex font-bold  justify-around">
-							<div className="px-6 py-4 whitespace-nowrap">
-								Nombre
-							</div>
-							<div className="px-6 py-4 whitespace-nowrap">
-								Proveedor
-							</div>
-							<div className="px-6 py-4 whitespace-nowrap">
-								Cantidad
-							</div>
-							<div className="px-6 py-4 whitespace-nowrap">
-								Precio
-							</div>
+						<div className="flex font-bold p-4">
+							<div className="flex-1">Nombre</div>
+							<div className="flex-1">Proveedor</div>
+							<div className="flex-1">Cantidad</div>
+							<div className="flex-1">Precio</div>
 						</div>
 						{supplies.map((supply) => (
-							<div
-								className="flex justify-around p-4"
-								key={supply.id}
-							>
-								<div>{supply.name}</div>
-								<div>{supply.provider}</div>
-								<div>{supply.stock}</div>
-								<div>{supply.price}</div>
+							<div className="flex p-4" key={supply.id}>
+								<div className="flex-1">{supply.name}</div>
+								<div className="flex-1">{supply.provider}</div>
+								<div className="flex-1">{supply.stock}</div>
+								<div className="flex-1">${supply.price}</div>
 							</div>
 						))}
+						<div className="flex justify-end font-bold">
+							<div className="px-6 py-4 whitespace-nowrap">
+								Total Price
+							</div>
+							<div className="px-6 py-4 whitespace-nowrap">
+								${totalSupplyPrice}
+							</div>
+						</div>
 					</div>
 				</TabsBody>
 			)}
 			{activeTab === "Labores" && (
 				<TabsBody className="bg-white h-4/5 w-10/12 rounded-md mx-auto mt-8">
-					<div className="flex font-bold justify-around p-4">
-						<div className="px-6 py-4 whitespace-nowrap">
-							Nombre
-						</div>
-						<div className="px-6 py-4 whitespace-nowrap">
-							Contratista
-						</div>
-						<div className="px-6 py-4 whitespace-nowrap">
-							Precio
-						</div>
-						<div className="px-6 py-4 whitespace-nowrap">
-							Superficie
-						</div>
+					<div className="flex font-bold flex-1 p-4">
+						<div className="flex-1">Nombre</div>
+						<div className="flex-1">Contratista</div>
+						<div className="flex-1">Superficie</div>
+						<div className="flex-1">Precio</div>
 					</div>
 					<div className="p-4">
 						{labors.map((labor) => (
@@ -141,12 +136,20 @@ const DetailSupplyLaborCard = () => {
 								className="flex justify-around p-4"
 								key={labor.id}
 							>
-								<div>{labor.name}</div>
-								<div>{labor.contractor}</div>
-								<div>{labor.price}</div>
-								<div>{labor.surface}</div>
+								<div className="flex-1">{labor.name}</div>
+								<div className="flex-1">{labor.contractor}</div>
+								<div className="flex-1">{labor.surface}</div>
+								<div className="flex-1">${labor.price}</div>
 							</div>
 						))}
+						<div className="flex font-bold justify-end">
+							<div className="px-6 py-4 whitespace-nowrap">
+								Total Price
+							</div>
+							<div className="px-6 py-4 whitespace-nowrap">
+								${totalLaborPrice}
+							</div>
+						</div>
 					</div>
 				</TabsBody>
 			)}

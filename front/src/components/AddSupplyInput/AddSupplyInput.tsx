@@ -4,26 +4,26 @@ const AddSupplyInput: React.FC = () => {
 	return (
 		<div>
 			<form className="flex justify-around">
-				<div className="w-1/4 mx-2">
+				<div className="flex-1 mx-2">
 					<label className="block text-sm font-medium text-gray-700 ml-2">
-						Categoría del insumo
+						Proveedor
 					</label>
 					<select
-						name="supplyId"
+						name="provider"
 						className="p-2 w-full border border-gray-300 rounded-sm shadow-sm sm:text-sm"
 					>
-						<option value="">Seleccione una categoría</option>
-						<option value="insumo1">Categoría 1</option>
-						<option value="insumo2">Categoría 2</option>
-						<option value="insumo3">Categoría 3</option>
+						<option value="">Seleccione una proveedor</option>
+						<option value="insumo1">Proveedor 1</option>
+						<option value="insumo2">Proveedor 2</option>
+						<option value="insumo3">Proveedor 3</option>
 					</select>
 				</div>
-				<div className="w-1/4 mx-2">
+				<div className="flex-1 mx-2">
 					<label className="block text-sm font-medium text-gray-700 ml-2">
 						Nombre del insumo
 					</label>
 					<select
-						name="supplyId"
+						name="name"
 						className="p-2 w-full border border-gray-300 rounded-sm shadow-sm sm:text-sm"
 					>
 						<option value="">Seleccione un insumo</option>
@@ -32,7 +32,7 @@ const AddSupplyInput: React.FC = () => {
 						<option value="insumo3">Insumo 3</option>
 					</select>
 				</div>
-				<div className="w-1/4 mx-2">
+				<div className="flex-1 mx-2">
 					<label className="block text-sm font-medium text-gray-700 ml-2">
 						Cantidad
 					</label>
@@ -40,6 +40,17 @@ const AddSupplyInput: React.FC = () => {
 						type="number"
 						name="quantity"
 						placeholder="Cantidad"
+						className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+					/>
+				</div>
+				<div className="flex-1 mx-2">
+					<label className="block text-sm font-medium text-gray-700 ml-2">
+						Precio
+					</label>
+					<input
+						type="number"
+						name="Price"
+						placeholder="Precio"
 						className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
 					/>
 				</div>
