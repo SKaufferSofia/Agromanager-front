@@ -4,8 +4,8 @@ const AddSupplyInput: React.FC = () => {
 	return (
 		<div>
 			<form className="flex justify-around">
-				<div>
-					<label className="block text-sm font-medium text-gray-700">
+				<div className="w-1/4 mx-2">
+					<label className="block text-sm font-medium text-gray-700 ml-2">
 						ID del insumo
 					</label>
 					<input
@@ -15,8 +15,8 @@ const AddSupplyInput: React.FC = () => {
 						className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
 					/>
 				</div>
-				<div>
-					<label className="block text-sm font-medium text-gray-700">
+				<div className="w-1/4 mx-2">
+					<label className="block text-sm font-medium text-gray-700 ml-2">
 						ID del lote
 					</label>
 					<input
@@ -26,8 +26,8 @@ const AddSupplyInput: React.FC = () => {
 						className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
 					/>
 				</div>
-				<div>
-					<label className="block text-sm font-medium text-gray-700">
+				<div className="w-1/4 mx-2">
+					<label className="block text-sm font-medium text-gray-700 ml-2">
 						Cantidad
 					</label>
 					<input
