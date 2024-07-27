@@ -16,6 +16,7 @@ const config: Config = withMT({
       },
       colors: {
         bgColor: "#E9E7DD",
+        altBgColor: "#B2B899",
         textColor: "#585858",
         navbarColor: "#636B3F",
         footerColor: "#747C5D",
