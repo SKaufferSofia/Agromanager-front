@@ -17,12 +17,19 @@ const AddSupplyInput: React.FC = () => {
 					<label className="block text-sm font-medium text-gray-700 ml-2">
 						Categoría
 					</label>
-					<input
-						type="text"
+					<select
 						name="supplyId"
-						placeholder="Categoría"
 						className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-					/>
+					>
+						<option value="" disabled selected>
+							Selecciona una categoría
+						</option>
+						{supplies.map((supply, index) => (
+							<option key={index} value={supply}>
+								{supply}
+							</option>
+						))}
+					</select>
 				</div>
 				<div className="flex-1 mx-2">
 					<label className="block text-sm font-medium text-gray-700 ml-2">
