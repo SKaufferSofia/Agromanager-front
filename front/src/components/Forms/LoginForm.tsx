@@ -3,9 +3,12 @@ import { useRouter } from "next/navigation";
 import useForm from "@/hooks/useForm";
 import { PetitionLogin } from "@/lib/server/petitionUser";
 import { validateLogin } from "@/helpers/valitateLogin";
+import { useDispatch } from "react-redux";
+import { signIn, saveToken } from "@/redux/reducer";
 
 const LoginForm = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const {
     loginData,
@@ -28,10 +31,18 @@ const LoginForm = () => {
     event.preventDefault();
 
     if (Object.keys(errorLogin).length === 0) {
-      const loginSuccess = await PetitionLogin(loginData);
+      const loginSuccess = await PetitionLogin(
+        loginData,
+        (token) => {
+          dispatch(saveToken(token));
+        },
+        (login) => {
+          dispatch(signIn(login));
+        }
+      );
       if (loginSuccess) {
         alert("Login exitoso");
-        router.push("/dashboard/plots");
+        // router.push("/dashboard/plots");
       }
     } else {
       alert("Complete todos los campos");
