@@ -1,7 +1,7 @@
-import { IUser } from "@/interfaces/interfaces";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { saveToken, saveUserData, signIn } from "@/redux/reducer";
+import { IUser } from "@/interfaces/interfacesUser";
 
 const useUserData = () => {
   const dispatch = useDispatch();

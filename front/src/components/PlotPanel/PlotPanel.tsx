@@ -1,43 +1,46 @@
-"use client";
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { IPlotsType, PlotPanelProps } from "@/interfaces/interfaces";
 import PlotDetailCard from "./PlotDetailCard/PlotDetailCard";
-import LandingButton from "../LandingButton/LandingButton";
-import axios from "axios";
+import { useSelector } from "react-redux";
+import { createPlot } from "@/lib/server/petitionPlots";
 
-const PlotPanel: React.FC<PlotPanelProps> = ({ plots: initialPlots }) => {
-  // const [plots, setPlots] = useState<IPlotsType[]>(initialPlots);
+const PlotPanel: React.FC<PlotPanelProps> = ({ plots, setPlots }) => {
   const [cereal, setCereal] = useState("");
   const [surface, setSurface] = useState("");
-  // const [newPlots, setNewPlots] = useState<IPlotsType[]>([]);
 
-  // const handleCerealChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setCereal(event.target.value);
-  // };
+  const userId = useSelector((state: any) => state.userData.id);
+  const token = useSelector((state: any) => state.token);
 
-  // const handleSurfaceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setSurface(event.target.value);
-  // };
+  const handleCerealChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCereal(event.target.value);
+  };
 
-  // const handleSubmit = async (event: React.FormEvent) => {
-  //   event.preventDefault();
-  //   const newPlot = { cereal, surface, user };
-  //   try {
-  //     const response = await axios.post(`${API_URL}/plots/create`, newPlot, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  //     if (response.data) {
-  //       const createdPlot = response.data;
-  //       console.log("Plot creado:", createdPlot);
-  //       setNewPlots([...newPlots, createdPlot]);
-  //       setPlots([...plots, createdPlot]);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error al crear el plot:", error);
-  //   }
-  // };
+  const handleSurfaceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSurface(event.target.value);
+  };
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!cereal || !surface) {
+      console.error("Cereal and surface are required.");
+      return;
+    }
+
+    const newPlot = { cereal, surface };
+    console.log("Creating plot:", newPlot);
+
+    try {
+      const createdPlot = await createPlot(newPlot, userId, token);
+      if (createdPlot) {
+        console.log("Plot creado:", createdPlot);
+        setPlots((prevPlots) => [...prevPlots, createdPlot]);
+        setCereal("");
+        setSurface("");
+      }
+    } catch (error) {
+      console.error("Error al crear el plot:", error);
+    }
+  };
 
   return (
     <div className="w-full max-w-screen-lg min-h-screen mx-auto p-4 flex flex-col">
@@ -48,7 +51,7 @@ const PlotPanel: React.FC<PlotPanelProps> = ({ plots: initialPlots }) => {
         <h2 className="text-lg poppins-regular mt-10">Add a new plot</h2>
         <form
           className="flex flex-col md:flex-row gap-4 mt-4"
-          //onSubmit={handleSubmit}
+          onSubmit={handleSubmit}
         >
           <div className="flex flex-col sm:flex-row sm:gap-4">
             <input
@@ -56,14 +59,14 @@ const PlotPanel: React.FC<PlotPanelProps> = ({ plots: initialPlots }) => {
               className="py-2 px-4 border border-gray-300 rounded-sm shadow-sm"
               placeholder="Write Cereal"
               value={cereal}
-              //onChange={handleCerealChange}
+              onChange={handleCerealChange}
             />
             <input
               type="text"
               className="py-2 px-4 border border-gray-300 rounded-sm shadow-sm mt-2 sm:mt-0"
               placeholder="Write Surface"
               value={surface}
-              //onChange={handleSurfaceChange}
+              onChange={handleSurfaceChange}
             />
           </div>
           <button
@@ -76,7 +79,7 @@ const PlotPanel: React.FC<PlotPanelProps> = ({ plots: initialPlots }) => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-16">
-        {initialPlots.map((plot: IPlotsType) => (
+        {plots.map((plot: IPlotsType) => (
           <PlotDetailCard
             key={plot.id}
             id={plot.id}

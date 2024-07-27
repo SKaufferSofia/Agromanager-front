@@ -1,42 +1,3 @@
-export interface IUser {
-  id?: string;
-  name: string;
-  surname: string;
-  placeName: string;
-  email: string;
-  phone?: number;
-  roles: IRoles[];
-  active: boolean;
-}
-
-export interface IRoles {
-  id: number;
-  name: string;
-}
-
-export interface IRegisterForm {
-  name: string;
-  surname: string;
-  phone?: number;
-  placeName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
-export interface IRegisterFormErrors {
-  [key: string]: string;
-}
-
-export interface ILoginForm {
-  email: string;
-  password: string;
-}
-
-export interface ILoginFormErrors {
-  [key: string]: string;
-}
-
 export interface Supply {
   name: string;
   provider: string;
@@ -49,7 +10,7 @@ export interface Supply {
 
 export interface IPlotsType {
   id: number;
-  surface: number;
+  surface: string;
   cereal: string;
   labors: string[] | null;
   supplies: Supply[] | "";
@@ -70,7 +31,7 @@ export interface IPlotsNavbar {
 
 export interface PlotDetailCardProps {
   id: number;
-  surface: number;
+  surface: string;
   cereal: string;
   labors: string[] | null;
   supplies?: Supply[] | "";
@@ -78,15 +39,9 @@ export interface PlotDetailCardProps {
 
 export interface PlotPanelProps {
   plots: IPlotsType[];
+  setPlots: React.Dispatch<React.SetStateAction<IPlotsType[]>>;
 }
 
-export interface ISuscribe {
-  id: number;
-  title: string;
-  price: number;
-  unid: string;
-  describe: string;
-}
 export interface ICreatePlot {
   id: number;
   surface: string;
@@ -94,6 +49,4 @@ export interface ICreatePlot {
   user: string;
 }
 
-export type SignIn = (arg: boolean) => void;
-export type SaveToken = (arg: string) => void;
-export type SaveUserData = (arg: IUser) => void;
+export type SaveDataPlot = (arg: IPlotsType[]) => void;

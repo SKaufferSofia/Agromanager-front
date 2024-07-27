@@ -3,7 +3,7 @@ import {
   ILoginFormErrors,
   IRegisterForm,
   IRegisterFormErrors,
-} from "@/interfaces/interfaces";
+} from "@/interfaces/interfacesUser";
 import React from "react";
 
 const useForm = () => {

@@ -3,7 +3,7 @@ import { IPlotsType } from "@/interfaces/interfaces";
 const plots: IPlotsType[] = [
   {
     id: 1,
-    surface: 50,
+    surface: "50",
     cereal: "Maíz",
     labors: ["Laboreo Inicial"],
     supplies: [
@@ -29,7 +29,7 @@ const plots: IPlotsType[] = [
   },
   {
     id: 2,
-    surface: 75,
+    surface: "75",
     cereal: "Soja",
     labors: ["Laboreo de Mantenimiento"],
     supplies: [
@@ -46,7 +46,7 @@ const plots: IPlotsType[] = [
   },
   {
     id: 3,
-    surface: 75,
+    surface: "75",
     cereal: "Cannabis",
     labors: ["Laboreo de Mantenimiento"],
     supplies: [
@@ -63,7 +63,7 @@ const plots: IPlotsType[] = [
   },
   {
     id: 3,
-    surface: 75,
+    surface: "75",
     cereal: "Opio",
     labors: ["Laboreo de Mantenimiento"],
     supplies: [
@@ -80,7 +80,7 @@ const plots: IPlotsType[] = [
   },
   {
     id: 3,
-    surface: 75,
+    surface: "75",
     cereal: "Opio",
     labors: ["Laboreo de Mantenimiento"],
     supplies: [

@@ -13,6 +13,7 @@ const initialState = {
     active: false,
     roles: [],
   },
+  plot: [],
 };
 
 export const someSlice = createSlice({
@@ -28,8 +29,12 @@ export const someSlice = createSlice({
     saveUserData: (state, action) => {
       state.userData = action.payload;
     },
+    savePlot: (state, action) => {
+      console.log(action.payload);
+      state.plot = action.payload;
+    },
   },
 });
 
-export const { signIn, saveToken, saveUserData } = someSlice.actions;
+export const { signIn, saveToken, saveUserData, savePlot } = someSlice.actions;
 export default someSlice.reducer;
