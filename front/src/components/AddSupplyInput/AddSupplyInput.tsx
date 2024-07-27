@@ -1,6 +1,15 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 
 const AddSupplyInput: React.FC = () => {
+	// Demo Array used for Development, to be removed once
+	// the component is completed with the fetch logic
+	const [supplies, setSupplies] = useState([
+		"firstCat",
+		"secondCat",
+		"thirdCat",
+	]);
+
 	return (
 		<div>
 			<form className="flex">
