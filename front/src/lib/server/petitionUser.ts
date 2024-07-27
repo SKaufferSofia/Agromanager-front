@@ -10,14 +10,11 @@ import {
 
 const API = NEXT_PUBLIC_API_URL;
 
-export const petitionRegister = async (
-  regiterData: IRegisterForm,
-  userData: SaveUserData
-) => {
+export const petitionRegister = async (regiterData: IRegisterForm) => {
   try {
     const response = await axios.post(`${API}/auth/signup`, regiterData);
-    userData(response.data.rest);
-    return true;
+
+    return response.data;
   } catch (error: any) {
     if (axios.isAxiosError(error) && error.response) {
       const axiosError = error.response.data.message;
@@ -30,12 +27,14 @@ export const petitionRegister = async (
 export const PetitionLogin = async (
   loginData: ILoginForm,
   saveToken: SaveToken,
-  signIn: SignIn
+  signIn: SignIn,
+  userData: SaveUserData
 ): Promise<boolean> => {
   try {
     const response = await axios.post(`${API}/auth/signin`, loginData);
     saveToken(response.data.token);
     signIn(response.data.isLoggin);
+    userData(response.data.user);
 
     return true;
   } catch (error: any) {
