@@ -7,7 +7,7 @@ import {
   CardBody,
   Typography,
 } from "@material-tailwind/react";
-import { ISuscribe } from "@/interfaces/interfaces";
+import { ISuscribe } from "@/interfaces/interfacesSupscriptions";
 
 const SuscribeCardListHome = ({
   suscribe: { title, price, unid, describe },

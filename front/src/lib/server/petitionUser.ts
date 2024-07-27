@@ -1,12 +1,12 @@
-import { NEXT_PUBLIC_API_URL } from "./envs";
-import axios from "axios";
 import {
   ILoginForm,
   IRegisterForm,
   SaveToken,
   SaveUserData,
   SignIn,
-} from "@/interfaces/interfaces";
+} from "@/interfaces/interfacesUser";
+import { NEXT_PUBLIC_API_URL } from "./envs";
+import axios from "axios";
 
 const API = NEXT_PUBLIC_API_URL;
 
