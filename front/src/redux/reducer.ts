@@ -1,4 +1,3 @@
-// reducers/someReducer.ts
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -21,15 +20,12 @@ export const someSlice = createSlice({
   initialState,
   reducers: {
     signIn: (state, action) => {
-      console.log(action.payload);
       state.isLoggin = action.payload;
     },
     saveToken: (state, action) => {
-      console.log(action.payload);
       state.token = action.payload;
     },
     saveUserData: (state, action) => {
-      console.log(action.payload);
       state.userData = action.payload;
     },
   },
