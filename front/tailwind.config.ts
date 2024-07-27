@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
+const withMT = require("@material-tailwind/react/utils/withMT");
 
-const config: Config = {
+const config: Config = withMT({
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -15,13 +16,15 @@ const config: Config = {
       },
       colors: {
         bgColor: "#E9E7DD",
+        altBgColor: "#B2B899",
         textColor: "#585858",
         navbarColor: "#636B3F",
         footerColor: "#747C5D",
         textGreen: "#70823E",
+        sideNavbarColor: "#8B8B8B",
       },
     },
   },
   plugins: [],
-};
+});
 export default config;
