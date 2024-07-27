@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import useForm from "@/hooks/useForm";
+import useUserData from "@/hooks/useUserData";
 import { PetitionLogin } from "@/lib/server/petitionUser";
 import { validateLogin } from "@/helpers/valitateLogin";
 import { useDispatch } from "react-redux";
@@ -19,6 +20,8 @@ const LoginForm = () => {
     setShowPassword,
   } = useForm();
 
+  const { saveTokenStorage, saveUserDataStorage } = useUserData();
+
   const handleOnclickPassword = () => setShowPassword(!showPassword);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,14 +38,17 @@ const LoginForm = () => {
         loginData,
         (token) => {
           dispatch(saveToken(token));
+          saveTokenStorage(token);
         },
         (login) => {
           dispatch(signIn(login));
         },
         (data) => {
           dispatch(saveUserData(data));
+          saveUserDataStorage(data);
         }
       );
+
       if (loginSuccess) {
         alert("Login exitoso");
         router.push("/dashboard/plots");
