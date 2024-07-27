@@ -4,6 +4,7 @@ import "../styles/globals.css";
 import "../styles/font.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
+import ProviderWrapper from "@/redux/ProviderWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,11 +33,13 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.className} poppins-regular`}>
-        <header className="relative z-10">
-          <Navbar />
-        </header>
-        <div>{children}</div>
-        <Footer />
+        <ProviderWrapper>
+          <header className="relative z-10">
+            <Navbar />
+          </header>
+          <div>{children}</div>
+          <Footer />
+        </ProviderWrapper>
       </body>
     </html>
   );
