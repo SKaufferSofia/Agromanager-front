@@ -4,13 +4,9 @@ import { validateRegister } from "@/helpers/validateRegister";
 import { petitionRegister } from "@/lib/server/petitionUser";
 import { useRouter } from "next/navigation";
 import useForm from "@/hooks/useForm";
-import { useDispatch } from "react-redux";
-import { saveUserData } from "@/redux/reducer";
 
 const RegisterForm = () => {
   const router = useRouter();
-
-  const dispatch = useDispatch();
 
   const {
     regiterData,
@@ -38,9 +34,7 @@ const RegisterForm = () => {
     event.preventDefault();
 
     if (Object.keys(errorRegister).length === 0) {
-      const registerSuccess = await petitionRegister(regiterData, (data) => {
-        dispatch(saveUserData(data));
-      });
+      const registerSuccess = await petitionRegister(regiterData);
       if (registerSuccess) {
         alert("registro exitoso");
         router.push("/login");

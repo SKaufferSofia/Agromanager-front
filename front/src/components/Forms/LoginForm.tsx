@@ -4,7 +4,7 @@ import useForm from "@/hooks/useForm";
 import { PetitionLogin } from "@/lib/server/petitionUser";
 import { validateLogin } from "@/helpers/valitateLogin";
 import { useDispatch } from "react-redux";
-import { signIn, saveToken } from "@/redux/reducer";
+import { signIn, saveToken, saveUserData } from "@/redux/reducer";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -38,11 +38,14 @@ const LoginForm = () => {
         },
         (login) => {
           dispatch(signIn(login));
+        },
+        (data) => {
+          dispatch(saveUserData(data));
         }
       );
       if (loginSuccess) {
         alert("Login exitoso");
-        // router.push("/dashboard/plots");
+        router.push("/dashboard/plots");
       }
     } else {
       alert("Complete todos los campos");
