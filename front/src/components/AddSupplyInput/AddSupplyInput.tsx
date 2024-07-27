@@ -2,13 +2,33 @@
 import React, { useState } from "react";
 
 const AddSupplyInput: React.FC = () => {
-	// Demo Array used for Development, to be removed once
-	// the component is completed with the fetch logic
-	const [supplies, setSupplies] = useState([
-		"firstCat",
-		"secondCat",
-		"thirdCat",
+	// Mock data for categories and supplies
+	const [categories] = useState(["firstCat", "secondCat", "thirdCat"]);
+	const [supplies] = useState([
+		{ name: "firstSupply", category: "firstCat" },
+		{ name: "secondSupply", category: "firstCat" },
+		{ name: "thirdSupply", category: "secondCat" },
+		{ name: "fourthSupply", category: "secondCat" },
+		{ name: "fifthSupply", category: "thirdCat" },
 	]);
+
+	const [activeCategory, setActiveCategory] = useState("");
+	const [filteredSupplies, setFilteredSupplies] = useState(supplies);
+
+	const handleCategoryChange = (
+		event: React.ChangeEvent<HTMLSelectElement>
+	) => {
+		const selectedCategory = event.target.value;
+		setActiveCategory(selectedCategory);
+		if (selectedCategory) {
+			const suppliesByCategory = supplies.filter(
+				(supply) => supply.category === selectedCategory
+			);
+			setFilteredSupplies(suppliesByCategory);
+		} else {
+			setFilteredSupplies(supplies);
+		}
+	};
 
 	return (
 		<div>
@@ -20,13 +40,13 @@ const AddSupplyInput: React.FC = () => {
 					<select
 						name="supplyId"
 						className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+						onChange={handleCategoryChange}
+						value={activeCategory}
 					>
-						<option value="" disabled selected>
-							Selecciona una categoría
-						</option>
-						{supplies.map((supply, index) => (
-							<option key={index} value={supply}>
-								{supply}
+						<option value="">Selecciona una categoría</option>
+						{categories.map((category, index) => (
+							<option key={index} value={category}>
+								{category}
 							</option>
 						))}
 					</select>
@@ -35,12 +55,19 @@ const AddSupplyInput: React.FC = () => {
 					<label className="block text-sm font-medium text-gray-700 ml-2">
 						Nombre del insumo
 					</label>
-					<input
-						type="text"
+					<select
 						name="plotId"
-						placeholder="Nombre del insumo"
 						className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-					/>
+					>
+						<option value="" disabled selected>
+							Selecciona un insumo
+						</option>
+						{filteredSupplies.map((supply, index) => (
+							<option key={index} value={supply.name}>
+								{supply.name}
+							</option>
+						))}
+					</select>
 				</div>
 				<div className="flex-1 mx-2">
 					<label className="block text-sm font-medium text-gray-700 ml-2">
