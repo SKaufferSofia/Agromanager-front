@@ -35,7 +35,7 @@ export interface IPlotsType {
   surface: string;
   cereal: string;
   labors: Labors[] | null;
-  supplies: Supply[] | "";
+  supplies: Supply[] | null;
 }
 
 export interface Labors {

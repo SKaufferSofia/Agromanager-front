@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Tabs, TabsHeader, TabsBody, Tab } from "@material-tailwind/react";
-import { IPlotsType, Labors } from "@/interfaces/interfaces";
+import { IPlotsType, Labors, Supply } from "@/interfaces/interfaces";
 
 interface DetailSupplyLaborCardProps {
 	currentPlot: IPlotsType;
@@ -11,7 +11,7 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
 	currentPlot,
 }) => {
 	const [activeTab, setActiveTab] = useState("Insumos");
-
+	console.log(currentPlot);
 	const supplies = [
 		{
 			id: "123e4567-e89b-12d3-a456-426614174000",
@@ -44,12 +44,14 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
 			userId: "123e4567-e89b-12d3-a456-426614174011",
 		},
 	];
-	const calculateTotalPrice = (items: Labors[] | null): number => {
+	const calculateTotalPrice = (items: Labors[] | Supply[] | null): number => {
 		if (!items) return 0;
 		return items.reduce((total, item) => total + item.price, 0);
 	};
 
 	const totalLaborPrice = calculateTotalPrice(currentPlot.labors);
+	const totalSupplyPrice = calculateTotalPrice(currentPlot.supplies);
+
 	return (
 		<div className=" mt-8 ">
 			<Tabs value={activeTab}>
@@ -87,17 +89,22 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
 							<div className="flex-1">Cantidad</div>
 							<div className="flex-1">Precio</div>
 						</div>
-						{supplies.map((supply) => (
-							<div className="flex p-4" key={supply.id}>
-								<div className="flex-1">{supply.name}</div>
-								<div className="flex-1">{supply.provider}</div>
-								<div className="flex-1">{supply.stock}</div>
-								<div className="flex-1">${supply.price}</div>
-							</div>
-						))}
+						{currentPlot.supplies &&
+							currentPlot.supplies.map((supply) => (
+								<div className="flex p-4" key={supply.id}>
+									<div className="flex-1">{supply.name}</div>
+									<div className="flex-1">
+										{supply.provider}
+									</div>
+									<div className="flex-1">{supply.stock}</div>
+									<div className="flex-1">
+										${supply.price}
+									</div>
+								</div>
+							))}
 						<div className="flex justify-end font-bold">
 							<div className="px-6 py-4">Total Price</div>
-							<div className="px-6 py-4">3</div>
+							<div className="px-6 py-4">{totalSupplyPrice}</div>
 						</div>
 					</TabsBody>
 				)}
