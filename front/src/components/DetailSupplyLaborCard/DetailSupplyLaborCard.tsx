@@ -11,39 +11,7 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
 	currentPlot,
 }) => {
 	const [activeTab, setActiveTab] = useState("Insumos");
-	console.log(currentPlot);
-	const supplies = [
-		{
-			id: "123e4567-e89b-12d3-a456-426614174000",
-			name: "Supply 1",
-			provider: "Provider A",
-			stock: 100,
-			price: 200,
-			categoryId: "123e4567-e89b-12d3-a456-426614174001",
-			measurementId: "123e4567-e89b-12d3-a456-426614174002",
-			userId: "123e4567-e89b-12d3-a456-426614174003",
-		},
-		{
-			id: "123e4567-e89b-12d3-a456-426614174004",
-			name: "Supply 2",
-			provider: "Provider B",
-			stock: 50,
-			price: 150,
-			categoryId: "123e4567-e89b-12d3-a456-426614174005",
-			measurementId: "123e4567-e89b-12d3-a456-426614174006",
-			userId: "123e4567-e89b-12d3-a456-426614174007",
-		},
-		{
-			id: "123e4567-e89b-12d3-a456-426614174008",
-			name: "Supply 3",
-			provider: "Provider C",
-			stock: 200,
-			price: 300,
-			categoryId: "123e4567-e89b-12d3-a456-426614174009",
-			measurementId: "123e4567-e89b-12d3-a456-426614174010",
-			userId: "123e4567-e89b-12d3-a456-426614174011",
-		},
-	];
+
 	const calculateTotalPrice = (items: Labors[] | Supply[] | null): number => {
 		if (!items) return 0;
 		return items.reduce((total, item) => total + item.price, 0);
