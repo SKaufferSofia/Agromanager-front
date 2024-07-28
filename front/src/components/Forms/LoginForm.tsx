@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import useForm from "@/hooks/useForm";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import useUserData from "@/hooks/useUserData";
 import { PetitionLogin } from "@/lib/server/petitionUser";
 import { validateLogin } from "@/helpers/valitateLogin";
@@ -89,13 +90,28 @@ const LoginForm = () => {
               Contraseña
               {!loginData.password && <span className="text-red-500"> * </span>}
             </label>
-            <input
-              type="password"
-              name="password"
-              onChange={handleChange}
-              placeholder="Contraseña"
-              className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                onChange={handleChange}
+                placeholder="Contraseña"
+                className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+              />
+              <button type="button" onClick={handleOnclickPassword}>
+                {showPassword ? (
+                  <FaEye
+                    size={17}
+                    className="absolute right-3 top-5 -translate-y-1/2 text-textGreen"
+                  />
+                ) : (
+                  <FaEyeSlash
+                    size={17}
+                    className="absolute right-3 top-5 -translate-y-1/2  text-textColor"
+                  />
+                )}
+              </button>
+            </div>
           </div>
 
           <div className="mt-auto flex justify-center">
@@ -110,7 +126,7 @@ const LoginForm = () => {
             {!loginData.password && (
               <p className=" text-sm text-red-500 font-medium ">
                 {" "}
-                (*) All fields are required
+                (*) Todos los campos requeridos
               </p>
             )}
           </div>
