@@ -1,59 +1,16 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Tabs, TabsHeader, TabsBody, Tab } from "@material-tailwind/react";
-import axios from "axios";
-import { NEXT_PUBLIC_API_URL } from "@/lib/server/envs";
+import { IPlotsType, Labors } from "@/interfaces/interfaces";
 
 interface DetailSupplyLaborCardProps {
-	currentPlot: object;
+	currentPlot: IPlotsType;
 }
 const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
 	currentPlot,
 }) => {
 	const [activeTab, setActiveTab] = useState("Insumos");
-
-	console.log(currentPlot);
-	// useEffect(() => {
-	// 	const fetchData = async () => {
-	// 		try {
-	// 			const res = await axios.get(
-	// 				`${NEXT_PUBLIC_API_URL}/supplies/1`
-	// 			);
-	// 			console.log(res);
-	// 		} catch (error) {
-	// 			console.log("Error fetching:", error);
-	// 		}
-	// 	};
-	// 	fetchData();
-	// }, []);
-
-	const labors = [
-		{
-			id: "987e4567-e89b-12d3-a456-426614174000",
-			name: "Labor 1",
-			contractor: "Contractor A",
-			price: 500,
-			surface: 100,
-			plotId: "123e4567-e89b-12d3-a456-426614174012",
-		},
-		{
-			id: "987e4567-e89b-12d3-a456-426614174001",
-			name: "Labor 2",
-			contractor: "Contractor B",
-			price: 700,
-			surface: 200,
-			plotId: "123e4567-e89b-12d3-a456-426614174013",
-		},
-		{
-			id: "987e4567-e89b-12d3-a456-426614174002",
-			name: "Labor 3",
-			contractor: "Contractor C",
-			price: 900,
-			surface: 300,
-			plotId: "123e4567-e89b-12d3-a456-426614174014",
-		},
-	];
 
 	const supplies = [
 		{
@@ -87,12 +44,12 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
 			userId: "123e4567-e89b-12d3-a456-426614174011",
 		},
 	];
-	const calculateTotalPrice = (items: { price: number }[]): number => {
+	const calculateTotalPrice = (items: Labors[] | null): number => {
+		if (!items) return 0;
 		return items.reduce((total, item) => total + item.price, 0);
 	};
 
-	const totalSupplyPrice = calculateTotalPrice(supplies);
-	const totalLaborPrice = calculateTotalPrice(labors);
+	const totalLaborPrice = calculateTotalPrice(currentPlot.labors);
 	return (
 		<div className=" mt-8 ">
 			<Tabs value={activeTab}>
@@ -140,7 +97,7 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
 						))}
 						<div className="flex justify-end font-bold">
 							<div className="px-6 py-4">Total Price</div>
-							<div className="px-6 py-4">${totalSupplyPrice}</div>
+							<div className="px-6 py-4">3</div>
 						</div>
 					</TabsBody>
 				)}
@@ -153,21 +110,26 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
 							<div className="flex-1">Precio</div>
 						</div>
 						<div>
-							{labors.map((labor) => (
-								<div
-									className="flex justify-around p-4"
-									key={labor.id}
-								>
-									<div className="flex-1">{labor.name}</div>
-									<div className="flex-1">
-										{labor.contractor}
+							{currentPlot.labors &&
+								currentPlot.labors.map((labor) => (
+									<div
+										className="flex justify-around p-4"
+										key={labor.id}
+									>
+										<div className="flex-1">
+											{labor.name}
+										</div>
+										<div className="flex-1">
+											{labor.contractor}
+										</div>
+										<div className="flex-1">
+											{labor.surface}
+										</div>
+										<div className="flex-1">
+											${labor.price}
+										</div>
 									</div>
-									<div className="flex-1">
-										{labor.surface}
-									</div>
-									<div className="flex-1">${labor.price}</div>
-								</div>
-							))}
+								))}
 							<div className="flex font-bold justify-end">
 								<div className="px-6 py-4">Total Price</div>
 								<div className="px-6 py-4">

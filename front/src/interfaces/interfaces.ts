@@ -34,7 +34,7 @@ export interface IPlotsType {
   id: number;
   surface: string;
   cereal: string;
-  labors: string[] | null;
+  labors: Labors[] | null;
   supplies: Supply[] | "";
 }
 
