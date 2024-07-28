@@ -3,43 +3,38 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { NEXT_PUBLIC_API_URL } from "@/lib/server/envs";
+import { Category, Supply } from "@/interfaces/interfaces";
 
 const API_PUBLIC = NEXT_PUBLIC_API_URL;
 
 const AddSupplyInput: React.FC = () => {
 	// Mock data for categories and supplies
-	const [categories] = useState(["firstCat", "secondCat", "thirdCat"]);
-	const [supplies] = useState([
-		{ name: "firstSupply", category: "firstCat" },
-		{ name: "secondSupply", category: "firstCat" },
-		{ name: "thirdSupply", category: "secondCat" },
-		{ name: "fourthSupply", category: "secondCat" },
-		{ name: "fifthSupply", category: "thirdCat" },
-	]);
-
-	const [activeCategory, setActiveCategory] = useState("");
-	const [filteredSupplies, setFilteredSupplies] = useState(supplies);
+	const [categories, setCategories] = useState<Category[]>([]);
+	const [supplies, setSupplies] = useState<Supply[]>([]);
+	const [filteredSupplies, setFilteredSupplies] = useState<Supply[]>([]);
+	const [activeCategory, setActiveCategory] = useState<Category | null>(null);
 
 	// Redux selectors to get user ID and token
 	const userId = useSelector((state: any) => state.userData.id);
 	const token = useSelector((state: any) => state.token);
 
-	console.log(token, userId);
 	useEffect(() => {
 		const getSuppliesByUser = async () => {
-			try {
-				const response = await axios.get(
-					`${API_PUBLIC}/supplies/${userId}`,
-					{
-						headers: {
-							Authorization: `Bearer ${token}`,
-						},
-					}
-				);
-				const data = response.data;
-				console.log("Supplies from API:", data);
-			} catch (error) {
-				console.error("Error fetching supplies:", error);
+			if (userId && token) {
+				try {
+					const response = await axios.get(
+						`${API_PUBLIC}/supplies/${userId}`,
+						{
+							headers: {
+								Authorization: `Bearer ${token}`,
+							},
+						}
+					);
+					const data = response.data;
+					setSupplies(data);
+				} catch (error) {
+					console.error("Error fetching supplies:", error);
+				}
 			}
 		};
 
@@ -49,11 +44,14 @@ const AddSupplyInput: React.FC = () => {
 	const handleCategoryChange = (
 		event: React.ChangeEvent<HTMLSelectElement>
 	) => {
-		const selectedCategory = event.target.value;
+		const selectedCategoryId = event.target.value;
+		const selectedCategory =
+			categories.find((category) => category.id === selectedCategoryId) ||
+			null;
 		setActiveCategory(selectedCategory);
 		if (selectedCategory) {
 			const suppliesByCategory = supplies.filter(
-				(supply) => supply.category === selectedCategory
+				(supply) => supply.category.id === selectedCategory.id
 			);
 			setFilteredSupplies(suppliesByCategory);
 		} else {
@@ -72,14 +70,15 @@ const AddSupplyInput: React.FC = () => {
 						name="supplyId"
 						className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
 						onChange={handleCategoryChange}
-						value={activeCategory}
+						value={activeCategory ? activeCategory.id : ""}
 					>
 						<option value="">Selecciona una categoría</option>
-						{categories.map((category, index) => (
-							<option key={index} value={category}>
-								{category}
-							</option>
-						))}
+						{categories &&
+							categories.map((category) => (
+								<option key={category.id} value={category.id}>
+									{category.name}
+								</option>
+							))}
 					</select>
 				</div>
 				<div className="flex-1 mx-2">
@@ -93,11 +92,12 @@ const AddSupplyInput: React.FC = () => {
 						<option value="" disabled>
 							Selecciona un insumo
 						</option>
-						{filteredSupplies.map((supply, index) => (
-							<option key={index} value={supply.name}>
-								{supply.name}
-							</option>
-						))}
+						{filteredSupplies &&
+							filteredSupplies.map((supply) => (
+								<option key={supply.id} value={supply.id}>
+									{supply.name}
+								</option>
+							))}
 					</select>
 				</div>
 				<div className="flex-1 mx-2">

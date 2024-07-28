@@ -11,8 +11,7 @@ import { IPlotsType } from "@/interfaces/interfaces";
 const PlotDetailDashboard: React.FC = () => {
 	const plot = useSelector((state: any) => state.plot);
 	const plotId = plot.map((plot: IPlotsType) => plot.id);
-	console.log(plotId);
-	console.log(plot);
+
 	return (
 		<div className=" w-screen h-full flex flex-col sm:flex-row">
 			<div className="w-1/6 mt-24 h-min-screen  bg-sideNavbarColor bg-opacity-20 ">
