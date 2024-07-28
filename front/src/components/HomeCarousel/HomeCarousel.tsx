@@ -10,23 +10,23 @@ const HomeCarousel: React.FC = () => {
     {
       src: "/CarouselHome/img-1.avif",
       alt: "image 1",
-      title: "Titulo 1",
+      title: "Gestión de Lotes Eficiente",
       describe:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatu culpa esse dolore mollitia ratione, excepturi autem error quasi, quibusdam quo ea aspernatur dolorem sequi, nam id impedit. Laboriosam, at dolore.",
+        "Optimiza y controla tus lotes agrícolas con nuestra plataforma avanzada. Lleva un seguimiento detallado de tus cultivos, desde la siembra hasta la cosecha.",
     },
     {
       src: "/CarouselHome/img-2.avif",
       alt: "image 2",
-      title: "Titulo 2",
+      title: "Organización de Labores",
       describe:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatu culpa esse dolore mollitia ratione, excepturi autem error quasi, quibusdam quo ea aspernatur dolorem sequi, nam id impedit. Laboriosam, at dolore.",
+        "Planifica y gestiona todas tus actividades agrícolas. Asigna tareas, monitoriza el progreso y asegúrate de que cada labor se realiza a tiempo.",
     },
     {
       src: "/CarouselHome/img-3.avif",
       alt: "image 3",
-      title: "Titulo 3",
+      title: "Administración de Insumos",
       describe:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatu culpa esse dolore mollitia ratione, excepturi autem error quasi, quibusdam quo ea aspernatur dolorem sequi, nam id impedit. Laboriosam, at dolore.",
+        "Mantén un inventario actualizado de todos tus insumos agrícolas. Gestiona eficientemente el uso de fertilizantes, pesticidas y otros recursos esenciales.",
     },
   ];
 
@@ -66,7 +66,7 @@ const HomeCarousel: React.FC = () => {
           />
           <div className="absolute top-0 right-0 h-[calc(84vh)] w-[40%] grid place-items-center bg-white/60">
             <div className="w-2/4 text-center md:w-3/4">
-              <h1 className="mb-4 text-3xl md:text-4xl lg:text-5xl  text-textColor font-bold">
+              <h1 className="mb-4 text-3xl md:text-4xl lg:text-5xl text-textColor font-bold">
                 {itemCarousel.title}
               </h1>
               <p className="mb-12 opacity-80">{itemCarousel.describe}</p>
