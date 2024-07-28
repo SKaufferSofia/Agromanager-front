@@ -90,7 +90,7 @@ const AddSupplyInput: React.FC = () => {
 						name="plotId"
 						className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
 					>
-						<option value="" disabled selected>
+						<option value="" disabled>
 							Selecciona un insumo
 						</option>
 						{filteredSupplies.map((supply, index) => (
