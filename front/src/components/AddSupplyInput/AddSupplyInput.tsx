@@ -1,5 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { NEXT_PUBLIC_API_URL } from "@/lib/server/envs";
+
+const API_PUBLIC = NEXT_PUBLIC_API_URL;
 
 const AddSupplyInput: React.FC = () => {
 	// Mock data for categories and supplies
@@ -14,6 +19,32 @@ const AddSupplyInput: React.FC = () => {
 
 	const [activeCategory, setActiveCategory] = useState("");
 	const [filteredSupplies, setFilteredSupplies] = useState(supplies);
+
+	// Redux selectors to get user ID and token
+	const userId = useSelector((state: any) => state.userData.id);
+	const token = useSelector((state: any) => state.token);
+
+	console.log(token, userId);
+	useEffect(() => {
+		const getSuppliesByUser = async () => {
+			try {
+				const response = await axios.get(
+					`${API_PUBLIC}/supplies/${userId}`,
+					{
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+					}
+				);
+				const data = response.data;
+				console.log("Supplies from API:", data);
+			} catch (error) {
+				console.error("Error fetching supplies:", error);
+			}
+		};
+
+		getSuppliesByUser();
+	}, [userId, token]);
 
 	const handleCategoryChange = (
 		event: React.ChangeEvent<HTMLSelectElement>
