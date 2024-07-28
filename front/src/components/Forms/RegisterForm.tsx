@@ -3,6 +3,7 @@ import React from "react";
 import { validateRegister } from "@/helpers/validateRegister";
 import { petitionRegister } from "@/lib/server/petitionUser";
 import { useRouter } from "next/navigation";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import useForm from "@/hooks/useForm";
 
 const RegisterForm = () => {
@@ -90,6 +91,7 @@ const RegisterForm = () => {
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Teléfono
+              {!regiterData.phone && <span className="text-red-500"> * </span>}
             </label>
             <input
               type="text"
@@ -129,6 +131,9 @@ const RegisterForm = () => {
               placeholder="E-mail"
               className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
             />
+            {errorRegister.email && (
+              <p className="text-red-500 text-xs mt-1">{errorRegister.email}</p>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
@@ -137,14 +142,36 @@ const RegisterForm = () => {
                 <span className="text-red-500"> * </span>
               )}
             </label>
-            <input
-              type="password"
-              name="password"
-              value={regiterData.password}
-              onChange={handleChange}
-              placeholder="Contraseña"
-              className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={regiterData.password}
+                onChange={handleChange}
+                placeholder="Contraseña"
+                className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+              />
+              <button type="button" onClick={handleOnClickShowPassword}>
+                {showPassword ? (
+                  <FaEye
+                    size={17}
+                    className="absolute right-3 top-5 -translate-y-1/2 text-textGreen"
+                  />
+                ) : (
+                  <FaEyeSlash
+                    size={17}
+                    className="absolute right-3 top-5 -translate-y-1/2  text-textColor"
+                  />
+                )}
+              </button>
+              <div className="-mt-4">
+                {errorRegister.password && (
+                  <p className="text-red-500 text-xs font-medium">
+                    {errorRegister.password}
+                  </p>
+                )}
+              </div>
+            </div>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
@@ -153,14 +180,36 @@ const RegisterForm = () => {
                 <span className="text-red-500"> * </span>
               )}
             </label>
-            <input
-              type="password"
-              name="confirmPassword"
-              value={regiterData.confirmPassword}
-              onChange={handleChange}
-              placeholder="Confirmar contraseña"
-              className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-            />
+            <div className="relative">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                name="confirmPassword"
+                value={regiterData.confirmPassword}
+                onChange={handleChange}
+                placeholder="Confirmar contraseña"
+                className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+              />
+              <button type="button" onClick={handleOnClickShowConfirmPassword}>
+                {showConfirmPassword ? (
+                  <FaEye
+                    size={17}
+                    className="absolute right-3 top-5 -translate-y-1/2 text-textGreen"
+                  />
+                ) : (
+                  <FaEyeSlash
+                    size={17}
+                    className="absolute right-3 top-5 -translate-y-1/2  text-textColor"
+                  />
+                )}
+              </button>
+              <div className="-mt-4">
+                {errorRegister.confirmPassword && (
+                  <p className="text-red-500 text-xs font-medium">
+                    {errorRegister.confirmPassword}
+                  </p>
+                )}
+              </div>
+            </div>
           </div>
           <div className="mt-5">
             {!regiterData.confirmPassword && (
