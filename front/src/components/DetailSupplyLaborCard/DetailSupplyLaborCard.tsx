@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Tabs, TabsHeader, TabsBody, Tab } from "@material-tailwind/react";
 import axios from "axios";
 import { NEXT_PUBLIC_API_URL } from "@/lib/server/envs";
@@ -11,7 +11,7 @@ interface DetailSupplyLaborCardProps {
 const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
 	currentPlot,
 }) => {
-	const [activeTab, setActiveTab] = React.useState("html");
+	const [activeTab, setActiveTab] = useState("Insumos");
 
 	console.log(currentPlot);
 	// useEffect(() => {
