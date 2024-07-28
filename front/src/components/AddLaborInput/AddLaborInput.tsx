@@ -1,10 +1,13 @@
 "use client";
 
-import React from "react";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { NEXT_PUBLIC_API_URL } from "@/lib/server/envs";
+import { updateLabors } from "@/redux/reducer";
+import useDataPlot from "@/hooks/useDataPlot";
+import { RootState } from "@/redux/store";
+import { Labors } from "@/interfaces/interfaces";
 
 interface AddLaborInputProps {
   plotId: string;
@@ -15,7 +18,11 @@ const AddLaborInput: React.FC<AddLaborInputProps> = ({ plotId }) => {
   const [contractor, setContractor] = useState("");
   const [price, setPrice] = useState("");
   const [surface, setSurface] = useState("");
-  const token = useSelector((state: any) => state.token);
+  const token = useSelector((state: RootState) => state.token);
+  const plots = useSelector((state: RootState) => state.plot);
+
+  const dispatch = useDispatch();
+  const { updatePlotsStorage } = useDataPlot();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -37,10 +44,14 @@ const AddLaborInput: React.FC<AddLaborInputProps> = ({ plotId }) => {
           },
         }
       );
+      const updatedLabors: Labors[] = response.data.labors;
+      dispatch(updateLabors({ plotId, labors: updatedLabors }));
+      updatePlotsStorage(plotId, updatedLabors);
     } catch (error) {
       console.error("Error creating labor:", error);
     }
   };
+
   return (
     <div>
       <form className="flex" onSubmit={handleSubmit}>

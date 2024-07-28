@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { usePathname } from "next/navigation";
 
 import { IPlotsType } from "@/interfaces/interfaces";
+import MainButton from "@/components/MainButton/MainButton";
 
 const PlotDetailDashboard: React.FC = () => {
   // Parse path (URL) to get plot ID
@@ -51,6 +52,9 @@ const PlotDetailDashboard: React.FC = () => {
         </div>
         <div className=" bg-altBgColor">
           <DetailSupplyLaborCard currentPlot={currentPlot} />
+        </div>
+        <div className="p-9">
+          <MainButton text="Ver Lotes" path="/dashboard/plots" />
         </div>
       </div>
     </div>

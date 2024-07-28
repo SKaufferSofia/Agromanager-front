@@ -1,10 +1,15 @@
-import { IPlotsType } from "@/interfaces/interfaces";
-import { IInitialState } from "@/interfaces/interfacesRedux";
+import { IPlotsType, Labors } from "@/interfaces/interfaces";
 import { IUser } from "@/interfaces/interfacesUser";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "@reduxjs/toolkit/query";
 
-const initialState: IInitialState = {
+interface InitialState {
+  isLoggin: boolean;
+  token: string;
+  userData: IUser;
+  plot: IPlotsType[];
+}
+
+const initialState: InitialState = {
   isLoggin: false,
   token: "",
   userData: {
@@ -35,15 +40,29 @@ export const someSlice = createSlice({
     },
     savePlot: (state, action: PayloadAction<IPlotsType[]>) => {
       state.plot = action.payload;
-      console.log(action.payload);
     },
     addPlot: (state, action: PayloadAction<IPlotsType>) => {
       state.plot.push(action.payload);
-      console.log(action.payload);
+    },
+    updateLabors: (
+      state,
+      action: PayloadAction<{ plotId: string; labors: Labors[] }>
+    ) => {
+      const { plotId, labors } = action.payload;
+      const plot = state.plot.find((plot) => plot.id === plotId);
+      if (plot) {
+        plot.labors = labors;
+      }
     },
   },
 });
 
-export const { signIn, saveToken, saveUserData, savePlot, addPlot } =
-  someSlice.actions;
+export const {
+  signIn,
+  saveToken,
+  saveUserData,
+  savePlot,
+  addPlot,
+  updateLabors,
+} = someSlice.actions;
 export default someSlice.reducer;

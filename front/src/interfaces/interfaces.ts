@@ -31,7 +31,7 @@ export interface ISupplyEditForm {
 }
 
 export interface IPlotsType {
-  id: number;
+  id: string;
   surface: string;
   cereal: string;
   labors: Labors[] | null;
