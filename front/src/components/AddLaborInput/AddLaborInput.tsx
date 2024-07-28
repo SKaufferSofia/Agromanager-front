@@ -37,8 +37,6 @@ const AddLaborInput: React.FC<AddLaborInputProps> = ({ plotId }) => {
 					},
 				}
 			);
-
-			console.log(response.data);
 		} catch (error) {
 			console.error("Error creating labor:", error);
 		}
