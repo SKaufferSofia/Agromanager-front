@@ -38,6 +38,8 @@ const AddSupplyInput: React.FC = () => {
 			}
 		};
 
+		// TODO: Once The add/fetch logic is completed, I'll add the category detection logic here
+
 		getSuppliesByUser();
 	}, [userId, token]);
 
