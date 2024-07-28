@@ -78,7 +78,7 @@ const NavbarComponent: React.FC = () => {
       <li>
         <a
           href="/contact"
-          className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:scale-105 md:hover:ease-in-out md:p-0"
+          className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 lg:hover:scale-105 lg:hover:ease-in-out md:p-0"
         >
           CONTACTO
         </a>
@@ -102,7 +102,7 @@ const NavbarComponent: React.FC = () => {
             />
           </a>
           <div className="flex items-center gap-4">
-            <div className="mr-80">{navList}</div>
+            <div className="mr-72 hidden lg:block ">{navList}</div>
             <div className="flex items-center gap-x-10">
               <a href="/login">
                 <p className="text-white hidden  lg:inline-block  md:hover:scale-105 md:hover:ease-in-out md:p-0">
@@ -117,7 +117,7 @@ const NavbarComponent: React.FC = () => {
             </div>
             <IconButton
               variant="text"
-              className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
+              className="ml-auto h-6 w-6 text-inherit hover:bg-navbarGreen focus:bg-transparent active:bg-navbarGreen lg:hidden"
               ripple={false}
               onClick={() => setOpenNav(!openNav)}
             >
@@ -156,17 +156,13 @@ const NavbarComponent: React.FC = () => {
         </div>
         <MobileNav open={openNav}>
           {navList}
-          <div className="flex items-center gap-x-10">
-            <a href="/login">
-              <p className="text-white md:hover:scale-105 md:hover:ease-in-out md:p-0">
-                INICIAR SESIÓN
-              </p>
-            </a>
-            <a href="/register">
-              <p className="text-white md:hover:scale-105 md:hover:ease-in-out md:p-0">
-                REGISTRARSE
-              </p>
-            </a>
+          <div className="flex items-center gap-x-1">
+            <Button fullWidth variant="text" size="sm" className="">
+              <span>Log In</span>
+            </Button>
+            <Button fullWidth variant="gradient" size="sm" className="">
+              <span>Sign in</span>
+            </Button>
           </div>
         </MobileNav>
       </Navbar>
@@ -191,7 +187,31 @@ export default NavbarComponent;
 //         </a>
 //         <div className="hidden w-full md:block md:w-auto md:ml-8">
 //           <ul className="font-medium flex flex-col p-4 md:p-0  md:flex-row md:space-x-8 md:mt-0 md:border-0">
-//
+// <li>
+//   <a
+//     href="/home"
+//     className="block py-2 px-3 text-white rounded md:bg-transparent md:hover:scale-105 md:hover:ease-in-out md:p-0"
+//     aria-current="page"
+//   >
+//     INICIO
+//   </a>
+// </li>
+// <li>
+//   <a
+//     href="/about"
+//     className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:scale-105 md:hover:ease-in-out md:p-0"
+//   >
+//     SOBRE NOSOTROS
+//   </a>
+// </li>
+// <li>
+//   <a
+//     href="/contact"
+//     className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:scale-105 md:hover:ease-in-out md:p-0"
+//   >
+//     CONTACTO
+//   </a>
+// </li>
 //           </ul>
 //         </div>
 //         <div className="font-medium flex flex-col p-4 md:p-8 md:flex-row md:space-x-8">
