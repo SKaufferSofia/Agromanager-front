@@ -34,8 +34,8 @@ export interface IPlotsType {
   id: number;
   surface: string;
   cereal: string;
-  labors: string[] | null;
-  supplies: Supply[] | "";
+  labors: Labors[] | null;
+  supplies: Supply[] | null;
 }
 
 export interface Labors {
@@ -55,8 +55,8 @@ export interface PlotDetailCardProps {
   id: number;
   surface: string;
   cereal: string;
-  labors: string[] | null;
-  supplies?: Supply[] | "";
+  labors: Labors[] | null;
+  supplies?: Supply[] | null;
 }
 
 export interface PlotPanelProps {

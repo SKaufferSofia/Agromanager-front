@@ -2,24 +2,26 @@
 
 import React from "react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
+import { NEXT_PUBLIC_API_URL } from "@/lib/server/envs";
 
-const AddLaborInput: React.FC = () => {
+interface AddLaborInputProps {
+	plotId: string;
+}
+
+const AddLaborInput: React.FC<AddLaborInputProps> = ({ plotId }) => {
 	const [name, setName] = useState("");
 	const [contractor, setContractor] = useState("");
 	const [price, setPrice] = useState("");
 	const [surface, setSurface] = useState("");
-	const plotId = 20;
+	const token = useSelector((state: any) => state.token);
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
-		console.log("Nombre del Labor:", name);
-		console.log("Contratista:", contractor);
-		console.log("Precio:", price);
-		console.log("Superficie:", surface);
 		try {
 			const response = await axios.post(
-				"http://localhost:3001/plots/addLabor",
+				`${NEXT_PUBLIC_API_URL}/plots/addLabor`,
 				{
 					labor: {
 						name,
@@ -27,11 +29,14 @@ const AddLaborInput: React.FC = () => {
 						price: parseFloat(price),
 						surface: parseFloat(surface),
 					},
-					plotId,
+					plotId: plotId,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
 				}
 			);
-
-			console.log(response.data);
 		} catch (error) {
 			console.error("Error creating labor:", error);
 		}
