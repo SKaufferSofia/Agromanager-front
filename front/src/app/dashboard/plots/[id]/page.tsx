@@ -52,7 +52,7 @@ const PlotDetailDashboard: React.FC = () => {
 					<AddSupplyInput />
 				</div>
 				<div className=" bg-altBgColor">
-					<DetailSupplyLaborCard />
+					<DetailSupplyLaborCard currentPlot={currentPlot} />
 				</div>
 			</div>
 		</div>

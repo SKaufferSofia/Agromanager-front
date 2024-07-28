@@ -16,7 +16,6 @@ const AddLaborInput: React.FC<AddLaborInputProps> = ({ plotId }) => {
 	const [price, setPrice] = useState("");
 	const [surface, setSurface] = useState("");
 	const token = useSelector((state: any) => state.token);
-	console.log(plotId);
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();

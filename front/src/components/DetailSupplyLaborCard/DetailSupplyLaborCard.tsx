@@ -3,14 +3,23 @@
 import React, { useEffect } from "react";
 import { Tabs, TabsHeader, TabsBody, Tab } from "@material-tailwind/react";
 import axios from "axios";
+import { NEXT_PUBLIC_API_URL } from "@/lib/server/envs";
 
-const DetailSupplyLaborCard = () => {
+interface DetailSupplyLaborCardProps {
+	currentPlot: object;
+}
+const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
+	currentPlot,
+}) => {
 	const [activeTab, setActiveTab] = React.useState("html");
 
+	console.log(currentPlot);
 	// useEffect(() => {
 	// 	const fetchData = async () => {
 	// 		try {
-	// 			const res = await axios.get("http://localhost:4000/supplies/1");
+	// 			const res = await axios.get(
+	// 				`${NEXT_PUBLIC_API_URL}/supplies/1`
+	// 			);
 	// 			console.log(res);
 	// 		} catch (error) {
 	// 			console.log("Error fetching:", error);
