@@ -7,7 +7,7 @@ const ContactForm: React.FC = () => {
         <h2 className="text-4xl text-textColor font-semibold mb-4 text-center">
           Contáctanos
         </h2>
-        <h3 className="text-xl text-textColor font-semibold mb-4 text-center">
+        <h3 className="text-md text-textColor font-medium mb-4 text-center">
           Envíanos tu mensaje y te responderemos a la brevedad
         </h3>
         <form className="space-y-5 flex flex-col h-full">
