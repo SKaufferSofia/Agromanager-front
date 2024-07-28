@@ -10,7 +10,7 @@ interface DetailSupplyLaborCardProps {
 const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
 	currentPlot,
 }) => {
-	const [activeTab, setActiveTab] = useState("Insumos");
+	const [activeTab, setActiveTab] = useState("Labores");
 
 	const calculateTotalPrice = (items: Labors[] | Supply[] | null): number => {
 		if (!items) return 0;
