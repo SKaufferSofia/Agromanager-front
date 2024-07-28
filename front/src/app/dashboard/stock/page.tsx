@@ -15,9 +15,7 @@ const StockDashboard: React.FC = () => {
   const dispatch = useDispatch();
 
   const userId = useSelector((state: any) => state.userData.id);
-  console.log("User ID:", userId);
   const token = useSelector((state: any) => state.token);
-  console.log("Token:", token);
   const [plots, setPlots] = useState<IPlotsType[]>([]);
   const [supplies, setSupplies] = useState<Supply[]>([]);
 
@@ -27,7 +25,6 @@ const StockDashboard: React.FC = () => {
         try {
           const fetchedSupplies = await fetchSupplies(userId, token);
           setSupplies(fetchedSupplies);
-          console.log("Fetched supplies:", fetchedSupplies);
         } catch (error) {
           console.error("Error fetching supplies:", error);
         }
@@ -45,7 +42,6 @@ const StockDashboard: React.FC = () => {
             dispatch(savePlot(plots));
           });
           setPlots(fetchedPlots);
-          console.log("Fetched plots:", fetchedPlots);
         } catch (error) {
           console.error("Error fetching plots:", error);
         }
@@ -53,7 +49,7 @@ const StockDashboard: React.FC = () => {
     };
 
     getPlots();
-  }, [userId, token]);
+  }, [userId, token, dispatch]);
 
   return (
     <div className="w-screen h-full flex flex-col sm:flex-row">

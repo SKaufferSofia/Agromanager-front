@@ -27,12 +27,10 @@ const PlotPanel: React.FC<PlotPanelProps> = ({ plots, setPlots }) => {
     }
 
     const newPlot = { cereal, surface };
-    console.log("Creating plot:", newPlot);
 
     try {
       const createdPlot = await createPlot(newPlot, userId, token);
       if (createdPlot) {
-        console.log("Plot creado:", createdPlot);
         setPlots((prevPlots) => [...prevPlots, createdPlot]);
         setCereal("");
         setSurface("");

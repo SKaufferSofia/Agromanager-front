@@ -1,4 +1,4 @@
-import { IPlotsType, SaveDataPlot } from "@/interfaces/interfaces";
+import { AddDataPlot, IPlotsType, SaveDataPlot } from "@/interfaces/interfaces";
 import { NEXT_PUBLIC_API_URL } from "./envs";
 import axios from "axios";
 
@@ -14,7 +14,6 @@ export const fetchPlots = async (
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log("Response:", response.data);
     savePlot(response.data);
     return response.data;
   } catch (error) {

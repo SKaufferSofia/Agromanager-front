@@ -1,6 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { IPlotsType } from "@/interfaces/interfaces";
+import { IInitialState } from "@/interfaces/interfacesRedux";
+import { IUser } from "@/interfaces/interfacesUser";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "@reduxjs/toolkit/query";
 
-const initialState = {
+const initialState: IInitialState = {
   isLoggin: false,
   token: "",
   userData: {
@@ -20,16 +24,16 @@ export const someSlice = createSlice({
   name: "some",
   initialState,
   reducers: {
-    signIn: (state, action) => {
+    signIn: (state, action: PayloadAction<boolean>) => {
       state.isLoggin = action.payload;
     },
-    saveToken: (state, action) => {
+    saveToken: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
     },
-    saveUserData: (state, action) => {
+    saveUserData: (state, action: PayloadAction<IUser>) => {
       state.userData = action.payload;
     },
-    savePlot: (state, action) => {
+    savePlot: (state, action: PayloadAction<IPlotsType[]>) => {
       console.log(action.payload);
       state.plot = action.payload;
     },

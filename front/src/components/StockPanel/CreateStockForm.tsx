@@ -45,8 +45,6 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
 
       const newSupplyResponse = await createSupply(userId, newSupply, token);
       const createdSupplyId = newSupplyResponse.id;
-      console.log("New Supply Response:", newSupplyResponse);
-      console.log("Supply ID:", createdSupplyId);
 
       // Subir la imagen si existe
       if (imgFile) {
@@ -54,7 +52,6 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
           imgFile,
           createdSupplyId
         );
-        console.log("Upload Response:", uploadResponse);
 
         // Actualizar el suministro con la URL de la imagen
         const updatedSupply = {
@@ -64,7 +61,6 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
 
         // Aquí deberías enviar una solicitud para actualizar el suministro con la URL de la imagen
         // Si tu API ya actualiza el suministro automáticamente, este paso puede ser opcional
-        console.log("Updated Supply with Image URL:", updatedSupply);
       }
 
       // Restablecer el estado

@@ -10,9 +10,7 @@ import { savePlot } from "@/redux/reducer";
 const PlotDashboard: React.FC = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state: any) => state.userData.id);
-  console.log("User ID:", userId);
   const token = useSelector((state: any) => state.token);
-  console.log("Token:", token);
   const [plots, setPlots] = useState<IPlotsType[]>([]);
 
   useEffect(() => {
@@ -23,7 +21,6 @@ const PlotDashboard: React.FC = () => {
             dispatch(savePlot(plots));
           });
           setPlots(fetchedPlots);
-          console.log("Fetched plots:", fetchedPlots);
         } catch (error) {
           console.error("Error fetching plots:", error);
         }
@@ -31,9 +28,7 @@ const PlotDashboard: React.FC = () => {
     };
 
     getPlots();
-  }, [userId, token]);
-
-  console.log(plots);
+  }, [userId, token, dispatch]);
 
   return (
     <div className="w-screen h-full flex flex-col sm:flex-row">

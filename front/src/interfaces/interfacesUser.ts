@@ -4,7 +4,7 @@ export interface IUser {
   surname: string;
   placeName: string;
   email: string;
-  phone?: number;
+  phone?: string;
   roles: IRoles[];
   active: boolean;
 }
