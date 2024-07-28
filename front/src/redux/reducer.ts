@@ -34,11 +34,16 @@ export const someSlice = createSlice({
       state.userData = action.payload;
     },
     savePlot: (state, action: PayloadAction<IPlotsType[]>) => {
-      console.log(action.payload);
       state.plot = action.payload;
+      console.log(action.payload);
+    },
+    addPlot: (state, action: PayloadAction<IPlotsType>) => {
+      state.plot.push(action.payload);
+      console.log(action.payload);
     },
   },
 });
 
-export const { signIn, saveToken, saveUserData, savePlot } = someSlice.actions;
+export const { signIn, saveToken, saveUserData, savePlot, addPlot } =
+  someSlice.actions;
 export default someSlice.reducer;

@@ -10,9 +10,11 @@ import { fetchSupplies } from "@/lib/server/petitionStock";
 import { fetchPlots } from "@/lib/server/petitionPlots";
 import { useDispatch } from "react-redux";
 import { savePlot } from "@/redux/reducer";
+import useDataPlot from "@/hooks/useDataPlot";
 
 const StockDashboard: React.FC = () => {
   const dispatch = useDispatch();
+  const { savePlotsStorage } = useDataPlot();
 
   const userId = useSelector((state: any) => state.userData.id);
   const token = useSelector((state: any) => state.token);
@@ -40,6 +42,7 @@ const StockDashboard: React.FC = () => {
         try {
           const fetchedPlots = await fetchPlots(userId, token, (plots) => {
             dispatch(savePlot(plots));
+            savePlotsStorage(plots);
           });
           setPlots(fetchedPlots);
         } catch (error) {

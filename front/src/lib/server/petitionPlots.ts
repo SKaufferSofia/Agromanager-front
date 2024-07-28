@@ -24,7 +24,8 @@ export const fetchPlots = async (
 export const createPlot = async (
   plot: { surface: string; cereal: string },
   userId: string,
-  token: string
+  token: string,
+  savePlot: AddDataPlot
 ): Promise<IPlotsType | void> => {
   try {
     const response = await axios.post(
@@ -38,6 +39,8 @@ export const createPlot = async (
     );
 
     const data = response.data;
+
+    savePlot(data);
 
     if (data && data.id && data.cereal && data.surface) {
       return {

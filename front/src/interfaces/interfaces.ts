@@ -84,3 +84,4 @@ export interface StockTableProps {
 }
 
 export type SaveDataPlot = (arg: IPlotsType[]) => void;
+export type AddDataPlot = (arg: IPlotsType) => void;
