@@ -8,36 +8,50 @@ const SuscribeCardHome: React.FC = () => {
   const suscribes = [
     {
       id: 1,
-      title: "Suscripcion gratuita",
+      title: "Suscripción gratuita",
       price: 0,
       unid: "mo",
-      describe: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+      describe:
+        "Accede a las funcionalidades básicas de la aplicación sin costo alguno.",
     },
     {
       id: 2,
-      title: "Suscripcion por mes",
+      title: "Suscripción mensual",
       price: 10,
       unid: "mo",
-      describe: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+      describe:
+        "Disfruta de todas las funcionalidades premium por un precio accesible cada mes.",
     },
     {
       id: 3,
-      title: "Suscripcion anual",
+      title: "Suscripción anual",
       price: 30,
-      unid: "mo",
-      describe: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+      unid: "yr",
+      describe:
+        "Ahorra más con nuestra suscripción anual y accede a todas las funciones premium.",
     },
   ];
 
   return (
-    <div className="grid grid-cols-3 gap-x-20 gap-y-10">
-      {suscribes.map((suscribe) => (
-        <div key={suscribe.id}>
-          <SuscribeCardListHome suscribe={suscribe} />
+    <div className="px-10 py-8">
+      <div className="mb-8 text-center">
+        <h2 className="text-3xl font-bold text-textColor">
+          Planes de Suscripción
+        </h2>
+        <p className="text-lg text-opacity-80">
+          Elige el plan que mejor se adapte a tus necesidades y comienza a
+          gestionar tus lotes de manera más eficiente.
+        </p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-x-20 gap-y-10 mt-12">
+        {suscribes.map((suscribe) => (
+          <div key={suscribe.id}>
+            <SuscribeCardListHome suscribe={suscribe} />
+          </div>
+        ))}
+        <div className="col-span-1 md:col-span-3 text-center">
+          <MainButton text="Suscribirse" path="/login" />
         </div>
-      ))}
-      <div className="col-span-3">
-        <MainButton text="Suscribirse" path="/login" />
       </div>
     </div>
   );
