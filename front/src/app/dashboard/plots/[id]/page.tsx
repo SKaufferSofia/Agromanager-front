@@ -6,11 +6,17 @@ import AddLaborInput from "@/components/AddLaborInput/AddLaborInput";
 import DetailSupplyLaborCard from "@/components/DetailSupplyLaborCard/DetailSupplyLaborCard";
 import SideNavbar from "@/components/Navbar/sideNavbar";
 import { useSelector } from "react-redux";
+import { usePathname } from "next/navigation";
+
 import { IPlotsType } from "@/interfaces/interfaces";
 
 const PlotDetailDashboard: React.FC = () => {
 	const plot = useSelector((state: any) => state.plot);
 	const plotId = plot.map((plot: IPlotsType) => plot.id);
+
+	// Parse path (URL) to get plot ID
+	const splitPath = usePathname().split("/");
+	const idFromPath = splitPath[splitPath.length - 1];
 
 	return (
 		<div className=" w-screen h-full flex flex-col sm:flex-row">
