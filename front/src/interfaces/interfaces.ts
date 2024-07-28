@@ -31,7 +31,7 @@ export interface ISupplyEditForm {
 }
 
 export interface IPlotsType {
-  id: number;
+  id: string;
   surface: string;
   cereal: string;
   labors: Labors[] | null;
@@ -84,3 +84,4 @@ export interface StockTableProps {
 }
 
 export type SaveDataPlot = (arg: IPlotsType[]) => void;
+export type AddDataPlot = (arg: IPlotsType) => void;

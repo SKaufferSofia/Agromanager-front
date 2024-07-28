@@ -1,4 +1,4 @@
-import { IPlotsType, SaveDataPlot } from "@/interfaces/interfaces";
+import { AddDataPlot, IPlotsType, SaveDataPlot } from "@/interfaces/interfaces";
 import { NEXT_PUBLIC_API_URL } from "./envs";
 import axios from "axios";
 
@@ -14,7 +14,6 @@ export const fetchPlots = async (
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log("Response:", response.data);
     savePlot(response.data);
     return response.data;
   } catch (error) {
@@ -25,7 +24,8 @@ export const fetchPlots = async (
 export const createPlot = async (
   plot: { surface: string; cereal: string },
   userId: string,
-  token: string
+  token: string,
+  savePlot: AddDataPlot
 ): Promise<IPlotsType | void> => {
   try {
     const response = await axios.post(
@@ -39,6 +39,8 @@ export const createPlot = async (
     );
 
     const data = response.data;
+
+    savePlot(data);
 
     if (data && data.id && data.cereal && data.surface) {
       return {

@@ -3,8 +3,15 @@ import { IPlotsType, PlotPanelProps } from "@/interfaces/interfaces";
 import PlotDetailCard from "./PlotDetailCard/PlotDetailCard";
 import { useSelector } from "react-redux";
 import { createPlot } from "@/lib/server/petitionPlots";
+import { useDispatch } from "react-redux";
+import { addPlot } from "@/redux/reducer";
+import useDataPlot from "@/hooks/useDataPlot";
 
 const PlotPanel: React.FC<PlotPanelProps> = ({ plots, setPlots }) => {
+  const dispatch = useDispatch();
+
+  const { addPlotsStorage } = useDataPlot();
+
   const [cereal, setCereal] = useState("");
   const [surface, setSurface] = useState("");
 
@@ -27,12 +34,13 @@ const PlotPanel: React.FC<PlotPanelProps> = ({ plots, setPlots }) => {
     }
 
     const newPlot = { cereal, surface };
-    console.log("Creating plot:", newPlot);
 
     try {
-      const createdPlot = await createPlot(newPlot, userId, token);
+      const createdPlot = await createPlot(newPlot, userId, token, (data) => {
+        dispatch(addPlot(data));
+        addPlotsStorage(data);
+      });
       if (createdPlot) {
-        console.log("Plot creado:", createdPlot);
         setPlots((prevPlots) => [...prevPlots, createdPlot]);
         setCereal("");
         setSurface("");
@@ -82,7 +90,7 @@ const PlotPanel: React.FC<PlotPanelProps> = ({ plots, setPlots }) => {
         {plots.map((plot: IPlotsType) => (
           <PlotDetailCard
             key={plot.id}
-            id={plot.id}
+            id={Number(plot.id)}
             surface={plot.surface}
             cereal={plot.cereal}
             labors={plot.labors}

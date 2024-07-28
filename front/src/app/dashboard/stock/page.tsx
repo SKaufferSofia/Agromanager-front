@@ -10,14 +10,14 @@ import { fetchSupplies } from "@/lib/server/petitionStock";
 import { fetchPlots } from "@/lib/server/petitionPlots";
 import { useDispatch } from "react-redux";
 import { savePlot } from "@/redux/reducer";
+import useDataPlot from "@/hooks/useDataPlot";
 
 const StockDashboard: React.FC = () => {
   const dispatch = useDispatch();
+  const { savePlotsStorage } = useDataPlot();
 
   const userId = useSelector((state: any) => state.userData.id);
-  console.log("User ID:", userId);
   const token = useSelector((state: any) => state.token);
-  console.log("Token:", token);
   const [plots, setPlots] = useState<IPlotsType[]>([]);
   const [supplies, setSupplies] = useState<Supply[]>([]);
 
@@ -27,7 +27,6 @@ const StockDashboard: React.FC = () => {
         try {
           const fetchedSupplies = await fetchSupplies(userId, token);
           setSupplies(fetchedSupplies);
-          console.log("Fetched supplies:", fetchedSupplies);
         } catch (error) {
           console.error("Error fetching supplies:", error);
         }
@@ -43,9 +42,9 @@ const StockDashboard: React.FC = () => {
         try {
           const fetchedPlots = await fetchPlots(userId, token, (plots) => {
             dispatch(savePlot(plots));
+            savePlotsStorage(plots);
           });
           setPlots(fetchedPlots);
-          console.log("Fetched plots:", fetchedPlots);
         } catch (error) {
           console.error("Error fetching plots:", error);
         }
@@ -53,7 +52,7 @@ const StockDashboard: React.FC = () => {
     };
 
     getPlots();
-  }, [userId, token]);
+  }, [userId, token, dispatch]);
 
   return (
     <div className="w-screen h-full flex flex-col sm:flex-row">

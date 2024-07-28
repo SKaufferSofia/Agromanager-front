@@ -36,8 +36,6 @@ const StockPanel: React.FC<StockPanelProps> = ({ supplies }) => {
       setImgFile(e.target.files[0]);
     }
   };
-  console.log("Editing supply:", editingSupply);
-  console.log(editingSupply?.id);
 
   // useEffect(() => {
   //   if (editingSupply) {
@@ -67,7 +65,6 @@ const StockPanel: React.FC<StockPanelProps> = ({ supplies }) => {
           editingSupply.id
         );
         setEditingSupply(uploadResponse);
-        console.log("Upload Response:", uploadResponse);
       }
 
       const updatedSupply = await updateSupply(
