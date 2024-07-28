@@ -20,9 +20,6 @@ const PlotDetailDashboard: React.FC = () => {
 		(plot: IPlotsType) => String(plot.id) === idFromPath
 	);
 
-	console.log("plot is", currentPlot);
-	console.log("id is", idFromPath);
-
 	if (!currentPlot) {
 		return (
 			<div className=" w-screen h-full flex flex-col sm:flex-row">
@@ -48,7 +45,7 @@ const PlotDetailDashboard: React.FC = () => {
 					<h2 className="text-2xl font-semibold text-center mb-4">
 						Labores
 					</h2>
-					<AddLaborInput />
+					<AddLaborInput plotId={idFromPath} />
 					<h2 className="text-2xl font-semibold text-center mt-4 mb-4">
 						Insumos
 					</h2>
