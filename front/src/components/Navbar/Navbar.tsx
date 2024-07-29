@@ -4,7 +4,7 @@ import Image from "next/image";
 import React from "react";
 import {
   Navbar,
-  MobileNav,
+  Collapse,
   Typography,
   Button,
   IconButton,
@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import useUserData from "@/hooks/useUserData";
 import useDataPlot from "@/hooks/useDataPlot";
 import { useRouter } from "next/navigation";
+import ProfileMenu from "./ProfileMenu";
 
 const NavbarComponent: React.FC = () => {
   const pathname = usePathname();
@@ -159,33 +160,28 @@ const NavbarComponent: React.FC = () => {
             </div>
           ) : (
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-x-10">
-                <a href="/home" onClick={handleLogOut}>
-                  <p className="text-white hidden  lg:inline-block  md:hover:scale-105 md:hover:ease-in-out md:p-0">
-                    CERRAR SESION
-                  </p>
-                </a>
-              </div>
+              <ProfileMenu />
             </div>
           )}
         </div>
-        {/* <MobileNav open={openNav}>
+        <Collapse open={openNav}>
           {navList}
-          <div className="flex items-center gap-x-1">
-            <Button fullWidth variant="text" size="sm" className="">
-              <span>Log In</span>
-            </Button>
-            <Button fullWidth variant="gradient" size="sm" className="">
-              <span>Sign in</span>
-            </Button>
+          <div className="flex items-center justify-center gap-x-10">
+            <a href="/login">
+              <p className="text-white">INICIAR SESIÓN</p>
+            </a>
+            <a href="/register">
+              <p className="text-white">REGISTRARSE</p>
+            </a>
           </div>
-        </MobileNav> */}
+        </Collapse>
       </Navbar>
     </div>
   );
 };
 
 export default NavbarComponent;
+
 // <div>
 //   <nav
 //     className={`fixed top-0 left-0 w-full ${bgColor} transition-colors ease-in-out duration-300`}
