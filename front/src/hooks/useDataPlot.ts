@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { savePlot } from "@/redux/reducer";
-import { IPlotsType, Labors } from "@/interfaces/interfaces";
+import { IPlotsType, Labors, Supply } from "@/interfaces/interfaces";
 
 const useDataPlot = () => {
   const dispatch = useDispatch();
@@ -42,6 +42,21 @@ const useDataPlot = () => {
     }
   };
 
+  const updatePlotsStorageWithSupplies = (plotId: string, supplies: Supply[]) => {
+  const plotsStorage = localStorage.getItem("plots");
+  if (plotsStorage) {
+    const parsedPlotsStorage = JSON.parse(plotsStorage);
+    const plot = parsedPlotsStorage.find(
+      (plot: IPlotsType) => plot.id === plotId
+    );
+    if (plot) {
+      plot.supplies = supplies;
+      localStorage.setItem("plots", JSON.stringify(parsedPlotsStorage));
+    }
+  }
+};
+
+
   const clearPlotsStorage = () => {
     if (typeof window !== "undefined") {
       localStorage.removeItem("plots");
@@ -53,6 +68,7 @@ const useDataPlot = () => {
     addPlotsStorage,
     updatePlotsStorage,
     clearPlotsStorage,
+    updatePlotsStorageWithSupplies
   };
 };
 

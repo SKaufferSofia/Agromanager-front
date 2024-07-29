@@ -1,19 +1,20 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import {
-  Category,
-  Measurement,
-  StockPanelProps,
-  Supply,
+	Category,
+	ISupplyEditForm,
+	Measurement,
+	StockPanelProps,
+	Supply,
 } from "@/interfaces/interfaces";
 import CreateStockForm from "./CreateStockForm";
 import StockTable from "./StockTable";
 
 import {
-  fetchSuppliesCategories,
-  fetchSuppliesMeasurements,
-  updateSupply,
-  uploadImageSupply,
+	fetchSuppliesCategories,
+	fetchSuppliesMeasurements,
+	updateSupply,
+	uploadImageSupply,
 } from "@/lib/server/petitionStock";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -147,6 +148,7 @@ const StockPanel: React.FC<StockPanelProps> = ({ supplies }) => {
       </div>
     </div>
   );
+
 };
 
 export default StockPanel;
