@@ -1,38 +1,39 @@
+"use client";
 import React, { useState } from "react";
-import {
-  Category,
-  CreateStockFormProps,
-  Measurement,
-} from "@/interfaces/interfaces";
-import { createSupply } from "@/lib/server/petitionStock";
+import { Category, Measurement, Supply } from "@/interfaces/interfaces";
+import { createSupply, uploadImageSupply } from "@/lib/server/petitionStock";
 import { useSelector } from "react-redux";
-import { uploadImageSupply } from "@/lib/server/petitionStock";
+import useDataStock from "@/hooks/useDataStock";
+import MainButton from "../MainButton/MainButton";
+
+interface CreateStockFormProps {
+  categories: Category[];
+  measurements: Measurement[];
+  onNewSupply: (supply: Supply) => void;
+}
 
 const CreateStockForm: React.FC<CreateStockFormProps> = ({
   categories,
   measurements,
+  onNewSupply,
 }) => {
   const [name, setName] = useState("");
   const [provider, setProvider] = useState("");
   const [stock, setStock] = useState(0);
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState("");
-  const [imgFile, setImgFile] = useState<File | null>(null);
   const [measurement, setMeasurement] = useState("");
+  const [imgFile, setImgFile] = useState<File | string>("");
   const userId = useSelector((state: any) => state.userData.id);
   const token = useSelector((state: any) => state.token);
+  //PROBANDO REDUCER Y LOCA LS.
+  const { saveStockStorage } = useDataStock();
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setImgFile(e.target.files[0]);
-    }
-  };
-
+  //AL SUBMIT CREATE FORM
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      // Crear el suministro sin imagen
       const newSupply = {
         name,
         provider,
@@ -40,50 +41,49 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
         price,
         category,
         measurement,
-        imgUrl: "", // imgUrl estará vacío al principio
+        imgUrl: "",
       };
 
       const newSupplyResponse = await createSupply(userId, newSupply, token);
       const createdSupplyId = newSupplyResponse.id;
+      console.log("New Supply Response:", newSupplyResponse);
 
-      // Subir la imagen si existe
       if (imgFile) {
         const uploadResponse = await uploadImageSupply(
           imgFile,
           createdSupplyId
         );
 
-        // Actualizar el suministro con la URL de la imagen
         const updatedSupply = {
           ...newSupplyResponse,
-          imgUrl: uploadResponse.imgUrl, // imgUrl obtenido después de la carga
+          imgUrl: uploadResponse.imgUrl,
         };
 
-        // Aquí deberías enviar una solicitud para actualizar el suministro con la URL de la imagen
-        // Si tu API ya actualiza el suministro automáticamente, este paso puede ser opcional
+        onNewSupply(updatedSupply);
+        saveStockStorage([updatedSupply]);
+      } else {
+        onNewSupply(newSupplyResponse);
       }
 
-      // Restablecer el estado
       setName("");
       setProvider("");
       setStock(0);
       setPrice(0);
       setCategory("");
-      setImgFile(null);
+      setImgFile("");
       setMeasurement("");
     } catch (error) {
       console.error("Error adding new stock:", error);
     }
   };
-
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setImgFile(e.target.files[0]);
+    }
+  };
   return (
-    <div className="mb-8 bgColor">
-      <div className="mb-10">
-        <h2 className="text-xl font-semibold text-gray-800">Add New Stock</h2>
-        <p className="text-gray-600">
-          Fill out the form to add a new stock item.
-        </p>
-      </div>
+    <div className="mb-8 bgColor w-[80%] mx-auto ">
+      <h2 className="text-xl font-semibold text-gray-800">Create New Supply</h2>
       <form className="grid grid-cols-2 gap-4" onSubmit={handleSubmit}>
         <input
           type="text"
@@ -108,15 +108,9 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
         />
         <input
           type="number"
-          step="0.01"
           placeholder="Price"
           value={price}
           onChange={(e) => setPrice(Number(e.target.value))}
-          className="px-4 py-2 border rounded-lg"
-        />
-        <input
-          type="file"
-          onChange={handleImageChange}
           className="px-4 py-2 border rounded-lg"
         />
         <select
@@ -143,13 +137,12 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
             </option>
           ))}
         </select>
-
-        <button
-          type="submit"
-          className="px-4 py-2 bg-green-600 text-white rounded-lg"
-        >
-          Add Stock
-        </button>
+        <input
+          type="file"
+          onChange={handleImageChange}
+          className="px-4 py-2 border rounded-lg"
+        />
+        <MainButton text="Crear Stock" path="/dashboard/stock"></MainButton>
       </form>
     </div>
   );

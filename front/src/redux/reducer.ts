@@ -7,6 +7,8 @@ interface InitialState {
   token: string;
   userData: IUser;
   plot: IPlotsType[];
+  stock: Supply[];
+  edit: string;
 }
 
 const initialState: InitialState = {
@@ -23,6 +25,8 @@ const initialState: InitialState = {
     roles: [],
   },
   plot: [],
+  stock: [],
+  edit: "",
 };
 
 export const someSlice = createSlice({
@@ -40,12 +44,31 @@ export const someSlice = createSlice({
     },
     savePlot: (state, action: PayloadAction<IPlotsType[]>) => {
       state.plot = action.payload;
-      console.log(state.plot);
-      console.log(action.payload);
     },
+
     addPlot: (state, action: PayloadAction<IPlotsType>) => {
       state.plot.push(action.payload);
     },
+    saveStock: (state, action: PayloadAction<Supply[]>) => {
+      state.stock = action.payload;
+
+      console.log(action.payload);
+    },
+    addStock: (state, action: PayloadAction<Supply>) => {
+      state.stock.push(action.payload);
+    },
+    updateStock: (state, action: PayloadAction<Supply>) => {
+      const updatedStock = action.payload;
+      state.stock = state.stock.map((stockItem) =>
+        stockItem.id === updatedStock.id ? updatedStock : stockItem
+      );
+    },
+
+    edit: (state, action: PayloadAction<string>) => {
+      state.edit = "edit";
+      state.edit = action.payload;
+    },
+
     updateLabors: (
       state,
       action: PayloadAction<{ plotId: string; labors: Labors[] }>
@@ -74,6 +97,10 @@ export const {
   saveUserData,
   savePlot,
   addPlot,
+  saveStock,
+  addStock,
+  updateStock,
+  edit,
   updateLabors,
   updateSupplies
 } = someSlice.actions;

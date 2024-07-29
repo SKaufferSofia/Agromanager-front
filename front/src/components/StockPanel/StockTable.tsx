@@ -1,8 +1,12 @@
-// StockTable.tsx
+"use client";
 import React from "react";
-import { StockTableProps, Supply } from "@/interfaces/interfaces";
+import { Supply } from "@/interfaces/interfaces";
 import Image from "next/image";
 
+interface StockTableProps {
+  supplies: Supply[];
+  handleEditClick: (supply: Supply) => void;
+}
 const TABLE_HEAD = [
   "Name",
   "Provider",
@@ -52,7 +56,9 @@ const StockTable: React.FC<StockTableProps> = ({
                     <Image
                       width={80}
                       height={80}
-                      src={supply.imgUrl}
+                      src={
+                        typeof supply.imgUrl === "string" ? supply.imgUrl : ""
+                      }
                       alt={supply.name}
                       className="object-cover rounded-xl"
                     />
