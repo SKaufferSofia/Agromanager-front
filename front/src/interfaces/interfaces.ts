@@ -52,7 +52,7 @@ export interface IPlotsNavbar {
 }
 
 export interface PlotDetailCardProps {
-  id: number;
+  id: string;
   surface: string;
   cereal: string;
   labors: Labors[] | null;

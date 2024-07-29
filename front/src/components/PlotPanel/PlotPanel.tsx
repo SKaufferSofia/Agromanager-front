@@ -90,7 +90,7 @@ const PlotPanel: React.FC<PlotPanelProps> = ({ plots, setPlots }) => {
         {plots.map((plot: IPlotsType) => (
           <PlotDetailCard
             key={plot.id}
-            id={Number(plot.id)}
+            id={plot.id}
             surface={plot.surface}
             cereal={plot.cereal}
             labors={plot.labors}

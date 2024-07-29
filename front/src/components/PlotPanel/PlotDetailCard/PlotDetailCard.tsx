@@ -11,6 +11,8 @@ const PlotDetailCard: React.FC<PlotDetailCardProps> = ({
 }) => {
   const suppliesCount = supplies?.length || 0;
 
+  console.log(id, surface, cereal, labors, supplies);
+
   return (
     <div
       className="w-full h-auto flex flex-col p-6 border border-gray-300 bg-white rounded-lg
