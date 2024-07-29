@@ -18,8 +18,6 @@ const StockTable: React.FC<StockTableProps> = ({
   supplies,
   handleEditClick,
 }) => {
-  const list = supplies.map((supply) => supply.id);
-
   return (
     <div className="overflow-x-auto p-4 w-full mx-auto bg-white">
       <table className="table-auto w-full mx-auto bg-white">
