@@ -1,15 +1,14 @@
 import axios from "axios";
 import { NEXT_PUBLIC_API_URL } from "./envs";
-import {
-  Category,
-  ISupplyEditForm,
-  Measurement,
-  Supply,
-} from "@/interfaces/interfaces";
+import { Supply } from "@/interfaces/interfaces";
 
 const API_PUBLIC = NEXT_PUBLIC_API_URL;
-
-export const fetchSupplies = async (id: string, token: string) => {
+import { saveStock, updateStock } from "@/redux/reducer";
+export const fetchSupplies = async (
+  id: string,
+  token: string,
+  setStock: (supply: Supply[]) => void
+) => {
   try {
     const response = await axios.get(`${API_PUBLIC}/supplies/${id}`, {
       headers: {
@@ -21,6 +20,7 @@ export const fetchSupplies = async (id: string, token: string) => {
         throw new Error("No hay plots para este usuario");
       }
     }
+    setStock(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching plots:", error);
@@ -76,7 +76,10 @@ export const createSupply = async (
   }
 };
 
-export const uploadImageSupply = async (file: File, supplyId: string) => {
+export const uploadImageSupply = async (
+  file: File | string,
+  supplyId: string
+) => {
   try {
     const formData = new FormData();
     formData.append("file", file);
@@ -107,6 +110,7 @@ export const updateSupply = async (
         },
       }
     );
+
     return response.data;
   } catch (error) {
     console.log(error);

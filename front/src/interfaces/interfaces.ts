@@ -1,5 +1,3 @@
-import { IUser } from "./interfacesUser";
-
 export interface Category {
   id: string;
   name: string;
@@ -18,16 +16,17 @@ export interface Supply {
   price: number;
   category: Category;
   measurement: Measurement;
-  imgUrl?: string | null;
+  imgUrl?: File | "";
 }
 
 export interface ISupplyEditForm {
   name: string;
   provider: string;
-  stock: string;
-  price: string;
+  stock: number;
+  price: number;
   category: string;
   measurement: string;
+  imgUrl?: File | string;
 }
 
 export interface IPlotsType {
@@ -81,6 +80,13 @@ export interface ICreatePlot {
 export interface StockTableProps {
   supplies: Supply[];
   handleEditClick: (supply: Supply) => void;
+}
+
+export interface StockEditFormProps {
+  supply: Supply;
+  onSubmit: (updatedSupply: Supply) => void;
+  onCancel: () => void;
+  onImageChange: (file: File | null) => void;
 }
 
 export type SaveDataPlot = (arg: IPlotsType[]) => void;

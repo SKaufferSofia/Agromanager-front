@@ -1,8 +1,12 @@
-// StockTable.tsx
+"use client";
 import React from "react";
-import { StockTableProps, Supply } from "@/interfaces/interfaces";
+import { Supply } from "@/interfaces/interfaces";
 import Image from "next/image";
 
+interface StockTableProps {
+  supplies: Supply[];
+  handleEditClick: (supply: Supply) => void;
+}
 const TABLE_HEAD = [
   "Name",
   "Provider",
@@ -18,8 +22,6 @@ const StockTable: React.FC<StockTableProps> = ({
   supplies,
   handleEditClick,
 }) => {
-  const list = supplies.map((supply) => supply.id);
-
   return (
     <div className="overflow-x-auto p-4 w-full mx-auto bg-white">
       <table className="table-auto w-full mx-auto bg-white">
@@ -54,7 +56,9 @@ const StockTable: React.FC<StockTableProps> = ({
                     <Image
                       width={80}
                       height={80}
-                      src={supply.imgUrl}
+                      src={
+                        typeof supply.imgUrl === "string" ? supply.imgUrl : ""
+                      }
                       alt={supply.name}
                       className="object-cover rounded-xl"
                     />
