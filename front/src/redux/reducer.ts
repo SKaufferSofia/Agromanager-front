@@ -1,4 +1,4 @@
-import { IPlotsType, Labors } from "@/interfaces/interfaces";
+import { IPlotsType, Labors, Supply } from "@/interfaces/interfaces";
 import { IUser } from "@/interfaces/interfacesUser";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -54,6 +54,15 @@ export const someSlice = createSlice({
         plot.labors = labors;
       }
     },
+      updateSupplies: (
+      state,
+      action: PayloadAction<{ plotId: string; supplies: Supply[] }>
+    ) => {
+      const { plotId, supplies } = action.payload;
+      const plot = state.plot.find((plot) => plot.id === plotId);
+      if (plot) {
+        plot.supplies = supplies;
+      }}
   },
 });
 
@@ -64,5 +73,6 @@ export const {
   savePlot,
   addPlot,
   updateLabors,
+  updateSupplies
 } = someSlice.actions;
 export default someSlice.reducer;
