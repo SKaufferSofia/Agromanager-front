@@ -1,29 +1,28 @@
 "use client";
 import { saveUserData } from "@/redux/reducer";
 import { useSelector } from "react-redux";
+import MainButton from "../MainButton/MainButton";
 
 const ProfileComponent = () => {
   const userData = useSelector((state: any) => state.userData);
-  console.log(userData);
+  console.log();
 
   return (
     <div className="w-full lg:w-1/2 mx-auto">
-      <div className="card card-profile">
+      <div className="card card-profile bg-navbarColor p-6 rounded-xl text-white">
         <img
-          src="https://demos.creative-tim.com/argon-dashboard/assets-old/img/theme/img-1-1000x600.jpg"
+          src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Sembrado_de_soja_en_argentina.jpg"
           alt="Image placeholder"
-          className="card-img-top w-full"
+          className="card-img-top w-full h-[15rem] object-cover"
         />
         <div className="flex justify-center mt-4">
           <div className="lg:w-1/3">
             <div className="flex justify-center items-center">
-              <a href="#">
-                <img
-                  src="https://demos.creative-tim.com/argon-dashboard/assets-old/img/theme/team-4.jpg"
-                  className="rounded-full w-24 h-24"
-                  alt="Profile"
-                />
-              </a>
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                className="rounded-full w-24 h-24"
+                alt="Profile"
+              />
             </div>
           </div>
         </div>
@@ -42,7 +41,7 @@ const ProfileComponent = () => {
                   Telefono <span className="description">{userData.phone}</span>
                 </span>
               </div>
-              <div className="text-center">
+              <div className="text-center p">
                 <span className="heading">
                   Establecimiento{" "}
                   <span className="description">{userData.placeName}</span>
@@ -50,10 +49,14 @@ const ProfileComponent = () => {
               </div>
               <div className="text-center">
                 <span className="heading">
-                  89 <span className="description">Comments</span>
+                  Roles{" "}
+                  <span className="description">
+                    {userData.roles.map((role: any) => role.name)}
+                  </span>
                 </span>
               </div>
             </div>
+
             {/* <div className="card-profile-stats flex justify-center space-x-8">
               <div className="text-center">
                 <span className="heading">22</span>
@@ -70,6 +73,9 @@ const ProfileComponent = () => {
             </div> */}
           </div>
         </div>
+      </div>
+      <div className="p-5">
+        <MainButton text="Ver lotes" path="/dashboard/plots" />
       </div>
     </div>
   );
