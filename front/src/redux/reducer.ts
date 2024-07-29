@@ -40,6 +40,8 @@ export const someSlice = createSlice({
     },
     savePlot: (state, action: PayloadAction<IPlotsType[]>) => {
       state.plot = action.payload;
+      console.log(state.plot);
+      console.log(action.payload);
     },
     addPlot: (state, action: PayloadAction<IPlotsType>) => {
       state.plot.push(action.payload);

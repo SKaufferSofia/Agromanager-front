@@ -7,7 +7,7 @@ import { IPlotsType } from "@/interfaces/interfaces";
 import { fetchPlots } from "@/lib/server/petitionPlots";
 import { savePlot } from "@/redux/reducer";
 import useDataPlot from "@/hooks/useDataPlot";
-import ProfileComponent from "@/components/MyProfile/profileComponent";
+import ProfileComponent from "@/components/MyProfile/ProfileComponent";
 
 const MyProfile = () => {
   const dispatch = useDispatch();
