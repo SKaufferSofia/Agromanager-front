@@ -36,7 +36,6 @@ const StockEditForm: React.FC<StockEditFormProps> = ({
     dispatch(updateStock(updatedSupply));
     updateStocksStorage(updatedSupply);
     setUpdatedSupply(supply);
-    //window.location.reload();
   };
 
   return (
