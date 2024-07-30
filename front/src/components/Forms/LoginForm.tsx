@@ -7,6 +7,7 @@ import { PetitionLogin } from "@/lib/server/petitionUser";
 import { validateLogin } from "@/helpers/valitateLogin";
 import { useDispatch } from "react-redux";
 import { signIn, saveToken, saveUserData } from "@/redux/reducer";
+import Cookies from "js-cookie";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -47,7 +48,8 @@ const LoginForm = () => {
         (data) => {
           dispatch(saveUserData(data));
           saveUserDataStorage(data);
-        }
+        },
+        (data) => Cookies.set("token", data, { expires: 30 })
       );
 
       if (loginSuccess) {

@@ -11,16 +11,21 @@ import {
 } from "@material-tailwind/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import useDataStock from "@/hooks/useDataStock";
 
 export default function ProfileMenu() {
   const router = useRouter();
 
   const { logOut } = useUserData();
   const { clearPlotsStorage } = useDataPlot();
+  const { clearStocksStorage } = useDataStock();
 
   const handleLogOut = () => {
     logOut();
     clearPlotsStorage();
+    clearStocksStorage();
+    Cookies.remove("token");
     router.push("/");
   };
 

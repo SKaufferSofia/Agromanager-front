@@ -96,16 +96,16 @@ const NavbarComponent: React.FC = () => {
         color="transparent"
         className={`sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 ${bgColor} transition-colors ease-in-out duration-300 lg:px-16 lg:py-1`}
       >
-        <div className="flex items-center justify-between text-white">
-          <a href="/" className="flex items-center space-x-3">
-            <Image
-              src="/image4.png"
-              width={160}
-              height={160}
-              alt="agromanager Logo"
-            />
-          </a>
-          {!isLogged ? (
+        {!isLogged ? (
+          <div className="flex items-center justify-between text-white">
+            <a href="/" className="flex items-center space-x-3">
+              <Image
+                src="/image4.png"
+                width={160}
+                height={160}
+                alt="agromanager Logo"
+              />
+            </a>
             <div className="flex items-center gap-4">
               <div className="mr-72 hidden lg:block ">{navList}</div>
               <div className="flex items-center gap-x-10">
@@ -158,12 +158,20 @@ const NavbarComponent: React.FC = () => {
                 )}
               </IconButton>
             </div>
-          ) : (
+          </div>
+        ) : (
+          <div className="flex items-center justify-between text-white">
+            <Image
+              src="/image4.png"
+              width={160}
+              height={160}
+              alt="agromanager Logo"
+            />
             <div className="flex items-center gap-4">
               <ProfileMenu />
             </div>
-          )}
-        </div>
+          </div>
+        )}
         <Collapse open={openNav}>
           {navList}
           <div className="flex items-center justify-center gap-x-10">
@@ -181,74 +189,3 @@ const NavbarComponent: React.FC = () => {
 };
 
 export default NavbarComponent;
-
-// <div>
-//   <nav
-//     className={`fixed top-0 left-0 w-full ${bgColor} transition-colors ease-in-out duration-300`}
-//   >
-//     {!isLogged ? (
-//       <div className="flex flex-wrap items-center justify-between w-full">
-//         <a href="/" className="flex items-center space-x-3">
-//           <Image
-//             src="/image4.png"
-//             width={200}
-//             height={200}
-//             alt="agromanager Logo"
-//           />
-//         </a>
-//         <div className="hidden w-full md:block md:w-auto md:ml-8">
-//           <ul className="font-medium flex flex-col p-4 md:p-0  md:flex-row md:space-x-8 md:mt-0 md:border-0">
-// <li>
-//   <a
-//     href="/home"
-//     className="block py-2 px-3 text-white rounded md:bg-transparent md:hover:scale-105 md:hover:ease-in-out md:p-0"
-//     aria-current="page"
-//   >
-//     INICIO
-//   </a>
-// </li>
-// <li>
-//   <a
-//     href="/about"
-//     className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:scale-105 md:hover:ease-in-out md:p-0"
-//   >
-//     SOBRE NOSOTROS
-//   </a>
-// </li>
-// <li>
-//   <a
-//     href="/contact"
-//     className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:scale-105 md:hover:ease-in-out md:p-0"
-//   >
-//     CONTACTO
-//   </a>
-// </li>
-//           </ul>
-//         </div>
-//         <div className="font-medium flex flex-col p-4 md:p-8 md:flex-row md:space-x-8">
-// <a href="/login">
-//   <p className="text-white md:hover:scale-105 md:hover:ease-in-out md:p-0">
-//     INICIAR SESIÓN
-//   </p>
-// </a>
-// <a href="/register">
-//   <p className="text-white md:hover:scale-105 md:hover:ease-in-out md:p-0">
-//     REGISTRARSE
-//   </p>
-// </a>
-//         </div>
-//       </div>
-//     ) : (
-//       <div className="flex flex-wrap items-center justify-between w-full">
-//         <Image
-//           src="/image4.png"
-//           width={200}
-//           height={200}
-//           alt="agromanager Logo"
-//         />
-
-//         <button onClick={handleLogOut}>CERRAR SESION</button>
-//       </div>
-//     )}
-//   </nav>
-// </div>
