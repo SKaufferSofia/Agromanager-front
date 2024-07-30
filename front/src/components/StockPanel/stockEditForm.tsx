@@ -36,7 +36,6 @@ const StockEditForm: React.FC<StockEditFormProps> = ({
     dispatch(updateStock(updatedSupply));
     updateStocksStorage(updatedSupply);
     setUpdatedSupply(supply);
-
     //window.location.reload();
   };
 
@@ -61,7 +60,7 @@ const StockEditForm: React.FC<StockEditFormProps> = ({
           className="px-4 py-2 border rounded-lg"
         />
         <input
-          type="text"
+          type="number"
           name="stock"
           placeholder="Stock"
           value={updatedSupply.stock}
@@ -69,9 +68,8 @@ const StockEditForm: React.FC<StockEditFormProps> = ({
           className="px-4 py-2 border rounded-lg"
         />
         <input
-          type="text"
+          type="number"
           name="price"
-          step="0.01"
           placeholder="Price"
           value={updatedSupply.price}
           onChange={handleInputChange}
