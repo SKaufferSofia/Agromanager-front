@@ -1,25 +1,25 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import {
-	Category,
-	ISupplyEditForm,
-	Measurement,
-	StockPanelProps,
-	Supply,
+  Category,
+  ISupplyEditForm,
+  Measurement,
+  StockPanelProps,
+  Supply,
 } from "@/interfaces/interfaces";
 import CreateStockForm from "./CreateStockForm";
 import StockTable from "./StockTable";
 
 import {
-	fetchSuppliesCategories,
-	fetchSuppliesMeasurements,
-	updateSupply,
-	uploadImageSupply,
+  fetchSuppliesCategories,
+  fetchSuppliesMeasurements,
+  updateSupply,
+  uploadImageSupply,
 } from "@/lib/server/petitionStock";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import StockEditForm from "./stockEditForm";
-import { updateStock, edit } from "@/redux/reducer";
+import { updateStock, editStock } from "@/redux/reducer";
 
 import useDataStock from "@/hooks/useDataStock";
 
@@ -33,7 +33,6 @@ const StockPanel: React.FC<StockPanelProps> = ({ supplies }) => {
     supplies || []
   );
 
-  const userId = useSelector((state: any) => state.userData.id);
   const token = useSelector((state: any) => state.token);
 
   //PROBANDO REDUCER Y LOCAL.S
@@ -56,34 +55,37 @@ const StockPanel: React.FC<StockPanelProps> = ({ supplies }) => {
     if (!editingSupply) return;
 
     try {
+      let supplyToUpdate = { ...updatedSupply };
       if (imgFile) {
         const uploadResponse = await uploadImageSupply(
           imgFile,
           updatedSupply.id
         );
-        updatedSupply.imgUrl = uploadResponse.imgUrl;
+        supplyToUpdate = { ...supplyToUpdate, imgUrl: uploadResponse.imgUrl };
       }
 
       const updatedSupplyData = await updateSupply(
         updatedSupply.id,
-        updatedSupply,
+        {
+          ...updatedSupply,
+          stock: Number(updatedSupply.stock),
+          price: Number(updatedSupply.price),
+          imgUrl: supplyToUpdate.imgUrl,
+        },
         token
       );
 
-      console.log("Updated Supply:", updatedSupplyData);
-
       dispatch(updateStock(updatedSupplyData));
-      updateStocksStorage(updatedSupplyData);
-      console.log(editingSupply.id);
-      dispatch(edit(editingSupply.id));
+      updateStocksStorage(editingSupply);
+      dispatch(editStock(editingSupply.id));
 
       setEditingSupply(null);
       setImgFile(null);
-      //window.location.reload();
     } catch (error) {
       console.log(error);
     }
   };
+
   //AL CREATE STOCK
   const handleNewSupply = (newSupply: Supply) => {
     setSuppliesUpdated((prevSupplies = []) => [...prevSupplies, newSupply]);
@@ -148,7 +150,6 @@ const StockPanel: React.FC<StockPanelProps> = ({ supplies }) => {
       </div>
     </div>
   );
-
 };
 
 export default StockPanel;

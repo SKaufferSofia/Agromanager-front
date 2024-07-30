@@ -20,12 +20,10 @@ export interface Supply {
 }
 
 export interface ISupplyEditForm {
-  name: string;
-  provider: string;
-  stock: number;
-  price: number;
-  category: string;
-  measurement: string;
+  name?: string;
+  provider?: string;
+  stock?: number;
+  price?: number;
   imgUrl?: File | string;
 }
 

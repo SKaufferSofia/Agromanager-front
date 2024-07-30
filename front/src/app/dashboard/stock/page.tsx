@@ -19,7 +19,7 @@ const StockDashboard: React.FC = () => {
 
   const [error, setError] = useState<string | null>(null);
   const dispatch = useDispatch();
-  const edit = useSelector((state: any) => state.edit);
+  const edit = useSelector((state: any) => state.editStock);
 
   useEffect(() => {
     const loadSupplies = async () => {
