@@ -28,14 +28,15 @@ export const PetitionLogin = async (
   loginData: ILoginForm,
   saveToken: SaveToken,
   signIn: SignIn,
-  userData: SaveUserData
+  userData: SaveUserData,
+  cookieToken: SaveToken
 ): Promise<boolean> => {
   try {
     const response = await axios.post(`${API}/auth/signin`, loginData);
     saveToken(response.data.token);
     signIn(response.data.isLoggin);
     userData(response.data.user);
-
+    cookieToken(response.data.token);
     return true;
   } catch (error: any) {
     if (axios.isAxiosError(error) && error.response) {
