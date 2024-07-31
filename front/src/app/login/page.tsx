@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 import image1 from "@/assets/login-image.png";
 import LoginForm from "@/components/Forms/LoginForm";
-import LoginAuthNext from "@/components/Forms/LoginAuthNext";
 
 const Login: React.FC = () => {
   return (
@@ -14,9 +13,6 @@ const Login: React.FC = () => {
           className="w-full h-full object-cover"
           priority={true}
         />
-      </div>
-      <div className="w-1/2 flex justify-center items-center lg:mt-10">
-        <LoginAuthNext />
       </div>
       <div className="w-1/2 flex flex-col justify-center items-center">
         <LoginForm />

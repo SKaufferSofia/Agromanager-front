@@ -8,6 +8,7 @@ import { validateLogin } from "@/helpers/valitateLogin";
 import { useDispatch } from "react-redux";
 import { signIn, saveToken, saveUserData } from "@/redux/reducer";
 import Cookies from "js-cookie";
+import LoginAuthNext from "./LoginAuthNext";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -70,6 +71,9 @@ const LoginForm = () => {
         <h3 className="text-xl text-textColor font-semibold mb-4 text-center">
           Comienza con tu prueba gratuita
         </h3>
+        <div className="flex justify-center items-center p-5">
+          <LoginAuthNext />
+        </div>
         <form
           onSubmit={handleSumbit}
           className="space-y-5 flex flex-col h-full"

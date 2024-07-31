@@ -13,7 +13,10 @@ export function middleware(request: NextRequest) {
     "/contact",
   ];
 
-  if (token && tokenGoogle && publicRoutes.includes(request.nextUrl.pathname)) {
+  if (
+    token ||
+    (tokenGoogle && publicRoutes.includes(request.nextUrl.pathname))
+  ) {
     return NextResponse.redirect(new URL("/dashboard/plots", request.url));
   }
 
