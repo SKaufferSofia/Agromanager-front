@@ -26,7 +26,7 @@ export class AuthService {
 
     async signIn(signInDto: SignInDto) {
         const userFound = await this.UsersRepository.getUserByEmail(signInDto.email)
-        if(!userFound) {throw new BadRequestException("las credenciales son incorrectas1")}
+        if(!userFound) {throw new BadRequestException("Las credenciales son incorrectas")}
         const confirmPassword: boolean = await bcrypt.compare(signInDto.password, userFound.password) 
         if (!confirmPassword) {throw new BadRequestException("credenciales incorrectas")} 
 

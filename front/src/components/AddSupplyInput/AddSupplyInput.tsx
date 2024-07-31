@@ -106,7 +106,14 @@ const AddSupplyInput: React.FC<AddSupplyInputProps> = ({ plotId }) => {
 			setCategories([]);
 			setSupplies([]);
 		} catch (error) {
-			console.error("Error creating supply:", error);
+			if (axios.isAxiosError(error) && error.response) {
+				const axiosError = error.response.data.message;
+				toast.warning(axiosError, {
+					className:
+						"bg-red-500 text-white text-lg justify-center w-auto",
+					duration: 3000,
+				});
+			}
 		}
 	};
 

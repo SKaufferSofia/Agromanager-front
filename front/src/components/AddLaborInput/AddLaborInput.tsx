@@ -55,7 +55,14 @@ const AddLaborInput: React.FC<AddLaborInputProps> = ({ plotId }) => {
 			setPrice("");
 			setSurface("");
 		} catch (error) {
-			console.error("Error creating labor:", error);
+			if (axios.isAxiosError(error) && error.response) {
+				const axiosError = error.response.data.message;
+				toast.warning(axiosError, {
+					className:
+						"bg-red-500 text-white text-xl justify-center w-auto",
+					duration: 2000,
+				});
+			}
 		}
 	};
 
