@@ -34,6 +34,13 @@ export interface IPlotsType {
   labors: Labors[] | null;
   supplies: Supply[] | null;
 }
+export interface IPlotsDashboardType {
+  id: string;
+  surface: string;
+  cereal: string;
+  labors: Labors[] | null;
+  supplies: SupplyApplied[] | null;
+}
 
 export interface Labors {
   id: string;
@@ -85,6 +92,12 @@ export interface StockEditFormProps {
   onSubmit: (updatedSupply: Supply) => void;
   onCancel: () => void;
   onImageChange: (file: File | null) => void;
+}
+
+export interface SupplyApplied {
+  id: string;
+  quantity: number;
+  supply: Supply;
 }
 
 export type SaveDataPlot = (arg: IPlotsType[]) => void;

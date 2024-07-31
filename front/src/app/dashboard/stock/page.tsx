@@ -14,7 +14,10 @@ import { saveStock, updateStock } from "@/redux/reducer";
 const StockDashboard: React.FC = () => {
   const { savePlotsStorage } = useDataPlot();
   const userId = useSelector((state: any) => state.userData.id);
+  console.log(userId);
   const token = useSelector((state: any) => state.token);
+  console.log(token);
+
   const [supplies, setSupplies] = useState<Supply[]>([]);
 
   const [error, setError] = useState<string | null>(null);
@@ -22,20 +25,24 @@ const StockDashboard: React.FC = () => {
   const edit = useSelector((state: any) => state.editStock);
 
   useEffect(() => {
-    const loadSupplies = async () => {
-      try {
-        const suppliesData = await fetchSupplies(userId, token, (supplies) => {
-          dispatch(saveStock(supplies));
-        });
-        setSupplies(suppliesData);
-      } catch (error) {
-        setError("Failed to fetch supplies.");
-      }
-    };
+    const id = userId;
 
-    loadSupplies();
+    if (userId && token) {
+      const loadSupplies = async () => {
+        try {
+          const suppliesData = await fetchSupplies(id, token, (supplies) => {
+            dispatch(saveStock(supplies));
+          });
+          setSupplies(suppliesData);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      loadSupplies();
+    }
+
     console.log(supplies);
-  }, [edit, token, userId]);
+  }, [edit, token, userId, dispatch]);
 
   const { plots, error: plotsError } = useFetchPlots(userId, token);
 

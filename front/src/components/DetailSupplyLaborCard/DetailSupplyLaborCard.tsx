@@ -1,24 +1,87 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Tabs, TabsHeader, TabsBody, Tab } from "@material-tailwind/react";
-import { IPlotsType, Labors, Supply } from "@/interfaces/interfaces";
+import {
+  IPlotsDashboardType,
+  Labors,
+  Supply,
+  SupplyApplied,
+} from "@/interfaces/interfaces";
+import { NEXT_PUBLIC_API_URL } from "@/lib/server/envs";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 interface DetailSupplyLaborCardProps {
-  currentPlot: IPlotsType;
+  currentPlot: IPlotsDashboardType;
 }
+
 const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
   currentPlot,
 }) => {
   const [activeTab, setActiveTab] = useState("Labores");
+  const [suppliesAdded, setFetchedSupplies] = useState<SupplyApplied[]>([]);
+  const token = useSelector((state: RootState) => state.token);
 
-  const calculateTotalPrice = (items: Labors[] | Supply[] | null): number => {
+  const calculateLaborTotalPrice = (items: Labors[] | null): number => {
+    let totalPrice = 0;
     if (!items) return 0;
-    return items.reduce((total, item) => total + item.price, 0);
+    items.forEach((labor) => {
+      totalPrice += labor.price * labor.surface;
+    });
+    return totalPrice;
   };
 
-  const totalLaborPrice = calculateTotalPrice(currentPlot.labors);
-  const totalSupplyPrice = calculateTotalPrice(currentPlot.supplies);
+  const calculateSuppliesTotalPrice = (
+    items: SupplyApplied[] | null
+  ): number => {
+    let totalPrice = 0;
+
+    if (!items) return 0;
+    items.forEach((supply) => {
+      if (supply.supply) {
+        totalPrice += supply.quantity * supply.supply.price;
+      }
+    });
+    return totalPrice;
+  };
+  const newArrayId: string[] = [];
+  if (currentPlot.supplies) {
+    currentPlot.supplies.forEach((supply) => {
+      newArrayId.push(supply.id);
+    });
+  }
+
+  useEffect(() => {
+    const suppliesByIds: any[] = [];
+    const fetchSupplies = async () => {
+      try {
+        for (const id of newArrayId) {
+          const response = await axios.get(
+            `${NEXT_PUBLIC_API_URL}/plots/supplies/applied/${id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          console.log(
+            `Fetched supplies for plot ${id}:`,
+            suppliesByIds.push(response.data)
+          );
+        }
+        console.log("All fetched supplies:", suppliesByIds);
+        setFetchedSupplies(suppliesByIds);
+      } catch (error) {
+        console.error("Error fetching supplies:", error);
+      }
+    };
+    fetchSupplies();
+  }, [currentPlot]);
+
+  const totalLaborPrice = calculateLaborTotalPrice(currentPlot.labors);
+  const totalSupplyPrice = calculateSuppliesTotalPrice(suppliesAdded);
 
   return (
     <div className=" mt-8 ">
@@ -56,18 +119,22 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
               <div className="flex-1">Proveedor</div>
               <div className="flex-1">Cantidad</div>
               <div className="flex-1">Precio</div>
+              <div className="flex-1">Precio total</div>
             </div>
-            {currentPlot.supplies &&
-              currentPlot.supplies.map((supply) => (
+            {suppliesAdded.length > 0 &&
+              suppliesAdded.map((supply) => (
                 <div className="flex p-4" key={supply.id}>
-                  <div className="flex-1">{supply.name}</div>
-                  <div className="flex-1">{supply.provider}</div>
-                  <div className="flex-1">{supply.stock}</div>
-                  <div className="flex-1">${supply.price}</div>
+                  <div className="flex-1">{supply.supply.name}</div>
+                  <div className="flex-1">{supply.supply.provider}</div>
+                  <div className="flex-1">{supply.quantity}</div>
+                  <div className="flex-1">{supply.supply.price}</div>
+                  <div className="flex-1">
+                    {supply.supply.price * supply.quantity}
+                  </div>
                 </div>
               ))}
             <div className="flex justify-end font-bold">
-              <div className="px-6 py-4">Total Price</div>
+              <div className="px-6 py-4">Precio Total</div>
               <div className="px-6 py-4">{totalSupplyPrice}</div>
             </div>
           </TabsBody>
@@ -78,20 +145,22 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
               <div className="flex-1">Nombre</div>
               <div className="flex-1">Contratista</div>
               <div className="flex-1">Superficie</div>
-              <div className="flex-1">Precio</div>
+              <div className="flex-1">Precio unitario</div>
+              <div className="flex-1">Precio total</div>
             </div>
             <div>
               {currentPlot.labors &&
-                currentPlot.labors.map((labor) => (
-                  <div className="flex justify-around p-4" key={labor.id}>
+                currentPlot.labors.map((labor, index) => (
+                  <div className="flex justify-around p-4" key={index}>
                     <div className="flex-1">{labor.name}</div>
                     <div className="flex-1">{labor.contractor}</div>
                     <div className="flex-1">{labor.surface}</div>
                     <div className="flex-1">${labor.price}</div>
+                    <div className="flex-1">${labor.price * labor.surface}</div>
                   </div>
                 ))}
               <div className="flex font-bold justify-end">
-                <div className="px-6 py-4">Total Price</div>
+                <div className="px-6 py-4">Precio Total</div>
                 <div className="px-6 py-4">${totalLaborPrice}</div>
               </div>
             </div>
