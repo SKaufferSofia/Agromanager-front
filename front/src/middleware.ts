@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("token");
+  const tokenGoogle = request.cookies.get("next-auth.session-token");
 
   const publicRoutes = [
     "/login",
@@ -12,7 +13,7 @@ export function middleware(request: NextRequest) {
     "/contact",
   ];
 
-  if (token && publicRoutes.includes(request.nextUrl.pathname)) {
+  if (token && tokenGoogle && publicRoutes.includes(request.nextUrl.pathname)) {
     return NextResponse.redirect(new URL("/dashboard/plots", request.url));
   }
 
@@ -26,6 +27,7 @@ export function middleware(request: NextRequest) {
 
   if (
     !token &&
+    !tokenGoogle &&
     protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
   ) {
     return NextResponse.redirect(new URL("/login", request.url));
