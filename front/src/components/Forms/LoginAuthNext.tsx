@@ -3,11 +3,11 @@ import React from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "@material-tailwind/react";
+import { getToken } from "next-auth/jwt";
 
 const LoginAuthNext = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
-  console.log(session);
 
   if (status === "loading") {
     return <p>Authenticating...</p>;
