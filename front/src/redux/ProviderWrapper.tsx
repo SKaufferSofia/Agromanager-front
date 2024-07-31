@@ -8,7 +8,7 @@ import { Toaster, toast } from "sonner";
 const ProviderWrapper = ({ children }: { children: ReactNode }) => {
 	return (
 		<Provider store={store}>
-			{children} <Toaster />
+			{children} <Toaster position="top-right" expand={false} />
 		</Provider>
 	);
 };

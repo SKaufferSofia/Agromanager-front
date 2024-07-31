@@ -7,6 +7,7 @@ import {
 } from "@/interfaces/interfacesUser";
 import { NEXT_PUBLIC_API_URL } from "./envs";
 import axios from "axios";
+import { Toaster, toast } from "sonner"
 
 const API = NEXT_PUBLIC_API_URL;
 
@@ -37,6 +38,11 @@ export const PetitionLogin = async (
     signIn(response.data.isLoggin);
     userData(response.data.user);
     cookieToken(response.data.token);
+    toast("Login exitoso", {
+				className:
+					"mt-20 text-white bg-navbarColor font-semibold text-xl justify-center w-auto",
+				duration: 2000,
+			});
     return true;
   } catch (error: any) {
     if (axios.isAxiosError(error) && error.response) {

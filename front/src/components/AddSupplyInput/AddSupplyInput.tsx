@@ -98,8 +98,9 @@ const AddSupplyInput: React.FC<AddSupplyInputProps> = ({ plotId }) => {
 			dispatch(updateSupplies({ plotId, supplies: updatedSupplies }));
 			updatePlotsStorageWithSupplies(plotId, updatedSupplies);
 			toast("Insumo Agregado", {
-				className: "mb-24",
-				duration: 5000,
+				className:
+					"mt-20 text-white bg-navbarColor font-semibold text-xl justify-center w-auto",
+				duration: 3000,
 			});
 		} catch (error) {
 			console.error("Error creating supply:", error);
