@@ -1,4 +1,4 @@
-import { IPlotsType, Labors, Supply, SupplyApplied } from "@/interfaces/interfaces";
+import { IPlotsDashboardType, IPlotsType, Labors, Supply, SupplyApplied } from "@/interfaces/interfaces";
 import { IUser } from "@/interfaces/interfacesUser";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -6,7 +6,7 @@ interface InitialState {
   isLoggin: boolean;
   token: string;
   userData: IUser;
-  plot: IPlotsType[];
+  plot: IPlotsDashboardType[];
   stock: Supply[];
   edit: string;
 }
@@ -42,11 +42,11 @@ export const someSlice = createSlice({
     saveUserData: (state, action: PayloadAction<IUser>) => {
       state.userData = action.payload;
     },
-    savePlot: (state, action: PayloadAction<IPlotsType[]>) => {
+    savePlot: (state, action: PayloadAction<IPlotsDashboardType[]>) => {
       state.plot = action.payload;
     },
 
-    addPlot: (state, action: PayloadAction<IPlotsType>) => {
+    addPlot: (state, action: PayloadAction<IPlotsDashboardType>) => {
       state.plot.push(action.payload);
     },
     saveStock: (state, action: PayloadAction<Supply[]>) => {
