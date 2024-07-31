@@ -14,7 +14,11 @@ const API = NEXT_PUBLIC_API_URL;
 export const petitionRegister = async (regiterData: IRegisterForm) => {
   try {
     const response = await axios.post(`${API}/auth/signup`, regiterData);
-
+      toast("Registro exitoso", {
+				className:
+					"mt-20 text-white bg-navbarColor font-semibold text-xl justify-center w-auto",
+				duration: 2000,
+			});
     return response.data;
   } catch (error: any) {
     if (axios.isAxiosError(error) && error.response) {
