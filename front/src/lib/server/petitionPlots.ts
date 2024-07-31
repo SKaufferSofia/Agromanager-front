@@ -1,6 +1,8 @@
 import { AddDataPlot, IPlotsType, SaveDataPlot } from "@/interfaces/interfaces";
 import { NEXT_PUBLIC_API_URL } from "./envs";
 import axios from "axios";
+import { Toaster, toast } from "sonner"
+
 
 const API_PUBLIC = NEXT_PUBLIC_API_URL;
 export const fetchPlots = async (
@@ -36,6 +38,7 @@ export const createPlot = async (
           Authorization: `Bearer ${token}`,
         },
       }
+     
     );
 
     const data = response.data;
@@ -43,6 +46,11 @@ export const createPlot = async (
     savePlot(data);
 
     if (data && data.id && data.cereal && data.surface) {
+        toast("Lote creado", {
+				className:
+					"mt-20 text-white bg-navbarColor font-semibold text-xl justify-center w-auto",
+				duration: 2000,
+			});
       return {
         id: data.id,
         cereal: data.cereal,
