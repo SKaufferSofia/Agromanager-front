@@ -1,4 +1,10 @@
-import { IPlotsDashboardType, IPlotsType, Labors, Supply, SupplyApplied } from "@/interfaces/interfaces";
+import {
+  IPlotsDashboardType,
+  IPlotsType,
+  Labors,
+  Supply,
+  SupplyApplied,
+} from "@/interfaces/interfaces";
 import { IUser } from "@/interfaces/interfacesUser";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -6,7 +12,7 @@ interface InitialState {
   isLoggin: boolean;
   token: string;
   userData: IUser;
-  plot: IPlotsDashboardType[];
+  plot: IPlotsType[];
   stock: Supply[];
   edit: string;
 }
@@ -42,11 +48,11 @@ export const someSlice = createSlice({
     saveUserData: (state, action: PayloadAction<IUser>) => {
       state.userData = action.payload;
     },
-    savePlot: (state, action: PayloadAction<IPlotsDashboardType[]>) => {
+    savePlot: (state, action: PayloadAction<IPlotsType[]>) => {
       state.plot = action.payload;
     },
 
-    addPlot: (state, action: PayloadAction<IPlotsDashboardType>) => {
+    addPlot: (state, action: PayloadAction<IPlotsType>) => {
       state.plot.push(action.payload);
     },
     saveStock: (state, action: PayloadAction<Supply[]>) => {
@@ -79,15 +85,16 @@ export const someSlice = createSlice({
         plot.labors = labors;
       }
     },
-      updateSupplies: (
+    updateSupplies: (
       state,
-      action: PayloadAction<{ plotId: string; supplies: SupplyApplied[] }>
+      action: PayloadAction<{ plotId: string; supplies: any[] }>
     ) => {
       const { plotId, supplies } = action.payload;
       const plot = state.plot.find((plot) => plot.id === plotId);
       if (plot) {
         plot.supplies = supplies;
-      }}
+      }
+    },
   },
 });
 
@@ -102,6 +109,6 @@ export const {
   updateStock,
   edit,
   updateLabors,
-  updateSupplies
+  updateSupplies,
 } = someSlice.actions;
 export default someSlice.reducer;
