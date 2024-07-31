@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
@@ -19,8 +18,6 @@ const AddLaborInput: React.FC<AddLaborInputProps> = ({ plotId }) => {
 	const [price, setPrice] = useState("");
 	const [surface, setSurface] = useState("");
 	const token = useSelector((state: RootState) => state.token);
-	const plots = useSelector((state: RootState) => state.plot);
-
 	const dispatch = useDispatch();
 	const { updatePlotsStorage } = useDataPlot();
 

@@ -5,21 +5,17 @@ import { Supply } from "@/interfaces/interfaces";
 const API_PUBLIC = NEXT_PUBLIC_API_URL;
 import { saveStock, updateStock } from "@/redux/reducer";
 export const fetchSupplies = async (
-  id: string,
+  userId: string,
   token: string,
   setStock: (supply: Supply[]) => void
 ) => {
   try {
-    const response = await axios.get(`${API_PUBLIC}/supplies/${id}`, {
+    const response = await axios.get(`${API_PUBLIC}/supplies/${userId}`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkMDExNzA3ZC01NzE1LTQ4OGEtODIwYS1jZDFkZjUxMTY5MGQiLCJlbWFpbCI6Im5pY29sYXMuZy5wYW5kbzJAZ21haWwuY29tIiwicm9sZXMiOlt7ImlkIjoxLCJuYW1lIjoidXNlciJ9XSwiaWF0IjoxNzIyNDM5ODg3LCJleHAiOjE3MjI1MjYyODd9.zXZJmuicQdshjN3B-ps0MrU_oh4u0Zfx97bQMKWHuyI",
       },
     });
-    if (response.data.length === 0) {
-      {
-        throw new Error("No hay plots para este usuario");
-      }
-    }
     setStock(response.data);
     return response.data;
   } catch (error) {
