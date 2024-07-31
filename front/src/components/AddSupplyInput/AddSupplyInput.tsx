@@ -6,20 +6,7 @@ import { NEXT_PUBLIC_API_URL } from "@/lib/server/envs";
 import { Category, IPlotsType, Supply } from "@/interfaces/interfaces";
 import { RootState } from "@/redux/store";
 import { updateSupplies } from "@/redux/reducer";
-
-const updatePlotsStorageWithSupplies = (plotId: string, supplies: Supply[]) => {
-	const plotsStorage = localStorage.getItem("plots");
-	if (plotsStorage) {
-		const parsedPlotsStorage = JSON.parse(plotsStorage);
-		const plot = parsedPlotsStorage.find(
-			(plot: IPlotsType) => plot.id === plotId
-		);
-		if (plot) {
-			plot.supplies = supplies;
-			localStorage.setItem("plots", JSON.stringify(parsedPlotsStorage));
-		}
-	}
-};
+import useDataPlot from "@/hooks/useDataPlot";
 
 interface AddSupplyInputProps {
 	plotId: string;
@@ -32,12 +19,10 @@ const AddSupplyInput: React.FC<AddSupplyInputProps> = ({ plotId }) => {
 	const [activeCategory, setActiveCategory] = useState<Category | null>(null);
 	const [supplyId, setSupplyId] = useState("");
 	const [quantity, setQuantity] = useState("");
-
 	const userId = useSelector((state: RootState) => state.userData.id);
 	const token = useSelector((state: RootState) => state.token);
-	const plots = useSelector((state: RootState) => state.plot);
-	console.log(plots);
 	const dispatch = useDispatch();
+	const { updatePlotsStorageWithSupplies } = useDataPlot();
 
 	useEffect(() => {
 		const getSuppliesByUser = async () => {
@@ -53,9 +38,19 @@ const AddSupplyInput: React.FC<AddSupplyInputProps> = ({ plotId }) => {
 					);
 					const data = response.data;
 					setSupplies(data);
-					setCategories(
-						data.map((supply: Supply) => supply.category)
-					);
+
+					const uniqueCategories = Array.from(
+						new Set(
+							data.map((supply: Supply) => supply.category.id)
+						)
+					).map(
+						(id) =>
+							data.find(
+								(supply: Supply) => supply.category.id === id
+							)?.category
+					) as Category[];
+
+					setCategories(uniqueCategories);
 				} catch (error) {
 					console.error("Error fetching supplies:", error);
 				}
@@ -84,15 +79,7 @@ const AddSupplyInput: React.FC<AddSupplyInputProps> = ({ plotId }) => {
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
-		console.log("Submitting data:", {
-			supplyId,
-			plotId: plotId,
-			quantity,
-		});
-		if (!plotId) {
-			console.error("Plot ID is missing");
-			return;
-		}
+
 		try {
 			const response = await axios.post(
 				`${NEXT_PUBLIC_API_URL}/plots/addSupply`,
@@ -107,8 +94,7 @@ const AddSupplyInput: React.FC<AddSupplyInputProps> = ({ plotId }) => {
 					},
 				}
 			);
-			console.log("Server response:", response);
-			const updatedSupplies: Supply[] = response.data.supplies;
+			const updatedSupplies: any[] = response.data.supplies;
 			dispatch(updateSupplies({ plotId, supplies: updatedSupplies }));
 			updatePlotsStorageWithSupplies(plotId, updatedSupplies);
 		} catch (error) {

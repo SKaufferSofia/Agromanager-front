@@ -1,4 +1,4 @@
-import { IPlotsType, Labors, Supply } from "@/interfaces/interfaces";
+import { IPlotsType, Labors, Supply, SupplyApplied } from "@/interfaces/interfaces";
 import { IUser } from "@/interfaces/interfacesUser";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -81,7 +81,7 @@ export const someSlice = createSlice({
     },
       updateSupplies: (
       state,
-      action: PayloadAction<{ plotId: string; supplies: Supply[] }>
+      action: PayloadAction<{ plotId: string; supplies: SupplyApplied[] }>
     ) => {
       const { plotId, supplies } = action.payload;
       const plot = state.plot.find((plot) => plot.id === plotId);
