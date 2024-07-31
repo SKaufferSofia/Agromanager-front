@@ -7,6 +7,7 @@ import { updateLabors } from "@/redux/reducer";
 import useDataPlot from "@/hooks/useDataPlot";
 import { RootState } from "@/redux/store";
 import { Labors } from "@/interfaces/interfaces";
+import { toast } from "sonner";
 
 interface AddLaborInputProps {
 	plotId: string;
@@ -44,6 +45,15 @@ const AddLaborInput: React.FC<AddLaborInputProps> = ({ plotId }) => {
 			const updatedLabors: Labors[] = response.data.labors;
 			dispatch(updateLabors({ plotId, labors: updatedLabors }));
 			updatePlotsStorage(plotId, updatedLabors);
+			toast("Labor Agregada", {
+				className:
+					"mt-20 text-white bg-navbarColor font-semibold text-xl justify-center w-auto",
+				duration: 3000,
+			});
+			setName("");
+			setContractor("");
+			setPrice("");
+			setSurface("");
 		} catch (error) {
 			console.error("Error creating labor:", error);
 		}

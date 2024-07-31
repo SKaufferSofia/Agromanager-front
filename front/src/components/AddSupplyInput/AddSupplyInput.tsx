@@ -7,7 +7,7 @@ import { Category, IPlotsType, Supply } from "@/interfaces/interfaces";
 import { RootState } from "@/redux/store";
 import { updateSupplies } from "@/redux/reducer";
 import useDataPlot from "@/hooks/useDataPlot";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 
 interface AddSupplyInputProps {
 	plotId: string;
@@ -100,8 +100,11 @@ const AddSupplyInput: React.FC<AddSupplyInputProps> = ({ plotId }) => {
 			toast("Insumo Agregado", {
 				className:
 					"mt-20 text-white bg-navbarColor font-semibold text-xl justify-center w-auto",
-				duration: 3000,
+				duration: 2000,
 			});
+			setQuantity("");
+			setCategories([]);
+			setSupplies([]);
 		} catch (error) {
 			console.error("Error creating supply:", error);
 		}
