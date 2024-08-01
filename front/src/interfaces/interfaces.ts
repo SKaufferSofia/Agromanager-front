@@ -100,5 +100,21 @@ export interface SupplyApplied {
   supply: Supply;
 }
 
+export interface IRole {
+  active: boolean
+}
+export interface IUser {
+  id: string;
+  name: string;
+  surname: string;
+  phone: string;
+  placeName: string;
+  email: string;
+  active: boolean;
+  plots: IPlotsType[];
+  supplies: Supply[];
+  roles: IRole[];
+}
+
 export type SaveDataPlot = (arg: IPlotsType[]) => void;
 export type AddDataPlot = (arg: IPlotsType) => void;

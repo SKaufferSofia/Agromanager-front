@@ -3,10 +3,11 @@
 import { fetchAllUsers } from "@/lib/server/petitionAdminInfo";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { IUser } from "@/interfaces/interfacesUser";
 
 const AdminDashboardCard = () => {
 	const token = useSelector((state: any) => state.token);
-	const [newArrayUsers, setNewArrayUsers] = useState<any[]>([]);
+	const [newArrayUsers, setNewArrayUsers] = useState<IUser[]>([]);
 
 	useEffect(() => {
 		const getAllUsers = async () => {
