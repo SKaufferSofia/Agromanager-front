@@ -3,10 +3,17 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { NEXT_PUBLIC_API_URL } from "@/lib/server/envs";
-import { Category, IPlotsType, Supply } from "@/interfaces/interfaces";
+import {
+  Category,
+  IPlotsType,
+  Supply,
+  SupplyApplied,
+} from "@/interfaces/interfaces";
 import { RootState } from "@/redux/store";
-import { updateSupplies } from "@/redux/reducer";
+import { saveStock, updateSupplies } from "@/redux/reducer";
 import useDataPlot from "@/hooks/useDataPlot";
+import { fetchSupplies } from "@/lib/server/petitionStock";
+import useDataStock from "@/hooks/useDataStock";
 
 interface AddSupplyInputProps {
   plotId: string;
@@ -22,28 +29,24 @@ const AddSupplyInput: React.FC<AddSupplyInputProps> = ({ plotId }) => {
   const userId = useSelector((state: RootState) => state.userData.id);
   const token = useSelector((state: RootState) => state.token);
   const dispatch = useDispatch();
-  const { updatePlotsStorageWithSupplies } = useDataPlot();
+  const { saveStockStorage } = useDataStock();
 
   useEffect(() => {
     const getSuppliesByUser = async () => {
       if (userId && token) {
         try {
-          const response = await axios.get(
-            `${NEXT_PUBLIC_API_URL}/supplies/${userId}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          const data = response.data;
-          setSupplies(data);
+          const response = await fetchSupplies(userId, token, (supplies) => {
+            dispatch(saveStock(supplies));
+            saveStockStorage(supplies);
+          });
+          setSupplies(response);
 
           const uniqueCategories = Array.from(
-            new Set(data.map((supply: Supply) => supply.category.id))
+            new Set(response.map((supply: Supply) => supply.category.id))
           ).map(
             (id) =>
-              data.find((supply: Supply) => supply.category.id === id)?.category
+              response.find((supply: Supply) => supply.category.id === id)
+                ?.category
           ) as Category[];
 
           setCategories(uniqueCategories);
@@ -89,9 +92,10 @@ const AddSupplyInput: React.FC<AddSupplyInputProps> = ({ plotId }) => {
           },
         }
       );
-      const updatedSupplies: any[] = response.data.supplies;
+      const updatedSupplies: SupplyApplied[] = response.data;
+      console.log("Updated supplies:", updatedSupplies);
+
       dispatch(updateSupplies({ plotId, supplies: updatedSupplies }));
-      updatePlotsStorageWithSupplies(plotId, updatedSupplies);
     } catch (error) {
       console.error("Error creating supply:", error);
     }

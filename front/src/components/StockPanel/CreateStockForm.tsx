@@ -2,9 +2,10 @@
 import React, { useState } from "react";
 import { Category, Measurement, Supply } from "@/interfaces/interfaces";
 import { createSupply, uploadImageSupply } from "@/lib/server/petitionStock";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useDataStock from "@/hooks/useDataStock";
 import MainButton from "../MainButton/MainButton";
+import { addStock } from "@/redux/reducer";
 
 interface CreateStockFormProps {
   categories: Category[];
@@ -26,8 +27,9 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
   const [imgFile, setImgFile] = useState<File | string>("");
   const userId = useSelector((state: any) => state.userData.id);
   const token = useSelector((state: any) => state.token);
+  const dispatch = useDispatch();
   //PROBANDO REDUCER Y LOCA LS.
-  const { saveStockStorage } = useDataStock();
+  const { addStockStorage } = useDataStock();
 
   //AL SUBMIT CREATE FORM
   const handleSubmit = async (e: React.FormEvent) => {
@@ -44,9 +46,16 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
         imgUrl: "",
       };
 
-      const newSupplyResponse = await createSupply(userId, newSupply, token);
+      const newSupplyResponse = await createSupply(
+        userId,
+        newSupply,
+        token,
+        (data) => {
+          dispatch(addStock(data));
+          addStockStorage(data);
+        }
+      );
       const createdSupplyId = newSupplyResponse.id;
-      console.log("New Supply Response:", newSupplyResponse);
 
       if (imgFile) {
         const uploadResponse = await uploadImageSupply(
@@ -60,7 +69,6 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
         };
 
         onNewSupply(updatedSupply);
-        saveStockStorage([updatedSupply]);
       } else {
         onNewSupply(newSupplyResponse);
       }

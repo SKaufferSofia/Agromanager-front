@@ -10,8 +10,9 @@ import {
 } from "@/interfaces/interfaces";
 import { NEXT_PUBLIC_API_URL } from "@/lib/server/envs";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import useDataPlot from "@/hooks/useDataPlot";
 
 interface DetailSupplyLaborCardProps {
   currentPlot: IPlotsDashboardType;
@@ -23,6 +24,8 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
   const [activeTab, setActiveTab] = useState("Labores");
   const [suppliesAdded, setFetchedSupplies] = useState<SupplyApplied[]>([]);
   const token = useSelector((state: RootState) => state.token);
+  const dispatch = useDispatch();
+  const { updatePlotsStorageWithSupplies } = useDataPlot();
 
   const calculateLaborTotalPrice = (items: Labors[] | null): number => {
     let totalPrice = 0;
@@ -73,6 +76,7 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
         }
         console.log("All fetched supplies:", suppliesByIds);
         setFetchedSupplies(suppliesByIds);
+        updatePlotsStorageWithSupplies(currentPlot.id, suppliesByIds);
       } catch (error) {
         console.error("Error fetching supplies:", error);
       }

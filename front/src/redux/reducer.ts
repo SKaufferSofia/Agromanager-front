@@ -84,6 +84,8 @@ export const someSlice = createSlice({
       action: PayloadAction<{ plotId: string; supplies: any[] }>
     ) => {
       const { plotId, supplies } = action.payload;
+      console.log(action.payload);
+
       const plot = state.plot.find((plot) => plot.id === plotId);
       if (plot) {
         plot.supplies = supplies;
