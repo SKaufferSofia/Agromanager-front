@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { StockEditFormProps, Supply } from "@/interfaces/interfaces";
 import useDataStock from "@/hooks/useDataStock";
 import { useDispatch, useSelector } from "react-redux";
-import { updateStock, saveStock, addStock } from "@/redux/reducer";
+import { updateStock } from "@/redux/reducer";
 import MainButton from "../MainButton/MainButton";
 
 const StockEditForm: React.FC<StockEditFormProps> = ({

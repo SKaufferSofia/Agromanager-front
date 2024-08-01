@@ -10,29 +10,31 @@ import { Supply } from "@/interfaces/interfaces";
 import { fetchSupplies } from "@/lib/server/petitionStock";
 import { useDispatch, useSelector } from "react-redux";
 import { saveStock, updateStock } from "@/redux/reducer";
+import useDataStock from "@/hooks/useDataStock";
 
 const StockDashboard: React.FC = () => {
-  const { savePlotsStorage } = useDataPlot();
   const userId = useSelector((state: any) => state.userData.id);
-  console.log(userId);
   const token = useSelector((state: any) => state.token);
-  console.log(token);
 
   const [supplies, setSupplies] = useState<Supply[]>([]);
 
   const [error, setError] = useState<string | null>(null);
   const dispatch = useDispatch();
   const edit = useSelector((state: any) => state.editStock);
+  const { saveStockStorage } = useDataStock();
 
   useEffect(() => {
-    const id = userId;
-
     if (userId && token) {
       const loadSupplies = async () => {
         try {
-          const suppliesData = await fetchSupplies(id, token, (supplies) => {
-            dispatch(saveStock(supplies));
-          });
+          const suppliesData = await fetchSupplies(
+            userId,
+            token,
+            (supplies) => {
+              dispatch(saveStock(supplies));
+              saveStockStorage(supplies);
+            }
+          );
           setSupplies(suppliesData);
         } catch (error) {
           console.log(error);
@@ -40,8 +42,6 @@ const StockDashboard: React.FC = () => {
       };
       loadSupplies();
     }
-
-    console.log(supplies);
   }, [edit, token, userId, dispatch]);
 
   const { plots, error: plotsError } = useFetchPlots(userId, token);

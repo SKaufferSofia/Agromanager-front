@@ -15,6 +15,7 @@ interface InitialState {
   plot: IPlotsType[];
   stock: Supply[];
   editStock: string[];
+  suppliesApplied: SupplyApplied[];
 }
 
 const initialState: InitialState = {
@@ -33,6 +34,7 @@ const initialState: InitialState = {
   plot: [],
   stock: [],
   editStock: [],
+  suppliesApplied: [],
 };
 
 export const someSlice = createSlice({
@@ -79,15 +81,13 @@ export const someSlice = createSlice({
         plot.labors = labors;
       }
     },
-    updateSupplies: (
-      state,
-      action: PayloadAction<{ plotId: string; supplies: any[] }>
-    ) => {
-      const { plotId, supplies } = action.payload;
-      const plot = state.plot.find((plot) => plot.id === plotId);
-      if (plot) {
-        plot.supplies = supplies;
-      }
+    updateSupplies: (state, action: PayloadAction<SupplyApplied[]>) => {
+      state.suppliesApplied.push(...action.payload);
+      console.log(action.payload);
+    },
+    saveSuppliesApplied: (state, action: PayloadAction<SupplyApplied[]>) => {
+      state.suppliesApplied = action.payload;
+      console.log(action.payload);
     },
   },
 });
@@ -104,5 +104,6 @@ export const {
   editStock,
   updateLabors,
   updateSupplies,
+  saveSuppliesApplied,
 } = someSlice.actions;
 export default someSlice.reducer;
