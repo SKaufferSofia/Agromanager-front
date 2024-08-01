@@ -99,7 +99,7 @@ const AddSupplyInput: React.FC<AddSupplyInputProps> = ({ plotId }) => {
 			updatePlotsStorageWithSupplies(plotId, updatedSupplies);
 			toast("Insumo Agregado", {
 				className:
-					"mt-20 text-white bg-navbarColor font-semibold text-xl justify-center w-auto",
+					"mt-20 text-white bg-footerColor font-semibold text-xl justify-center w-auto",
 				duration: 2000,
 			});
 			setQuantity("");

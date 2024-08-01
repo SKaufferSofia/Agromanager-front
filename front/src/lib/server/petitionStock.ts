@@ -12,8 +12,7 @@ export const fetchSupplies = async (
   try {
     const response = await axios.get(`${API_PUBLIC}/supplies/${userId}`, {
       headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkMDExNzA3ZC01NzE1LTQ4OGEtODIwYS1jZDFkZjUxMTY5MGQiLCJlbWFpbCI6Im5pY29sYXMuZy5wYW5kbzJAZ21haWwuY29tIiwicm9sZXMiOlt7ImlkIjoxLCJuYW1lIjoidXNlciJ9XSwiaWF0IjoxNzIyNDM5ODg3LCJleHAiOjE3MjI1MjYyODd9.zXZJmuicQdshjN3B-ps0MrU_oh4u0Zfx97bQMKWHuyI",
+        Authorization:`Bearer ${token}`,
       },
     });
     setStock(response.data);

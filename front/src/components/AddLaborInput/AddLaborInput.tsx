@@ -47,8 +47,8 @@ const AddLaborInput: React.FC<AddLaborInputProps> = ({ plotId }) => {
 			updatePlotsStorage(plotId, updatedLabors);
 			toast("Labor Agregada", {
 				className:
-					"mt-20 text-white bg-navbarColor font-semibold text-xl justify-center w-auto",
-				duration: 3000,
+					"mt-20 text-white bg-footerColor font-semibold text-xl justify-center w-auto",
+				duration: 5000,
 			});
 			setName("");
 			setContractor("");

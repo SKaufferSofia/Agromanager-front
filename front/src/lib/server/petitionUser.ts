@@ -16,7 +16,7 @@ export const petitionRegister = async (regiterData: IRegisterForm) => {
     const response = await axios.post(`${API}/auth/signup`, regiterData);
       toast("Registro exitoso", {
 				className:
-					"mt-20 text-white bg-navbarColor font-semibold text-xl justify-center w-auto",
+					"mt-20 text-white bg-footerColor font-semibold text-xl justify-center w-auto",
 				duration: 2000,
 			});
     return response.data;
@@ -47,7 +47,7 @@ export const PetitionLogin = async (
     cookieToken(response.data.token);
     toast("Login exitoso", {
 				className:
-					"mt-20 text-white bg-navbarColor font-semibold text-xl justify-center w-auto",
+					"mt-20 text-white bg-footerColor font-semibold text-xl justify-center w-auto",
 				duration: 2000,
 			});
     return true;
