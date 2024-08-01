@@ -103,11 +103,11 @@ export interface SupplyApplied {
 export interface IRole {
   active: boolean
 }
-export interface IUser {
+export interface IUserForAdmin {
   id: string;
   name: string;
   surname: string;
-  phone: string;
+  phone?: string;
   placeName: string;
   email: string;
   active: boolean;

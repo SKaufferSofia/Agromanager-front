@@ -1,13 +1,13 @@
 "use client";
 
-import { fetchAllUsers } from "@/lib/server/petitionAdminInfo";
+import { editUserById, fetchAllUsers } from "@/lib/server/petitionAdminInfo";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { IUser } from "@/interfaces/interfacesUser";
+import { IUserForAdmin } from "@/interfaces/interfaces";
 
 const AdminDashboardCard = () => {
 	const token = useSelector((state: any) => state.token);
-	const [newArrayUsers, setNewArrayUsers] = useState<IUser[]>([]);
+	const [newArrayUsers, setNewArrayUsers] = useState<IUserForAdmin[]>([]);
 
 	useEffect(() => {
 		const getAllUsers = async () => {
@@ -23,7 +23,14 @@ const AdminDashboardCard = () => {
 		getAllUsers();
 	}, [token]);
 	const handleEditClick = () => {
-		alert("clicked");
+		// if (token && userToEditId) {
+		// 	try {
+		// 		editUserById(token, userToEditId);
+		// 		alert("clicked");
+		// 	} catch (error) {
+		// 		console.error("Error fetching plots:", error);
+		// 	}
+		// }
 	};
 	return (
 		<div>

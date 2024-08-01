@@ -2,6 +2,7 @@ import { NEXT_PUBLIC_API_URL } from "./envs";
 import axios from "axios";
 
 const API_PUBLIC = NEXT_PUBLIC_API_URL;
+
 export const fetchAllUsers = async (
     token: string,
 )=> {
@@ -18,3 +19,22 @@ export const fetchAllUsers = async (
   }
 };
 
+export const editUserById = async (
+ userToEditId: string,
+  token: string,
+) => {
+  try {
+    const response = await axios.put(
+      `${API_PUBLIC}/users/${userToEditId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
