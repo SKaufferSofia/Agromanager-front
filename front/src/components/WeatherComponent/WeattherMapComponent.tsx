@@ -40,7 +40,7 @@ const MapComponent: React.FC = () => {
 		if (!mapRef.current) return;
 		map = new google.maps.Map(mapRef.current, {
 			zoom: 8,
-			center: { lat: -34.397, lng: 150.644 },
+			center: { lat: -38.416097, lng: -63.61667199999999 },
 			mapTypeControl: false,
 		});
 
