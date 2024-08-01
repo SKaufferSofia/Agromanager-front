@@ -23,8 +23,8 @@ export class PlotsService {
     
 
     async createPlot(plot: CreatePlotDto, id: string){
-        const {surface, cereal, latitude, longitude} = plot
-        return await this.plotsRepository.createPlot(surface, cereal, latitude, longitude, id)
+        const {surface, cereal} = plot
+        return await this.plotsRepository.createPlot(surface, cereal , id)
     }
 
     async addLabor(laborDto: AddLaborDto){

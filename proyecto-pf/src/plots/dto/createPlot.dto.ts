@@ -1,6 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsLatitude, IsNotEmpty, IsNumber, IsNumberString, IsOptional, IsString, IsUUID } from "class-validator";
-import { isFloat64Array } from "util/types";
+import { IsNotEmpty, IsString, IsUUID } from "class-validator";
 
 export class CreatePlotDto {
 
@@ -26,26 +25,5 @@ export class CreatePlotDto {
     @IsString()
     cereal: string;
     
-    @ApiProperty({
-        description: "La latitud del lote",
-        type: String,
-        example: "-36,1118",
-        required: false,
-        nullable: true
-    })
-    @IsOptional()
-    @IsString()
-    latitude: string
-
-
-    @ApiProperty({
-        description: "La longitud del lote",
-        type: String,
-        example: "-61,1118",
-        required: false,
-        nullable: true
-    })
-    @IsOptional()
-    @IsString()
-    longitude: string
+    
 }
