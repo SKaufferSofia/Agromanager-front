@@ -23,11 +23,27 @@ const AdminDashboardCard = () => {
 	}, [token]);
 	return (
 		<div>
-			<div className="bg-white shadow-md p-14 text-center">
+			<div className="bg-white shadow-md">
+				<div className="flex font-bold p-4 border-b border-gray-200">
+					<div className="flex-1">Nombre</div>
+					<div className="flex-1">Apellido</div>
+					<div className="flex-1">Contacto</div>
+					<div className="flex-1">Establecimiento</div>
+					<div className="flex-1">Activo</div>
+				</div>
 				{newArrayUsers &&
 					newArrayUsers.map((user, index) => (
-						<div className="flex justify-around p-4" key={index}>
-							<div className="flex-1">{user.name}</div>
+						<div
+							className="flex p-4 border-b border-gray-200"
+							key={index}
+						>
+							<div className="p-4 w-1/4">{user.name}</div>
+							<div className="p-4 w-1/4">{user.surname}</div>
+							<div className="p-4 w-1/4">{user.email}</div>
+							<div className="p-4 w-1/4">{user.placeName}</div>
+							<div className="p-4 w-1/4">
+								{user.active ? "Si" : "No"}
+							</div>
 						</div>
 					))}
 			</div>
