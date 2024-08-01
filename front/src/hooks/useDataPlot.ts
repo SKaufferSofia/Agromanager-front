@@ -82,6 +82,7 @@ const useDataPlot = () => {
   const clearPlotsStorage = () => {
     if (typeof window !== "undefined") {
       localStorage.removeItem("plots");
+      localStorage.removeItem("suppliesApplied");
     }
   };
 
