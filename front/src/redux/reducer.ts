@@ -5,7 +5,6 @@ import {
   Supply,
   SupplyApplied,
 } from "@/interfaces/interfaces";
-import { ISuscribe } from "@/interfaces/interfacesSupscriptions";
 import { IUser } from "@/interfaces/interfacesUser";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -17,8 +16,6 @@ interface InitialState {
   stock: Supply[];
   editStock: string[];
   suppliesApplied: SupplyApplied[];
-  selectedSubscription: ISuscribe | null;
-  paymentLink: string;
 }
 
 const initialState: InitialState = {
@@ -38,8 +35,6 @@ const initialState: InitialState = {
   stock: [],
   editStock: [],
   suppliesApplied: [],
-  selectedSubscription: null,
-  paymentLink: "",
 };
 
 export const someSlice = createSlice({
@@ -88,17 +83,11 @@ export const someSlice = createSlice({
     },
     updateSupplies: (state, action: PayloadAction<SupplyApplied[]>) => {
       state.suppliesApplied.push(...action.payload);
+      console.log(action.payload);
     },
     saveSuppliesApplied: (state, action: PayloadAction<SupplyApplied[]>) => {
       state.suppliesApplied = action.payload;
-    },
-
-    setSelectedSubscription: (state, action: PayloadAction<ISuscribe>) => {
-      state.selectedSubscription = action.payload;
-    },
-
-    paymentLink: (state, action: PayloadAction<string>) => {
-      state.paymentLink = action.payload;
+      console.log(action.payload);
     },
   },
 });
@@ -116,7 +105,5 @@ export const {
   updateLabors,
   updateSupplies,
   saveSuppliesApplied,
-  setSelectedSubscription,
-  paymentLink,
 } = someSlice.actions;
 export default someSlice.reducer;
