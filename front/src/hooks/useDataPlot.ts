@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { savePlot } from "@/redux/reducer";
+import { savePlot, saveSuppliesApplied, updateSupplies } from "@/redux/reducer";
 import {
   IPlotsType,
   Labors,
@@ -19,6 +19,19 @@ const useDataPlot = () => {
       }
     }
   }, [dispatch]);
+
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      const suppliesApplied = localStorage.getItem("suppliesApplied");
+      if (suppliesApplied) {
+        dispatch(saveSuppliesApplied(JSON.parse(suppliesApplied)));
+      }
+    }
+  }, [dispatch]);
+
+  const saveSuppliesAppliedStorage = (suppliesApplied: SupplyApplied[]) => {
+    localStorage.setItem("suppliesApplied", JSON.stringify(suppliesApplied));
+  };
 
   const savePlotsStorage = (plots: IPlotsType[]) => {
     localStorage.setItem("plots", JSON.stringify(plots));
@@ -53,12 +66,14 @@ const useDataPlot = () => {
   ) => {
     const plotsStorage = localStorage.getItem("plots");
     if (plotsStorage) {
-      const parsedPlotsStorage = JSON.parse(plotsStorage);
+      const parsedPlotsStorage = JSON.parse(
+        plotsStorage.length ? plotsStorage : "[]"
+      );
       const plot = parsedPlotsStorage.find(
         (plot: IPlotsType) => plot.id === plotId
       );
       if (plot) {
-        plot.supplies = supplies;
+        plot.supplies.push(...supplies);
         localStorage.setItem("plots", JSON.stringify(parsedPlotsStorage));
       }
     }
@@ -76,6 +91,7 @@ const useDataPlot = () => {
     updatePlotsStorage,
     clearPlotsStorage,
     updatePlotsStorageWithSupplies,
+    saveSuppliesAppliedStorage,
   };
 };
 

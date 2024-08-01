@@ -13,6 +13,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import useDataPlot from "@/hooks/useDataPlot";
+import { saveSuppliesApplied } from "@/redux/reducer";
 
 interface DetailSupplyLaborCardProps {
   currentPlot: IPlotsDashboardType;
@@ -24,8 +25,10 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
   const [activeTab, setActiveTab] = useState("Labores");
   const [suppliesAdded, setFetchedSupplies] = useState<SupplyApplied[]>([]);
   const token = useSelector((state: RootState) => state.token);
+  const supplies = useSelector((state: RootState) => state.suppliesApplied);
   const dispatch = useDispatch();
-  const { updatePlotsStorageWithSupplies } = useDataPlot();
+  console.log(supplies);
+  const { saveSuppliesAppliedStorage } = useDataPlot();
 
   const calculateLaborTotalPrice = (items: Labors[] | null): number => {
     let totalPrice = 0;
@@ -74,9 +77,8 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
             suppliesByIds.push(response.data)
           );
         }
-        console.log("All fetched supplies:", suppliesByIds);
-        setFetchedSupplies(suppliesByIds);
-        updatePlotsStorageWithSupplies(currentPlot.id, suppliesByIds);
+        dispatch(saveSuppliesApplied(suppliesByIds));
+        saveSuppliesAppliedStorage(suppliesByIds);
       } catch (error) {
         console.error("Error fetching supplies:", error);
       }
@@ -85,7 +87,7 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
   }, [currentPlot]);
 
   const totalLaborPrice = calculateLaborTotalPrice(currentPlot.labors);
-  const totalSupplyPrice = calculateSuppliesTotalPrice(suppliesAdded);
+  const totalSupplyPrice = calculateSuppliesTotalPrice(supplies);
 
   return (
     <div className=" mt-8 ">
@@ -125,8 +127,8 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
               <div className="flex-1">Precio</div>
               <div className="flex-1">Precio total</div>
             </div>
-            {suppliesAdded.length > 0 &&
-              suppliesAdded.map((supply) => (
+            {supplies &&
+              supplies.map((supply) => (
                 <div className="flex p-4" key={supply.id}>
                   <div className="flex-1">{supply.supply.name}</div>
                   <div className="flex-1">{supply.supply.provider}</div>

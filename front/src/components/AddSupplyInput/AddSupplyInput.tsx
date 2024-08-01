@@ -30,6 +30,7 @@ const AddSupplyInput: React.FC<AddSupplyInputProps> = ({ plotId }) => {
   const token = useSelector((state: RootState) => state.token);
   const dispatch = useDispatch();
   const { saveStockStorage } = useDataStock();
+  const { updatePlotsStorageWithSupplies } = useDataPlot();
 
   useEffect(() => {
     const getSuppliesByUser = async () => {
@@ -92,10 +93,18 @@ const AddSupplyInput: React.FC<AddSupplyInputProps> = ({ plotId }) => {
           },
         }
       );
-      const updatedSupplies: SupplyApplied[] = response.data;
-      console.log("Updated supplies:", updatedSupplies);
+      let updatedSuppliesArray: SupplyApplied[] = [];
 
-      dispatch(updateSupplies({ plotId, supplies: updatedSupplies }));
+      updatedSuppliesArray = [...updatedSuppliesArray, response.data];
+      dispatch(updateSupplies(updatedSuppliesArray));
+      updatePlotsStorageWithSupplies(plotId, updatedSuppliesArray);
+      // console.log("Updated supplies:", updatedSupplies);
+
+      // dispatch(updateSupplies(response.data));
+      // updatePlotsStorageWithSupplies(plotId, response.data);
+      // console.log("Updated supplies:", updatedSupplies);
+
+      // dispatch(updateSupplies({ plotId, supplies: updatedSupplies }));
     } catch (error) {
       console.error("Error creating supply:", error);
     }
