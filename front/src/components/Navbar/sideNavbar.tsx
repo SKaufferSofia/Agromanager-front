@@ -2,12 +2,18 @@
 import React, { useState } from "react";
 import { IPlotsNavbar, IPlotsType } from "@/interfaces/interfaces";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const SideNavbar: React.FC<IPlotsNavbar> = ({ plots }) => {
   const [isLotesOpen, setIsLotesOpen] = useState(false);
+  const router = useRouter();
 
   const toggleLotes = () => {
     setIsLotesOpen(!isLotesOpen);
+  };
+
+  const handlePlotsClick = () => {
+    router.push("/dashboard/plots");
   };
 
   return (
@@ -17,12 +23,13 @@ const SideNavbar: React.FC<IPlotsNavbar> = ({ plots }) => {
       </div>
       <div className="textColor mb-4">
         <h4
-          onClick={toggleLotes}
+          onClick={handlePlotsClick}
           className="cursor-pointer poppins-regular text-xl py-2 px-4 rounded hover:bg-white flex justify-between items-center"
         >
           Mis Lotes
           <svg
             xmlns="http://www.w3.org/2000/svg"
+            onClick={toggleLotes}
             className={`w-5 h-5 transform transition-transform ${
               isLotesOpen ? "rotate-180" : "rotate-0"
             }`}
@@ -55,7 +62,7 @@ const SideNavbar: React.FC<IPlotsNavbar> = ({ plots }) => {
       <div>
         <a href="/dashboard/stock">
           <h4 className="text-xl py-2 px-4 mt-4 poppins-regular textColor rounded hover:bg-white">
-            Stock
+            Inventario
           </h4>
         </a>
       </div>
