@@ -93,13 +93,16 @@ export const someSlice = createSlice({
     },
     saveSuppliesApplied: (state, action: PayloadAction<SupplyApplied[]>) => {
       state.suppliesApplied = action.payload;
-      console.log(action.payload);
+      // console.log(action.payload);
     },
     currentLatitude: (state, action: PayloadAction<string>) => {
       state.latitude = action.payload
+      console.log(action.payload)
     },
     currentLongitude: (state, action: PayloadAction<string>) => {
       state.longitude = action.payload
+      console.log(action.payload)
+
     }
   },
 });

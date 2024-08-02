@@ -6,9 +6,7 @@ import { createPlot } from "@/lib/server/petitionPlots";
 import { useDispatch } from "react-redux";
 import { addPlot } from "@/redux/reducer";
 import useDataPlot from "@/hooks/useDataPlot";
-import Map from "../WeatherComponent/WeattherMapComponent";
-import MapComponent from "../WeatherComponent/WeattherMapComponent";
-
+import Map from "../WeatherComponent/WeatherMapComponent";
 const PlotPanel: React.FC<PlotPanelProps> = ({ plots, setPlots }) => {
 	const dispatch = useDispatch();
 

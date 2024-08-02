@@ -1,6 +1,7 @@
 import { currentLatitude, currentLongitude } from "@/redux/reducer";
 import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
+import { API_KEY_WEATHER } from "@/lib/server/envs";
 
 declare global {
 	interface Window {
@@ -14,7 +15,6 @@ const MapComponent: React.FC = () => {
 	const responseRef = useRef<HTMLPreElement | null>(null);
 	const responseDivRef = useRef<HTMLDivElement | null>(null);
 	const submitButtonRef = useRef<HTMLInputElement | null>(null);
-	// const clearButtonRef = useRef<HTMLInputElement | null>(null);
 	const dispatch = useDispatch();
 
 	let map: google.maps.Map;
@@ -26,7 +26,7 @@ const MapComponent: React.FC = () => {
 
 		// Load Google Maps script
 		const script = document.createElement("script");
-		script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyClIbFxja8EUW8C0woPJMf_gSrHZh5K-2k&callback=initMap`;
+		script.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY_WEATHER}&callback=initMap`;
 		script.async = true;
 		document.head.appendChild(script);
 
@@ -75,12 +75,6 @@ const MapComponent: React.FC = () => {
 		);
 		submitButtonRef.current = submitButton;
 
-		// const clearButton = document.createElement("input");
-		// clearButton.type = "button";
-		// clearButton.value = "Clear";
-		// clearButton.classList.add("button", "button-secondary");
-		// clearButtonRef.current = clearButton;
-
 		const response = document.createElement("pre");
 		response.id = "response";
 		response.innerText = "";
@@ -107,7 +101,6 @@ const MapComponent: React.FC = () => {
 		);
 		map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputText);
 		map.controls[google.maps.ControlPosition.TOP_LEFT].push(submitButton);
-		// map.controls[google.maps.ControlPosition.TOP_LEFT].push(clearButton);
 		map.controls[google.maps.ControlPosition.LEFT_TOP].push(
 			instructionsElement
 		);
@@ -124,10 +117,6 @@ const MapComponent: React.FC = () => {
 		submitButton.addEventListener("click", () =>
 			geocode({ address: inputText.value })
 		);
-
-		// clearButton.addEventListener("click", () => {
-		// 	clear();
-		// });
 
 		clear();
 	};
