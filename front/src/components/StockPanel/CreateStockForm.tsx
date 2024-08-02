@@ -60,7 +60,8 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
       if (imgFile) {
         const uploadResponse = await uploadImageSupply(
           imgFile,
-          createdSupplyId
+          createdSupplyId,
+          token
         );
 
         const updatedSupply = {
@@ -89,6 +90,7 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
       setImgFile(e.target.files[0]);
     }
   };
+
   return (
     <div className="mb-8 bgColor w-[80%] mx-auto ">
       <h2 className="text-4xl poppins-bold text-gray-800">
@@ -162,11 +164,7 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
             </option>
           ))}
         </select>
-        <input
-          type="file"
-          onChange={handleImageChange}
-          className="px-4 py-2  "
-        />
+        <input type="file" onChange={handleImageChange} className="px-4 py-2" />
         <MainButton text="Crear Insumo" path="/dashboard/stock"></MainButton>
       </form>
     </div>
