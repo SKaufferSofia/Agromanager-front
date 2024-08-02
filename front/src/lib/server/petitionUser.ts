@@ -16,7 +16,7 @@ export const petitionRegister = async (regiterData: IRegisterForm) => {
     const response = await axios.post(`${API}/auth/signup`, regiterData);
       toast.success("Registro exitoso", {
 				className:
-					"mt-20 text-white bg-footerColor font-semibold text-xl justify-center w-auto",
+					"mt-20 text-white bg-footerColor font-semibold text-xl",
 				duration: 2000,
 			});
     return response.data;
@@ -24,7 +24,7 @@ export const petitionRegister = async (regiterData: IRegisterForm) => {
    if (axios.isAxiosError(error) && error.response) {
       const axiosError = error.response.data.message;
       toast.warning(axiosError, {
-      className: 'bg-red-500 text-white text-lg justify-center w-auto', 
+      className: 'bg-red-500 text-white text-lg', 
       duration: 5000,
     });
     }
@@ -47,7 +47,7 @@ export const PetitionLogin = async (
     cookieToken(response.data.token);
     toast.success("Login exitoso", {
 				className:
-					"mt-20 text-white bg-footerColor font-semibold text-xl justify-center w-auto",
+					"mt-20 text-white bg-footerColor font-semibold text-xl",
 				duration: 2000,
 			});
     return true;
@@ -55,7 +55,7 @@ export const PetitionLogin = async (
     if (axios.isAxiosError(error) && error.response) {
       const axiosError = error.response.data.message;
       toast.warning(axiosError, {
-      className: 'bg-red-500 text-white text-xl justify-center w-auto', 
+      className: 'bg-red-500 text-white text-xl', 
       duration: 2000,
     });
     }

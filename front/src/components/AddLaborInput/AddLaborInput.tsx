@@ -47,7 +47,7 @@ const AddLaborInput: React.FC<AddLaborInputProps> = ({ plotId }) => {
 			updatePlotsStorage(plotId, updatedLabors);
 			toast.success("Labor Agregada", {
 				className:
-					"mt-20 text-white bg-footerColor font-semibold text-xl justify-center w-auto",
+					"mt-20 text-white bg-footerColor font-semibold text-xl",
 				duration: 5000,
 			});
 			setName("");
@@ -58,8 +58,7 @@ const AddLaborInput: React.FC<AddLaborInputProps> = ({ plotId }) => {
 			if (axios.isAxiosError(error) && error.response) {
 				const axiosError = error.response.data.message;
 				toast.warning(axiosError, {
-					className:
-						"bg-red-500 text-white text-xl justify-center w-auto",
+					className: "bg-red-500 text-white text-xl ",
 					duration: 2000,
 				});
 			}

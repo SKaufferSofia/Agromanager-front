@@ -99,7 +99,7 @@ const AddSupplyInput: React.FC<AddSupplyInputProps> = ({ plotId }) => {
 			updatePlotsStorageWithSupplies(plotId, updatedSupplies);
 			toast.success("Insumo Agregado", {
 				className:
-					"mt-20 text-white bg-footerColor font-semibold text-xl justify-center w-auto",
+					"mt-20 text-white bg-footerColor font-semibold text-xl",
 				duration: 2000,
 			});
 			setQuantity("");
@@ -109,8 +109,7 @@ const AddSupplyInput: React.FC<AddSupplyInputProps> = ({ plotId }) => {
 			if (axios.isAxiosError(error) && error.response) {
 				const axiosError = error.response.data.message;
 				toast.warning(axiosError, {
-					className:
-						"bg-red-500 text-white text-lg justify-center w-auto",
+					className: "bg-red-500 text-white text-lg ",
 					duration: 3000,
 				});
 			}

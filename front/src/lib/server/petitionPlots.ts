@@ -48,7 +48,7 @@ export const createPlot = async (
     if (data && data.id && data.cereal && data.surface) {
         toast.success("Lote creado", {
 				className:
-					"mt-20 text-white bg-footerColor font-semibold text-xl justify-center w-auto",
+					"mt-20 text-white bg-footerColor font-semibold text-xl",
 				duration: 2000,
 			});
       return {
@@ -63,7 +63,7 @@ export const createPlot = async (
     if (axios.isAxiosError(error) && error.response) {
       const axiosError = error.response.data.message;
       toast.warning(axiosError, {
-      className: 'bg-red-500 text-white text-xl justify-center w-auto', 
+      className: 'bg-red-500 text-white text-xl ', 
       duration: 2000,
     });
     }
