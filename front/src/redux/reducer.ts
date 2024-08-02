@@ -16,9 +16,6 @@ interface InitialState {
   stock: Supply[];
   editStock: string[];
   suppliesApplied: SupplyApplied[];
-  latitude: string;
-  longitude: string;
-
 }
 
 const initialState: InitialState = {
@@ -33,14 +30,11 @@ const initialState: InitialState = {
     email: "",
     active: false,
     roles: [],
-  
   },
   plot: [],
   stock: [],
   editStock: [],
   suppliesApplied: [],
-  latitude: "",
-  longitude: "",
 };
 
 export const someSlice = createSlice({
@@ -95,21 +89,10 @@ export const someSlice = createSlice({
       state.suppliesApplied = action.payload;
       // console.log(action.payload);
     },
-    currentLatitude: (state, action: PayloadAction<string>) => {
-      state.latitude = action.payload
-      console.log(action.payload)
-    },
-    currentLongitude: (state, action: PayloadAction<string>) => {
-      state.longitude = action.payload
-      console.log(action.payload)
-
-    }
   },
 });
 
 export const {
-  currentLatitude,
-  currentLongitude,
   signIn,
   saveToken,
   saveUserData,
