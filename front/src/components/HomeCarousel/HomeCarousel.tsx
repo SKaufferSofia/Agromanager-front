@@ -3,6 +3,7 @@
 import React from "react";
 import { Carousel } from "@material-tailwind/react";
 import MainButton from "../MainButton/MainButton";
+import LandingButton from "../LandingButton/LandingButton";
 
 const HomeCarousel: React.FC = () => {
   const carousel = [
@@ -108,7 +109,7 @@ const HomeCarousel: React.FC = () => {
                 {itemCarousel.describe}
               </p>
               <div className="flex justify-center gap-2">
-                <MainButton text="Iniciar" path="/login" />
+                <LandingButton text="Iniciar" path="/login" />
               </div>
             </div>
           </div>
