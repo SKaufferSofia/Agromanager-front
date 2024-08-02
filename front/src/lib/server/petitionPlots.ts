@@ -46,7 +46,7 @@ export const createPlot = async (
     savePlot(data);
 
     if (data && data.id && data.cereal && data.surface) {
-        toast("Lote creado", {
+        toast.success("Lote creado", {
 				className:
 					"mt-20 text-white bg-footerColor font-semibold text-xl justify-center w-auto",
 				duration: 2000,

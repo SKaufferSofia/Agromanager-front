@@ -97,7 +97,7 @@ const AddSupplyInput: React.FC<AddSupplyInputProps> = ({ plotId }) => {
 			const updatedSupplies: any[] = response.data.supplies;
 			dispatch(updateSupplies({ plotId, supplies: updatedSupplies }));
 			updatePlotsStorageWithSupplies(plotId, updatedSupplies);
-			toast("Insumo Agregado", {
+			toast.success("Insumo Agregado", {
 				className:
 					"mt-20 text-white bg-footerColor font-semibold text-xl justify-center w-auto",
 				duration: 2000,

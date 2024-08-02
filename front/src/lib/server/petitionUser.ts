@@ -14,7 +14,7 @@ const API = NEXT_PUBLIC_API_URL;
 export const petitionRegister = async (regiterData: IRegisterForm) => {
   try {
     const response = await axios.post(`${API}/auth/signup`, regiterData);
-      toast("Registro exitoso", {
+      toast.success("Registro exitoso", {
 				className:
 					"mt-20 text-white bg-footerColor font-semibold text-xl justify-center w-auto",
 				duration: 2000,
@@ -25,7 +25,7 @@ export const petitionRegister = async (regiterData: IRegisterForm) => {
       const axiosError = error.response.data.message;
       toast.warning(axiosError, {
       className: 'bg-red-500 text-white text-lg justify-center w-auto', 
-      duration: 3000,
+      duration: 5000,
     });
     }
     return false;
@@ -45,7 +45,7 @@ export const PetitionLogin = async (
     signIn(response.data.isLoggin);
     userData(response.data.user);
     cookieToken(response.data.token);
-    toast("Login exitoso", {
+    toast.success("Login exitoso", {
 				className:
 					"mt-20 text-white bg-footerColor font-semibold text-xl justify-center w-auto",
 				duration: 2000,

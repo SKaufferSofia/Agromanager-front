@@ -45,7 +45,7 @@ const AddLaborInput: React.FC<AddLaborInputProps> = ({ plotId }) => {
 			const updatedLabors: Labors[] = response.data.labors;
 			dispatch(updateLabors({ plotId, labors: updatedLabors }));
 			updatePlotsStorage(plotId, updatedLabors);
-			toast("Labor Agregada", {
+			toast.success("Labor Agregada", {
 				className:
 					"mt-20 text-white bg-footerColor font-semibold text-xl justify-center w-auto",
 				duration: 5000,
