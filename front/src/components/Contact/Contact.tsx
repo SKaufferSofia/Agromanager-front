@@ -2,7 +2,7 @@ import React from "react";
 
 const ContactComponent: React.FC = () => {
   return (
-    <div className="m-8 max-w-[40%] sm:py-38">
+    <div className="m-8 max-w-[40%] sm:py-38 z-10">
       <div className="text-left">
         <h1 className="text-4xl font-bold tracking-tight text-textColor sm:text-5xl sm:p-4">
           Contáctanos

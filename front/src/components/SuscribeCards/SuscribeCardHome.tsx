@@ -3,6 +3,7 @@
 import React from "react";
 import SuscribeCardListHome from "./SuscribeCardListHome";
 import MainButton from "../MainButton/MainButton";
+import SuscribeListCardHome from "./SuscribeListCardHome";
 
 const SuscribeCardHome: React.FC = () => {
   const suscribes = [
@@ -35,7 +36,7 @@ const SuscribeCardHome: React.FC = () => {
   return (
     <div className="px-10 py-8">
       <div className="mb-8 text-center">
-        <h2 className="text-3xl font-bold text-textColor">
+        <h2 className="text-4xl poppins-bold-italic text-textColor mb-4">
           Planes de Suscripción
         </h2>
         <p className="text-lg text-opacity-80">
@@ -46,12 +47,10 @@ const SuscribeCardHome: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-x-20 gap-y-10 mt-12">
         {suscribes.map((suscribe) => (
           <div key={suscribe.id}>
-            <SuscribeCardListHome suscribe={suscribe} />
+            <SuscribeListCardHome suscribe={suscribe} />
+            {/* <SuscribeCardListHome suscribe={suscribe} /> */}
           </div>
         ))}
-        <div className="col-span-1 md:col-span-3 text-center">
-          <MainButton text="Suscribirse" path="/login" />
-        </div>
       </div>
     </div>
   );
