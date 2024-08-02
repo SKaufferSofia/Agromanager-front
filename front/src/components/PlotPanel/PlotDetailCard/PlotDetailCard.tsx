@@ -17,7 +17,7 @@ const PlotDetailCard: React.FC<PlotDetailCardProps> = ({
 		<div
 			className="w-full h-auto flex flex-col p-6 border border-gray-300 bg-white rounded-lg
                  transition-shadow duration-300 ease-in-out 
-                  hover:shadow-custom-green hover:bg-navbarColor"
+                  hover:shadow-custom-green hover:bg-altBgColor hover:text-white"
 		>
 			<div className="flex justify-between">
 				<p className="poppins-bold uppercase">Lote: {cereal}</p>
