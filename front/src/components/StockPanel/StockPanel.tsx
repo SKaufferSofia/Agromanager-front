@@ -53,7 +53,8 @@ const StockPanel: React.FC<StockPanelProps> = ({ supplies }) => {
       if (imgFile) {
         const uploadResponse = await uploadImageSupply(
           imgFile,
-          updatedSupply.id
+          updatedSupply.id,
+          token
         );
         supplyToUpdate = { ...supplyToUpdate, imgUrl: uploadResponse.imgUrl };
       }

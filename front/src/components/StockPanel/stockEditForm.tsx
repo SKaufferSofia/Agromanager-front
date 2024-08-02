@@ -77,13 +77,13 @@ const StockEditForm: React.FC<StockEditFormProps> = ({
           className="px-4 py-2 border rounded-lg"
         />
         <div className="flex justify-around col-span-2">
-          <MainButton text="Save" path="/dashboard/stock" />
+          <MainButton text="Guardar" path="/dashboard/stock" />
           <button
             type="button"
             onClick={onCancel}
             className="w-32 p-2 flex justify-center border-footerColor border-2 rounded-md shadow-sm text-sm font-medium text-footerColor hover:bg-gray-100 focus:ring-offset-2"
           >
-            Cancel
+            Cancelar
           </button>
         </div>
       </form>
