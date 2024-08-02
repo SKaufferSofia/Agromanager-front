@@ -24,12 +24,16 @@ const PlotDetailDashboard: React.FC = () => {
 	const plots = useSelector((state: any) => state.plot);
 	const [fetchedWeather, setFetchedWeather]: any = useState(null);
 
+	const currentPlot = plots.find(
+		(plot: IPlotsType) => String(plot.id) === idFromPath
+	);
+
 	useEffect(() => {
 		const fetchWeather = async () => {
 			console.log("Fetching weather for", latitude, longitude);
 			try {
 				const response = await axios.get(
-					`http://api.weatherapi.com/v1/current.json?key=${API_KEY_WEATHER_PROPS}&q=${latitude},${longitude}`
+					`http://api.weatherapi.com/v1/current.json?key=${API_KEY_WEATHER_PROPS}&q=${latitude},${longitude}&lang=es`
 				);
 
 				setFetchedWeather(response.data);
@@ -46,10 +50,6 @@ const PlotDetailDashboard: React.FC = () => {
 	if (fetchedWeather) {
 		console.log("Weather Data:", fetchedWeather);
 	}
-
-	const currentPlot = plots.find(
-		(plot: IPlotsType) => String(plot.id) === idFromPath
-	);
 
 	if (!currentPlot) {
 		return (
@@ -69,14 +69,21 @@ const PlotDetailDashboard: React.FC = () => {
 					Lote {currentPlot.cereal}
 				</h2>
 				<div>
-					<h1>Weather Information</h1>
+					<h1>Clima</h1>
 					{fetchedWeather ? (
 						<div>
-							<p>Location: {fetchedWeather.location.name}</p>
-
+							<p>Lugar: {fetchedWeather.location.name}</p>
 							<p>
-								Temperature: {fetchedWeather.current.temp_c} °C
+								Temperatura: {fetchedWeather.current.temp_c}°C
 							</p>
+
+							<picture>
+								<img
+									className="fit-picture"
+									src={fetchedWeather.current.condition.icon}
+									alt="Grapefruit slice atop a pile of other slices"
+								/>
+							</picture>
 
 							<p>
 								Condition:
