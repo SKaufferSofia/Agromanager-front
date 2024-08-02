@@ -10,7 +10,7 @@ interface StockTableProps {
 const TABLE_HEAD = [
   "Nombre",
   "Proveedor",
-  "Stock",
+  "Cantidad",
   "Precio",
   "Categoria",
   "Medidas",
@@ -123,7 +123,7 @@ const StockTable: React.FC<StockTableProps> = ({
                 colSpan={TABLE_HEAD.length}
                 className="p-4 text-center text-gray-500"
               >
-                No supplies available
+                No hay insumos disponibles
               </td>
             </tr>
           )}

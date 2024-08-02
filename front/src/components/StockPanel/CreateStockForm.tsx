@@ -103,39 +103,41 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
           placeholder="Nombre"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="px-4 py-2 border rounded-lg text-gray-400"
+          className="px-4 py-2 border rounded-lg text-gray-700 font-medium"
         />
         <input
           type="text"
           placeholder="Proveedor"
           value={provider}
           onChange={(e) => setProvider(e.target.value)}
-          className="px-4 py-2 border rounded-lg text-gray-400"
+          className="px-4 py-2 border rounded-lg text-gray-700 font-medium"
         />
         <div className="grid grid-cols-2 gap-2 bg-white rounded-lg">
-          <label className="py-2 px-4 text-gray-400">Stock</label>
+          <label className="py-2 px-4 text-gray-700 font-normal">
+            Cantidad
+          </label>
           <input
             type="number"
             placeholder="Stock"
             value={stock}
             onChange={(e) => setStock(Number(e.target.value))}
-            className="px-4 py-2 border rounded-lg "
+            className="px-4 py-2 border rounded-lg text-gray-700 font-medium"
           />
         </div>
         <div className="grid grid-cols-2 gap-2 bg-white rounded-lg">
-          <label className="py-2 px-4 text-gray-400">Precio</label>
+          <label className="py-2 px-4 text-gray-700 font-normal">Precio</label>
           <input
             type="number"
             placeholder="Precio"
             value={price}
             onChange={(e) => setPrice(Number(e.target.value))}
-            className="px-4 py-2 border rounded-lg"
+            className="px-4 py-2 border rounded-lg text-gray-700 font-medium"
           />
         </div>
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="px-4 py-2 border rounded-lg "
+          className="px-4 py-2 border rounded-lg text-gray-700 font-medium"
         >
           <option value="" className="text-gray-400">
             Selecciona Categoria
@@ -149,7 +151,7 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
         <select
           value={measurement}
           onChange={(e) => setMeasurement(e.target.value)}
-          className="px-4 py-2 border rounded-lg"
+          className="px-4 py-2 border rounded-lg text-gray-700 font-medium"
         >
           <option value="" className="text-gray-400">
             Selecciona Medida
