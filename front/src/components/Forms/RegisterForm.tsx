@@ -1,13 +1,25 @@
 "use client";
 import React from "react";
 import { validateRegister } from "@/helpers/validateRegister";
-import { petitionRegister } from "@/lib/server/petitionUser";
+import { PetitionLogin, petitionRegister } from "@/lib/server/petitionUser";
 import { useRouter } from "next/navigation";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import useForm from "@/hooks/useForm";
+import { ILoginForm } from "@/interfaces/interfacesUser";
+import { useDispatch } from "react-redux";
+import {
+  saveRegisterData,
+  saveToken,
+  saveUserData,
+  signIn,
+} from "@/redux/reducer";
+import Cookies from "js-cookie";
+import useUserData from "@/hooks/useUserData";
 
 const RegisterForm = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const { saveTokenStorage, saveUserDataStorage } = useUserData();
 
   const {
     regiterData,
@@ -37,8 +49,31 @@ const RegisterForm = () => {
     if (Object.keys(errorRegister).length === 0) {
       const registerSuccess = await petitionRegister(regiterData);
       if (registerSuccess) {
-        alert("registro exitoso");
-        router.push("/login");
+        const loginData: ILoginForm = {
+          email: regiterData.email,
+          password: regiterData.password,
+        };
+        dispatch(saveRegisterData(loginData));
+        const loginSuccess = await PetitionLogin(
+          loginData,
+          (token) => {
+            dispatch(saveToken(token));
+            saveTokenStorage(token);
+          },
+          (login) => {
+            dispatch(signIn(login));
+          },
+          (data) => {
+            dispatch(saveUserData(data));
+            saveUserDataStorage(data);
+          },
+          (data) => Cookies.set("token", data, { expires: 30 })
+        );
+
+        if (loginSuccess) {
+          alert("registrado exitoso");
+          router.push("/subscriptions");
+        }
       }
     } else {
       alert("complete todos los campos");
