@@ -21,7 +21,7 @@ const subscriptions: ISuscribe[] = [
     id: 3,
     title: "Suscripcion anual",
     price: 30,
-    unid: "mo",
+    unid: "an",
     describe:
       "Lorem ipsum dolor sit amet consect etur adipisicing elit. Itaque amet indis perferendis blanditiis repellendus etur quidem assumenda.Lorem ipsum dolor sit amet consect etur adipisicing elit. Itaque amet indis perferendis blanditiis repellendus etur quidem assumenda.",
   },

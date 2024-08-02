@@ -7,6 +7,8 @@ export interface IUser {
   phone?: string;
   roles: IRoles[];
   active: boolean;
+  freeTrialUsed: boolean;
+  premiumExpiration: Date;
 }
 
 export interface IRoles {

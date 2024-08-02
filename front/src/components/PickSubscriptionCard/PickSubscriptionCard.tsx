@@ -7,12 +7,17 @@ import { useRouter } from "next/navigation";
 import subscriptions from "@/helpers/subscriptions";
 import { useDispatch, useSelector } from "react-redux";
 import { ISuscribe } from "@/interfaces/interfacesSupscriptions";
-import { setSelectedSubscription } from "@/redux/reducer";
-import { petitionPaymentsMonthly } from "@/lib/server/petitionPayments";
+import { paymentLink, setSelectedSubscription } from "@/redux/reducer";
+import {
+  petitionPaymentsMonthly,
+  petitonPaymentsFree,
+} from "@/lib/server/petitionPayments";
+import useDataSubscription from "@/hooks/useDataSubscription";
 
 const PickSubscriptionCard: React.FC = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const { saveSubscriptionStorage } = useDataSubscription();
 
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const userId = useSelector((state: any) => state.userData.id);
@@ -25,18 +30,28 @@ const PickSubscriptionCard: React.FC = () => {
   };
 
   const paymentsMonth = async () => {
-    const response = await petitionPaymentsMonthly(userId);
-    console.log(response);
+    try {
+      const response = await petitionPaymentsMonthly(userId);
+      if (response) {
+        dispatch(paymentLink(response));
+        window.location.href = response;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleButtonClick = () => {
-    if (selectedCard === 1) {
-      router.push("/subscriptions/accept-subscription");
+  const handleButtonClick = async () => {
+    if (selectedCard && selectedSubscription) {
+      dispatch(setSelectedSubscription(selectedSubscription as ISuscribe));
+      saveSubscriptionStorage(selectedSubscription as ISuscribe);
+      if (selectedCard === 1) {
+        await petitonPaymentsFree(userId);
+        router.push("/subscriptions/accept-subscription");
+      } else if (selectedCard === 2) {
+        await paymentsMonth();
+      }
     }
-    // if (selectedCard) {
-    //   dispatch(setSelectedSubscription(selectedCard));
-    //   router.push("/subscriptions/accept-subscription");
-    // }
   };
 
   return (
@@ -45,8 +60,8 @@ const PickSubscriptionCard: React.FC = () => {
         <div key={subscription.id}>
           <PickSubscriptionListCard
             suscribe={subscription}
-            isChecked={selectedCard === subscription}
-            onClick={() => handleCardClick(subscription)}
+            isChecked={selectedCard === subscription.id}
+            onClick={() => handleCardClick(subscription.id)}
           />
         </div>
       ))}
