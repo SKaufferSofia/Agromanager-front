@@ -27,7 +27,7 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
 	const token = useSelector((state: RootState) => state.token);
 	const supplies = useSelector((state: RootState) => state.suppliesApplied);
 	const dispatch = useDispatch();
-	console.log(supplies);
+
 	const { saveSuppliesAppliedStorage } = useDataPlot();
 
 	const calculateLaborTotalPrice = (items: Labors[] | null): number => {
@@ -64,7 +64,9 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
 		const fetchSupplies = async () => {
 			try {
 				for (const id of newArrayId) {
-					const response = await axios.get(
+
+					await axios.get(
+
 						`${NEXT_PUBLIC_API_URL}/plots/supplies/applied/${id}`,
 						{
 							headers: {
@@ -72,6 +74,7 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
 							},
 						}
 					);
+
 				}
 				dispatch(saveSuppliesApplied(suppliesByIds));
 				saveSuppliesAppliedStorage(suppliesByIds);

@@ -81,7 +81,7 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
       setImgFile("");
       setMeasurement("");
     } catch (error) {
-      console.error("Error adding new stock:", error);
+      console.error("Error agregando un insumo:", error);
     }
   };
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,42 +91,57 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
   };
   return (
     <div className="mb-8 bgColor w-[80%] mx-auto ">
-      <h2 className="text-xl font-semibold text-gray-800">Create New Supply</h2>
-      <form className="grid grid-cols-2 gap-4" onSubmit={handleSubmit}>
+      <h2 className="text-4xl poppins-bold text-gray-800">
+        Crea un Nuevo Insumo
+      </h2>
+      <form
+        className="grid grid-cols-2 gap-4 mt-14 poppins-light"
+        onSubmit={handleSubmit}
+      >
         <input
           type="text"
-          placeholder="Name"
+          placeholder="Nombre"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="px-4 py-2 border rounded-lg"
+          className="px-4 py-2 border rounded-lg text-gray-700 font-medium"
         />
         <input
           type="text"
-          placeholder="Provider"
+          placeholder="Proveedor"
           value={provider}
           onChange={(e) => setProvider(e.target.value)}
-          className="px-4 py-2 border rounded-lg"
+          className="px-4 py-2 border rounded-lg text-gray-700 font-medium"
         />
-        <input
-          type="number"
-          placeholder="Stock"
-          value={stock}
-          onChange={(e) => setStock(Number(e.target.value))}
-          className="px-4 py-2 border rounded-lg"
-        />
-        <input
-          type="number"
-          placeholder="Price"
-          value={price}
-          onChange={(e) => setPrice(Number(e.target.value))}
-          className="px-4 py-2 border rounded-lg"
-        />
+        <div className="grid grid-cols-2 gap-2 bg-white rounded-lg">
+          <label className="py-2 px-4 text-gray-700 font-normal">
+            Cantidad
+          </label>
+          <input
+            type="number"
+            placeholder="Stock"
+            value={stock}
+            onChange={(e) => setStock(Number(e.target.value))}
+            className="px-4 py-2 border rounded-lg text-gray-700 font-medium"
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-2 bg-white rounded-lg">
+          <label className="py-2 px-4 text-gray-700 font-normal">Precio</label>
+          <input
+            type="number"
+            placeholder="Precio"
+            value={price}
+            onChange={(e) => setPrice(Number(e.target.value))}
+            className="px-4 py-2 border rounded-lg text-gray-700 font-medium"
+          />
+        </div>
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="px-4 py-2 border rounded-lg"
+          className="px-4 py-2 border rounded-lg text-gray-700 font-medium"
         >
-          <option value="">Select Category</option>
+          <option value="" className="text-gray-400">
+            Selecciona Categoria
+          </option>
           {categories.map((cat) => (
             <option key={cat.id} value={cat.id}>
               {cat.name}
@@ -136,9 +151,11 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
         <select
           value={measurement}
           onChange={(e) => setMeasurement(e.target.value)}
-          className="px-4 py-2 border rounded-lg"
+          className="px-4 py-2 border rounded-lg text-gray-700 font-medium"
         >
-          <option value="">Select Measurement</option>
+          <option value="" className="text-gray-400">
+            Selecciona Medida
+          </option>
           {measurements.map((mes) => (
             <option key={mes.id} value={mes.id}>
               {mes.name}
@@ -148,9 +165,9 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
         <input
           type="file"
           onChange={handleImageChange}
-          className="px-4 py-2 border rounded-lg"
+          className="px-4 py-2  "
         />
-        <MainButton text="Crear Stock" path="/dashboard/stock"></MainButton>
+        <MainButton text="Crear Insumo" path="/dashboard/stock"></MainButton>
       </form>
     </div>
   );

@@ -7,20 +7,37 @@ import {
 } from "@/interfaces/interfaces";
 import { IUser } from "@/interfaces/interfacesUser";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ISuscribe } from "@/interfaces/interfacesSupscriptions";
+
+const savedSubscription =
+  typeof window !== "undefined"
+    ? JSON.parse(localStorage.getItem("subscription") || "null")
+    : null;
 
 interface InitialState {
   isLoggin: boolean;
   token: string;
+  registerData: {
+    email: string;
+    password: string;
+  };
   userData: IUser;
   plot: IPlotsType[];
   stock: Supply[];
   editStock: string[];
   suppliesApplied: SupplyApplied[];
+  selectedSubscription: ISuscribe | null;
+  paymentLink: string;
+  subscription: ISuscribe;
 }
 
 const initialState: InitialState = {
   isLoggin: false,
   token: "",
+  registerData: {
+    email: "",
+    password: "",
+  },
   userData: {
     id: "",
     name: "",
@@ -35,6 +52,15 @@ const initialState: InitialState = {
   stock: [],
   editStock: [],
   suppliesApplied: [],
+  selectedSubscription: savedSubscription, // Cargar la suscripción desde localStorage
+  subscription: {
+    id: 0,
+    title: "",
+    price: 0,
+    describe: "",
+    unid: "",
+  },
+  paymentLink: "",
 };
 
 export const someSlice = createSlice({
@@ -49,6 +75,12 @@ export const someSlice = createSlice({
     },
     saveUserData: (state, action: PayloadAction<IUser>) => {
       state.userData = action.payload;
+    },
+    saveRegisterData: (
+      state,
+      action: PayloadAction<{ email: string; password: string }>
+    ) => {
+      state.registerData = action.payload;
     },
     savePlot: (state, action: PayloadAction<IPlotsType[]>) => {
       state.plot = action.payload;
@@ -87,7 +119,16 @@ export const someSlice = createSlice({
     },
     saveSuppliesApplied: (state, action: PayloadAction<SupplyApplied[]>) => {
       state.suppliesApplied = action.payload;
+      // console.log(action.payload);
+    },
+    setSelectedSubscription: (state, action: PayloadAction<ISuscribe>) => {
+      state.selectedSubscription = action.payload;
       console.log(action.payload);
+      console.log(state.selectedSubscription);
+    },
+
+    paymentLink: (state, action: PayloadAction<string>) => {
+      state.paymentLink = action.payload;
     },
   },
 });
@@ -95,6 +136,7 @@ export const someSlice = createSlice({
 export const {
   signIn,
   saveToken,
+  saveRegisterData,
   saveUserData,
   savePlot,
   addPlot,
@@ -105,5 +147,7 @@ export const {
   updateLabors,
   updateSupplies,
   saveSuppliesApplied,
+  setSelectedSubscription,
+  paymentLink,
 } = someSlice.actions;
 export default someSlice.reducer;
