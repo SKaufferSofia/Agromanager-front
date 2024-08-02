@@ -54,7 +54,7 @@ const PlotDetailDashboard: React.FC = () => {
 	if (!currentPlot) {
 		return (
 			<div className=" w-screen h-full flex flex-col sm:flex-row">
-				<h1 className="h-screen mt-24"> Plot ID not found</h1>;
+				<h1 className="h-screen mt-24">Lote no encontrado</h1>;
 			</div>
 		);
 	}
