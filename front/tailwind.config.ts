@@ -13,6 +13,7 @@ const config: Config = withMT({
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+          "custom-linear-gradient": "linear-gradient(#ABC7D9, #003049)",
       },
       colors: {
         bgColor: "#E9E7DD",

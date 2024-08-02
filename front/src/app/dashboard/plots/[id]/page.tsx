@@ -68,30 +68,23 @@ const PlotDetailDashboard: React.FC = () => {
 				<h2 className="text-4xl font-semibold text-center mb-4">
 					Lote {currentPlot.cereal}
 				</h2>
-				<div>
-					<h1>Clima</h1>
+				<div className="right-0 m-4 flex bg-custom-linear-gradient shadow-md rounded-full p-4 w-36 h-36 text-white mx-auto items-center justify-center">
 					{fetchedWeather ? (
-						<div>
-							<p>Lugar: {fetchedWeather.location.name}</p>
-							<p>
-								Temperatura: {fetchedWeather.current.temp_c}°C
-							</p>
-
-							<picture>
+						<div className=" text-center">
+							{fetchedWeather.current.temp_c}°C
+							<picture className="flex justify-center">
 								<img
-									className="fit-picture"
+									className="fit-picture w-20 h-20"
 									src={fetchedWeather.current.condition.icon}
-									alt="Grapefruit slice atop a pile of other slices"
+									alt="Weather icon"
 								/>
 							</picture>
-
-							<p>
-								Condition:
-								{fetchedWeather.current.condition.text}
-							</p>
+							{fetchedWeather.current.condition.text}
 						</div>
 					) : (
-						<p>Loading weather data...</p>
+						<p className="text-center text-lg font-medium">
+							Loading weather data...
+						</p>
 					)}
 				</div>
 				<div className="m-10 flex justify-around text-lg font-semibold">
