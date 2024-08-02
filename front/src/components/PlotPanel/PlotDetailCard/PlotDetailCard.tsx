@@ -20,7 +20,7 @@ const PlotDetailCard: React.FC<PlotDetailCardProps> = ({
                   hover:shadow-custom-green hover:bg-navbarColor"
 		>
 			<div className="flex justify-between">
-				<p className="poppins-bold uppercase">Plot: {cereal}</p>
+				<p className="poppins-bold uppercase">Lote: {cereal}</p>
 				<button>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -36,13 +36,15 @@ const PlotDetailCard: React.FC<PlotDetailCardProps> = ({
 			</div>
 			<hr className="my-2 border-gray-500" />
 			<p className="py-2">
-				<span className="poppins-medium">Surface: </span> {surface}{" "}
+				<span className="poppins-medium">Superficie: </span> {surface}{" "}
 				hectáreas
 			</p>
 			<div className="flex justify-between">
 				<p className="py-2">
-					<span className="poppins-medium">Labors Quantity: </span>{" "}
-					{labors?.length || "No labors"}
+					<span className="poppins-medium">
+						Cantidad de labores:{" "}
+					</span>{" "}
+					{labors?.length || "No hay labores"}
 				</p>
 				<Link href={`/dashboard/plots/${id}`} className="py-2">
 					<svg
@@ -70,11 +72,11 @@ const PlotDetailCard: React.FC<PlotDetailCardProps> = ({
 			</div>
 			<div className="flex justify-between">
 				<p className="py-2">
-					<span className="poppins-medium">Supplies Quantity: </span>
+					<span className="poppins-medium">Cantidad insumos: </span>
 					{supplies && supplies.length > 0 ? (
 						<span>{suppliesCount}</span>
 					) : (
-						"No supplies"
+						"No hay insumos"
 					)}
 				</p>
 				<Link href={`/dashboard/plots/${id}`} className="py-2">

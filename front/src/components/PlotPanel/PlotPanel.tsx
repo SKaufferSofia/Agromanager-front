@@ -53,7 +53,7 @@ const PlotPanel: React.FC<PlotPanelProps> = ({ plots, setPlots }) => {
 				setSurface("");
 			}
 		} catch (error) {
-			console.error("Error al crear el plot:", error);
+			console.error("Error al crear el Lote:", error);
 		}
 	};
 
@@ -61,11 +61,11 @@ const PlotPanel: React.FC<PlotPanelProps> = ({ plots, setPlots }) => {
 		<div className="w-full max-w-screen-lg min-h-screen mx-auto p-4 flex flex-col">
 			<div className="mb-8">
 				<h1 className="text-2xl font-bold text-start uppercase">
-					All of your plots{" "}
-					<span className="poppins-thin"> in one place.</span>
+					Todos tus lotes
+					<span className="poppins-thin"> En un solo lugar.</span>
 				</h1>
 				<h2 className="text-lg poppins-regular mt-10">
-					Add a new plot
+					Agregar un nuevo lote
 				</h2>
 				<form
 					className="flex flex-col md:flex-row gap-4 mt-4"
@@ -75,14 +75,14 @@ const PlotPanel: React.FC<PlotPanelProps> = ({ plots, setPlots }) => {
 						<input
 							type="text"
 							className="py-2 px-4 border border-gray-300 rounded-sm shadow-sm"
-							placeholder="Write Cereal"
+							placeholder="Tipo de cereal"
 							value={cereal}
 							onChange={handleCerealChange}
 						/>
 						<input
 							type="text"
 							className="py-2 px-4 border border-gray-300 rounded-sm shadow-sm mt-2 sm:mt-0"
-							placeholder="Write Surface"
+							placeholder="Superficie en Ha"
 							value={surface}
 							onChange={handleSurfaceChange}
 						/>
@@ -91,7 +91,7 @@ const PlotPanel: React.FC<PlotPanelProps> = ({ plots, setPlots }) => {
 						type="submit"
 						className="px-4 py-2 bg-blue-600 text-white rounded-lg"
 					>
-						Create Plot
+						Crear lote
 					</button>
 				</form>
 				<Map />
