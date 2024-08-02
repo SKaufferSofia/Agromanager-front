@@ -94,6 +94,7 @@ const PlotPanel: React.FC<PlotPanelProps> = ({ plots, setPlots }) => {
 						Create Plot
 					</button>
 				</form>
+				<Map />
 			</div>
 
 			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-16">
@@ -108,7 +109,6 @@ const PlotPanel: React.FC<PlotPanelProps> = ({ plots, setPlots }) => {
 					/>
 				))}
 			</div>
-			<Map />
 		</div>
 	);
 };
