@@ -57,8 +57,8 @@ const AddLaborInput: React.FC<AddLaborInputProps> = ({ plotId }) => {
 		} catch (error) {
 			if (axios.isAxiosError(error) && error.response) {
 				const axiosError = error.response.data.message;
-				toast.warning(axiosError, {
-					className: "bg-red-500 text-white text-xl ",
+				toast.warning("Debes completar todos los campos", {
+					className: "bg-red-500 text-white text-lg ",
 					duration: 2000,
 				});
 			}

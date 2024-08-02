@@ -62,7 +62,7 @@ export const createPlot = async (
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       const axiosError = error.response.data.message;
-      toast.warning(axiosError, {
+      toast.warning("Debes completar todos los campos", {
       className: 'bg-red-500 text-white text-xl ', 
       duration: 2000,
     });
