@@ -1,8 +1,8 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { StockEditFormProps, Supply } from "@/interfaces/interfaces";
 import useDataStock from "@/hooks/useDataStock";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateStock } from "@/redux/reducer";
 import MainButton from "../MainButton/MainButton";
 
@@ -13,10 +13,8 @@ const StockEditForm: React.FC<StockEditFormProps> = ({
   onImageChange,
 }) => {
   const [updatedSupply, setUpdatedSupply] = useState<Supply>(supply);
-  //PROBANDO REDUCER Y LOCAL.S
   const { updateStocksStorage } = useDataStock();
   const dispatch = useDispatch();
-  const { stock } = useSelector((state: any) => state);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -28,7 +26,6 @@ const StockEditForm: React.FC<StockEditFormProps> = ({
       onImageChange(e.target.files[0]);
     }
   };
-  //AL SUBMIT EDIT FORM
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,8 +36,8 @@ const StockEditForm: React.FC<StockEditFormProps> = ({
   };
 
   return (
-    <div className="mb-10 bgColor w-[80%] mx-auto ">
-      <h2 className="text-xl font-semibold text-gray-800">Edit Supply</h2>
+    <div className="bg-white w-[80%] mx-auto p-6 rounded-md shadow-lg">
+      <h2 className="text-xl font-semibold text-gray-800 mb-4">Edit Supply</h2>
       <form className="grid grid-cols-2 gap-4" onSubmit={handleSubmit}>
         <input
           type="text"
@@ -79,8 +76,8 @@ const StockEditForm: React.FC<StockEditFormProps> = ({
           onChange={handleImageChange}
           className="px-4 py-2 border rounded-lg"
         />
-        <div className="flex justify-around">
-          <MainButton text="Save" path="/dashboard/stock"></MainButton>
+        <div className="flex justify-around col-span-2">
+          <MainButton text="Save" path="/dashboard/stock" />
           <button
             type="button"
             onClick={onCancel}

@@ -10,21 +10,39 @@ const slides = [
   {
     src: image1,
     alt: "Lote agrícola",
-    title: "Gestiona Tus Lotes",
+    title: (
+      <span className="poppins-thin">
+        Gestiona tus{" "}
+        <span className="poppins-bold-italic uppercase"> lotes</span>
+        <hr className="border-[1px] border-gray-700 w-full"></hr>
+      </span>
+    ),
     description:
       "Crea y organiza tus lotes agrícolas de manera eficiente. Mantén un registro detallado de cada lote, incluyendo su ubicación, tamaño y estado actual.",
   },
   {
     src: image2,
     alt: "Labores agrícolas",
-    title: "Organiza Tus Labores",
+    title: (
+      <span className="poppins-thin">
+        Organiza tus{" "}
+        <span className="poppins-bold-italic uppercase">labores</span>
+        <hr className="border-[1px] border-gray-700 w-full"></hr>
+      </span>
+    ),
     description:
       "Supervisa todas las labores agrícolas, desde la siembra hasta la cosecha. Asigna tareas a contratistas y asegúrate de que todas las actividades se realicen a tiempo.",
   },
   {
     src: image3,
     alt: "Insumos agrícolas",
-    title: "Administra Tus Insumos",
+    title: (
+      <span className="poppins-thin">
+        Administra tus{" "}
+        <span className="poppins-bold-italic uppercase">insumos</span>
+        <hr className="border-[1px] border-gray-700 w-full"></hr>
+      </span>
+    ),
     description:
       "Mantén un control preciso de tus insumos agrícolas, como fertilizantes y herbicidas. Gestiona tu stock y asegúrate de tener siempre los productos necesarios.",
   },
@@ -62,7 +80,7 @@ const LandingCarousel: React.FC = () => {
             <h1 className="mb-4 text-2xl md:text-3xl lg:text-4xl text-textColor">
               {slide.title}
             </h1>
-            <p className="mb-16 text-base md:text-lg lg:text-md text-textColor opacity-80">
+            <p className="mb-16 w-3/4 mx-auto text-base md:text-lg lg:text-md text-textColor opacity-80">
               {slide.description}
             </p>
           </div>
