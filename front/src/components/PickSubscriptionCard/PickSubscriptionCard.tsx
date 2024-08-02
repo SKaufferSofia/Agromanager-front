@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import PickSubscriptionListCard from "./PickSubscriptionListCard";
 import MainButton from "../MainButton/MainButton";
 import { useRouter } from "next/navigation";
-import subscriptions from "@/helpers/subscriptions";
+import subscriptions from "@/utils/subscriptions";
 import { useDispatch, useSelector } from "react-redux";
 import { ISuscribe } from "@/interfaces/interfacesSupscriptions";
 import { paymentLink, setSelectedSubscription } from "@/redux/reducer";
