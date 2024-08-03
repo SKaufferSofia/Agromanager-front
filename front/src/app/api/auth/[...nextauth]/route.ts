@@ -1,14 +1,15 @@
 import NextAuth from "next-auth/next";
 import Google from "next-auth/providers/google";
+import { GOOGLE_ID, GOOGLE_SECRET, NEXTAUTH_SECRET } from "@/lib/server/envs";
 
 const handler = NextAuth({
   providers: [
     Google({
-      clientId: process.env.GOOGLE_ID || "",
-      clientSecret: process.env.GOOGLE_SECRET || "",
+      clientId: GOOGLE_ID || "",
+      clientSecret: GOOGLE_SECRET || "",
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, user, account }) {
       if (account) {
