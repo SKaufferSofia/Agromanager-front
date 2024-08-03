@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { API_KEY_WEATHER } from "@/lib/server/envs";
+import { saveLatitude, saveLongitude } from "@/redux/reducer";
 
 const KEY = API_KEY_WEATHER;
 console.log(KEY);
@@ -149,8 +150,8 @@ const MapComponent: React.FC = () => {
 
           latitude = location.lat();
           longitude = location.lng();
-          console.log("Latitude:", latitude);
-          console.log("longitude:", longitude);
+          dispatch(saveLatitude(String(latitude)));
+          dispatch(saveLongitude(String(longitude)));
         }
 
         return { latitude, longitude };
