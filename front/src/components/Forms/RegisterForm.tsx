@@ -11,7 +11,7 @@ import {
   saveRegisterData,
   saveToken,
   saveUserData,
-  signIn,
+  signInRedux,
 } from "@/redux/reducer";
 import Cookies from "js-cookie";
 import useUserData from "@/hooks/useUserData";
@@ -61,7 +61,7 @@ const RegisterForm = () => {
             saveTokenStorage(token);
           },
           (login) => {
-            dispatch(signIn(login));
+            dispatch(signInRedux(login));
           },
           (data) => {
             dispatch(saveUserData(data));
