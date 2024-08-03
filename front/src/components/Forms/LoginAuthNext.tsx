@@ -1,23 +1,54 @@
 "use client";
-import React from "react";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
+import { signIn, useSession } from "next-auth/react";
+import Cookies from "js-cookie";
 import { Button } from "@material-tailwind/react";
-import { getToken } from "next-auth/jwt";
+import { loginGoogle } from "@/lib/server/petitionUser";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { saveToken, saveUserData, signInRedux } from "@/redux/reducer";
+import useUserData from "@/hooks/useUserData";
 
 const LoginAuthNext = () => {
-  const router = useRouter();
   const { data: session, status } = useSession();
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const { saveTokenStorage, saveUserDataStorage } = useUserData();
 
-  if (status === "loading") {
-    return <p>Authenticating...</p>;
-  }
+  useEffect(() => {
+    if (session) {
+      saveDataBase();
+    }
+  }, [session]);
 
-  if (session) {
-    router.push("/dashboard/plots");
-  }
+  const saveDataBase = async () => {
+    const dataGoogle = Cookies.get("dataGoogle");
+    if (dataGoogle) {
+      const data = JSON.parse(dataGoogle);
 
-  const signInWithGoogle = () => {
+      const response = await loginGoogle(
+        data,
+        (token) => {
+          dispatch(saveToken(token));
+          saveTokenStorage(token);
+        },
+        (login) => {
+          dispatch(signInRedux(login));
+        },
+        (data) => {
+          dispatch(saveUserData(data));
+          saveUserDataStorage(data);
+        },
+        (data) => Cookies.set("token", data, { expires: 30 })
+      );
+
+      if (response) {
+        router.push("/dashboard/plots");
+      }
+    }
+  };
+
+  const signInWithGoogle = async () => {
     signIn("google");
   };
 
@@ -36,7 +67,6 @@ const LoginAuthNext = () => {
         />
         Continue con Google
       </Button>
-      {/* <button onClick={signInWithGoogle}>Iniciar sessión con Google</button> */}
     </div>
   );
 };

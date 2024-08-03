@@ -11,22 +11,22 @@ export async function middleware(request: NextRequest) {
   });
 
   // Definir las rutas públicas
-  const publicRoutes = [
-    "/login",
-    "/register",
-    "/",
-    "/home",
-    "/about",
-    "/contact",
-  ];
+  // const publicRoutes = [
+  //   "/login",
+  //   "/register",
+  //   "/",
+  //   "/home",
+  //   "/about",
+  //   "/contact",
+  // ];
 
-  // Redirigir a la página del dashboard si ya está autenticado
-  if (publicRoutes.includes(request.nextUrl.pathname)) {
-    if (token || tokenGoogle) {
-      return NextResponse.redirect(new URL("/dashboard/plots", request.url));
-    }
-    return NextResponse.next();
-  }
+  // // Redirigir a la página del dashboard si ya está autenticado
+  // if (publicRoutes.includes(request.nextUrl.pathname)) {
+  //   if (token || tokenGoogle) {
+  //     return NextResponse.redirect(new URL("/dashboard/plots", request.url));
+  //   }
+  //   return NextResponse.next();
+  // }
 
   // Definir las rutas protegidas
   const protectedRoutes = [
@@ -53,11 +53,23 @@ export async function middleware(request: NextRequest) {
     try {
       console.log("Token de Google decodificado:", tokenGoogle);
 
+      const { user } = tokenGoogle;
+
+      const loginData = JSON.stringify(user);
+
+      const response = NextResponse.next();
+
+      response.cookies.set("dataGoogle", loginData, {
+        maxAge: 60 * 60 * 24 * 30,
+      });
+
+      return response;
+
       // Desestructurar el objeto JSON del token
-      const { sub, email, name } = tokenGoogle;
-      console.log("Sub:", sub);
-      console.log("Email:", email);
-      console.log("Name:", name);
+      // const { sub, email, name } = tokenGoogle;
+      // console.log("Sub:", sub);
+      // console.log("Email:", email);
+      // console.log("Name:", name);
 
       // Puedes usar estas variables como necesites en tu lógica
     } catch (error) {

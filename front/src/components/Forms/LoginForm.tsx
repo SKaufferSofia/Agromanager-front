@@ -6,7 +6,7 @@ import useUserData from "@/hooks/useUserData";
 import { PetitionLogin } from "@/lib/server/petitionUser";
 import { validateLogin } from "@/helpers/valitateLogin";
 import { useDispatch } from "react-redux";
-import { signIn, saveToken, saveUserData } from "@/redux/reducer";
+import { signInRedux, saveToken, saveUserData } from "@/redux/reducer";
 import Cookies from "js-cookie";
 import LoginAuthNext from "./LoginAuthNext";
 
@@ -44,7 +44,7 @@ const LoginForm = () => {
           saveTokenStorage(token);
         },
         (login) => {
-          dispatch(signIn(login));
+          dispatch(signInRedux(login));
         },
         (data) => {
           dispatch(saveUserData(data));

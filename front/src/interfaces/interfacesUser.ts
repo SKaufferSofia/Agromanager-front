@@ -9,6 +9,13 @@ export interface IUser {
   active: boolean;
 }
 
+export interface IUserGoogle {
+  id: string;
+  name: string;
+  email: string;
+  picture?: string;
+}
+
 export interface IRoles {
   id: number;
   name: string;
@@ -40,3 +47,4 @@ export interface ILoginFormErrors {
 export type SignIn = (arg: boolean) => void;
 export type SaveToken = (arg: string) => void;
 export type SaveUserData = (arg: IUser) => void;
+export type SaveUserDataGoogle = (arg: IUserGoogle) => void;

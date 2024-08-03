@@ -13,6 +13,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import useDataStock from "@/hooks/useDataStock";
+import { signOut } from "next-auth/react";
 
 export default function ProfileMenu() {
   const router = useRouter();
@@ -22,6 +23,7 @@ export default function ProfileMenu() {
   const { clearStocksStorage } = useDataStock();
 
   const handleLogOut = () => {
+    signOut();
     logOut();
     clearPlotsStorage();
     clearStocksStorage();
