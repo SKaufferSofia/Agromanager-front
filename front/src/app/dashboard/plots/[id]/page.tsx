@@ -10,7 +10,7 @@ import { usePathname } from "next/navigation";
 import { IPlotsType } from "@/interfaces/interfaces";
 import MainButton from "@/components/MainButton/MainButton";
 import { RootState } from "@/redux/store";
-import { API_KEY_WEATHER_PROPS } from "@/lib/server/envs";
+import { API_WEATHER_PROPS } from "@/lib/server/envs";
 
 import axios from "axios";
 
@@ -32,7 +32,7 @@ const PlotDetailDashboard: React.FC = () => {
       const fetchWeather = async () => {
         try {
           const response = await axios.get(
-            `http://api.weatherapi.com/v1/current.json?key=${API_KEY_WEATHER_PROPS}&q=${currentPlot.latitude},${currentPlot.longitude}&lang=es`
+            `http://api.weatherapi.com/v1/current.json?key=${API_WEATHER_PROPS}&q=${currentPlot.latitude},${currentPlot.longitude}&lang=es`
           );
 
           setFetchedWeather(response.data);

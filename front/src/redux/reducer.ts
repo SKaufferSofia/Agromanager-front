@@ -27,6 +27,8 @@ interface InitialState {
   editStock: string[];
   suppliesApplied: SupplyApplied[];
   selectedSubscription: ISuscribe | null;
+  latitude: string;
+  longitude: string;
   paymentLink: string;
   subscription: ISuscribe;
 }
@@ -52,6 +54,8 @@ const initialState: InitialState = {
   stock: [],
   editStock: [],
   suppliesApplied: [],
+  latitude: "",
+  longitude: "",
   selectedSubscription: savedSubscription, // Cargar la suscripción desde localStorage
   subscription: {
     id: 0,
@@ -121,6 +125,12 @@ export const someSlice = createSlice({
       state.suppliesApplied = action.payload;
       // console.log(action.payload);
     },
+    saveLatitude: (state, action: PayloadAction<string>) => {
+      state.latitude = action.payload;
+    },
+    saveLongitude: (state, action: PayloadAction<string>) => {
+      state.longitude = action.payload;
+    },
     setSelectedSubscription: (state, action: PayloadAction<ISuscribe>) => {
       state.selectedSubscription = action.payload;
       console.log(action.payload);
@@ -147,6 +157,8 @@ export const {
   updateLabors,
   updateSupplies,
   saveSuppliesApplied,
+  saveLatitude,
+  saveLongitude,
   setSelectedSubscription,
   paymentLink,
 } = someSlice.actions;
