@@ -20,8 +20,7 @@ export const fetchAllUsers = async (
 };
 
 export const editUserById = async (
- userToEditId: string,
-  token: string,
+userToEditId: string, p0: { name: string; surname: string; phone: string | undefined; placeName: string; email: string; }, token: string,
 ) => {
   try {
     const response = await axios.put(

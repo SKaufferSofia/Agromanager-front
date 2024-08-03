@@ -4,10 +4,12 @@ import { editUserById, fetchAllUsers } from "@/lib/server/petitionAdminInfo";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { IUserForAdmin } from "@/interfaces/interfaces";
+import { IUser } from "@/interfaces/interfacesUser";
 
 const AdminDashboardCard = () => {
 	const token = useSelector((state: any) => state.token);
 	const [newArrayUsers, setNewArrayUsers] = useState<IUserForAdmin[]>([]);
+	const [userToEditId, setUserToEdit] = useState<string | undefined>();
 
 	useEffect(() => {
 		const getAllUsers = async () => {
@@ -22,16 +24,31 @@ const AdminDashboardCard = () => {
 		};
 		getAllUsers();
 	}, [token]);
-	const handleEditClick = () => {
-		// if (token && userToEditId) {
-		// 	try {
-		// 		editUserById(token, userToEditId);
-		// 		alert("clicked");
-		// 	} catch (error) {
-		// 		console.error("Error fetching plots:", error);
-		// 	}
-		// }
+
+	const handleEditClick = async (user: IUserForAdmin) => {
+		console.log("User to edit:", user);
+		console.log("User token:", token);
+		if (token) {
+			try {
+				const updatedUser = await editUserById(
+					user.id,
+					{
+						name: user.name,
+						surname: user.surname,
+						phone: user.phone,
+						placeName: user.placeName,
+						email: user.email,
+					},
+					token
+				);
+			} catch (error) {
+				console.error("Error updating user:", error);
+			}
+		} else {
+			console.error("No token available for authentication");
+		}
 	};
+
 	return (
 		<div>
 			<div className="bg-white shadow-md">
@@ -43,10 +60,10 @@ const AdminDashboardCard = () => {
 					<div className="flex-1">Activo</div>
 				</div>
 				{newArrayUsers &&
-					newArrayUsers.map((user, index) => (
+					newArrayUsers.map((user) => (
 						<div
 							className="flex p-4 border-b border-gray-200"
-							key={index}
+							key={user.id}
 						>
 							<div className="p-4 w-1/4">{user.name}</div>
 							<div className="p-4 w-1/4">{user.surname}</div>
@@ -56,7 +73,7 @@ const AdminDashboardCard = () => {
 								{user.active ? "Si" : "No"}
 							</div>
 							<div>
-								<button onClick={handleEditClick}>
+								<button onClick={() => handleEditClick(user)}>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										x="0px"
