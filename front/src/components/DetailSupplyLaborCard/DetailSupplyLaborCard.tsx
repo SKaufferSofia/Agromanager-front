@@ -27,7 +27,6 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
   const token = useSelector((state: RootState) => state.token);
   const supplies = useSelector((state: RootState) => state.suppliesApplied);
   const dispatch = useDispatch();
-  console.log(supplies);
   const { saveSuppliesAppliedStorage } = useDataPlot();
 
   const calculateLaborTotalPrice = (items: Labors[] | null): number => {
