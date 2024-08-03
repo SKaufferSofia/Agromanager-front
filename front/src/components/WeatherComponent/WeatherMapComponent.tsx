@@ -1,10 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { API_KEY_WEATHER } from "@/lib/server/envs";
+import { API_WEATHER } from "@/lib/server/envs";
 import { saveLatitude, saveLongitude } from "@/redux/reducer";
-
-const KEY = API_KEY_WEATHER;
-console.log(KEY);
 
 declare global {
   interface Window {
@@ -29,7 +26,7 @@ const MapComponent: React.FC = () => {
 
     // Load Google Maps script
     const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${KEY}&callback=initMap`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${API_WEATHER}&callback=initMap`;
     script.async = true;
     document.head.appendChild(script);
 
