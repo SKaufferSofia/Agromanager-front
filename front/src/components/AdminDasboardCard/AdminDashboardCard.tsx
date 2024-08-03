@@ -9,7 +9,7 @@ import { IUser } from "@/interfaces/interfacesUser";
 const AdminDashboardCard = () => {
 	const token = useSelector((state: any) => state.token);
 	const [newArrayUsers, setNewArrayUsers] = useState<IUserForAdmin[]>([]);
-	const [editUserData, setEditUserData] = useState<any>({
+	const [editUserData, setEditUserData] = useState<IUser>({
 		name: "",
 		surname: "",
 		phone: "",
@@ -17,7 +17,7 @@ const AdminDashboardCard = () => {
 		email: "",
 	});
 	const [showForm, setShowForm] = useState(false);
-	const [userToEdit, setUserToEdit] = useState();
+	const [userToEdit, setUserToEdit] = useState<IUserForAdmin | null>(null);
 
 	useEffect(() => {
 		const getAllUsers = async () => {
@@ -45,13 +45,16 @@ const AdminDashboardCard = () => {
 	const handleNewUserData = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 
-		setEditUserData((prevData: any) => ({
+		setEditUserData((prevData: IUser) => ({
 			...prevData,
 			[name]: value,
 		}));
 	};
-	const handleEditClick = async (userToEdit: any, editUserData: any) => {
-		if (token && editUserData) {
+	const handleEditClick = async (
+		userToEdit: IUserForAdmin | null,
+		editUserData: IUser
+	) => {
+		if (token && editUserData && userToEdit) {
 			try {
 				const requestBody = {
 					name: editUserData.name,
