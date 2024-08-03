@@ -10,6 +10,7 @@ import { ISuscribe } from "@/interfaces/interfacesSupscriptions";
 import { paymentLink, setSelectedSubscription } from "@/redux/reducer";
 import {
   petitionPaymentsMonthly,
+  petitionPaymentsYearly,
   petitonPaymentsFree,
 } from "@/lib/server/petitionPayments";
 import useDataSubscription from "@/hooks/useDataSubscription";
@@ -41,6 +42,18 @@ const PickSubscriptionCard: React.FC = () => {
     }
   };
 
+  const paymentsYear = async () => {
+    try {
+      const response = await petitionPaymentsYearly(userId);
+      if (response) {
+        dispatch(paymentLink(response));
+        window.location.href = response;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleButtonClick = async () => {
     if (selectedCard && selectedSubscription) {
       dispatch(setSelectedSubscription(selectedSubscription as ISuscribe));
@@ -50,6 +63,8 @@ const PickSubscriptionCard: React.FC = () => {
         router.push("/subscriptions/accept-subscription");
       } else if (selectedCard === 2) {
         await paymentsMonth();
+      } else if (selectedCard === 3) {
+        await paymentsYear();
       }
     }
   };

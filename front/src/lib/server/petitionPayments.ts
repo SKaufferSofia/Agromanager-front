@@ -26,3 +26,14 @@ export const petitionPaymentsMonthly = async (
     console.log(error);
   }
 };
+
+export const petitionPaymentsYearly = async (
+  userId: string
+): Promise<string | undefined> => {
+  try {
+    const response = await axios.get(`${API_PUBLIC}/payment/yearly/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

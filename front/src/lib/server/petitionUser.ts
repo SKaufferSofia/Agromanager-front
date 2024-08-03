@@ -46,3 +46,26 @@ export const PetitionLogin = async (
     return false;
   }
 };
+
+export const getUserById = async (
+  id: string,
+  token: string,
+  saveUser: SaveUserData
+): Promise<any> => {
+  try {
+    const response = await axios.get(`${API}/users/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    saveUser(response.data);
+    return response.data;
+  } catch (error: any) {
+    if (axios.isAxiosError(error) && error.response) {
+      const axiosError = error.response.data.message;
+      alert("error: " + axiosError);
+    }
+    return false;
+  }
+};
