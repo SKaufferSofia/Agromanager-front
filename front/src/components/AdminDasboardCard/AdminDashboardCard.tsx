@@ -62,6 +62,21 @@ const AdminDashboardCard = () => {
 				};
 
 				await editUserById(userToEdit.id, requestBody, token);
+
+				setEditUserData({
+					name: "",
+					surname: "",
+					phone: "",
+					placeName: "",
+					email: "",
+				});
+
+				alert(`Usuario editado correctamente:
+        Nombre: ${requestBody.name} ${requestBody.surname}
+        Teléfono: ${requestBody.phone}
+        Establecimiento: ${requestBody.placeName}
+        Email: ${requestBody.email}`);
+				setShowForm(false);
 			} catch (error) {
 				console.error("Error updating user:", error);
 			}
@@ -131,91 +146,96 @@ const AdminDashboardCard = () => {
 					))}
 			</div>
 			{showForm === true && (
-				<div className="mt-4 flex flex-col">
-					<h3>Editar usuario</h3>
-					<div>
-						<label className="block text-sm font-medium text-gray-700">
-							Nombre
-						</label>
-						<input
-							type="text"
-							name="name"
-							value={editUserData.name}
-							onChange={handleNewUserData}
-							placeholder="Nombre"
-							className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-						/>
-					</div>
-					<div>
-						<label className="block text-sm font-medium text-gray-700">
-							Apellido
-						</label>
-						<input
-							type="text"
-							name="surname"
-							value={editUserData.surname}
-							onChange={handleNewUserData}
-							placeholder="Apellido"
-							className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-						/>
-					</div>
-					<div>
-						<label className="block text-sm font-medium text-gray-700">
-							Contacto
-						</label>
-						<input
-							type="text"
-							name="phone"
-							value={editUserData.phone}
-							onChange={handleNewUserData}
-							placeholder="Contacto"
-							className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-						/>
-					</div>
-					<div>
-						<label className="block text-sm font-medium text-gray-700">
-							Establecimiento
-						</label>
-						<input
-							type="text"
-							name="placeName"
-							value={editUserData.placeName}
-							onChange={handleNewUserData}
-							placeholder="Establecimiento"
-							className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-						/>
-					</div>
-					<div>
-						<label className="block text-sm font-medium text-gray-700">
-							Email
-						</label>
-						<input
-							type="email"
-							name="email"
-							value={editUserData.email}
-							onChange={handleNewUserData}
-							placeholder="Email"
-							className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-						/>
-					</div>
-					<div className="flex justify-around">
+				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+					<div className="bg-white w-[80%] max-w-lg p-6 rounded-md shadow-lg relative">
+						<h3>Editar usuario</h3>
 						<div>
+							<label className="block text-sm font-medium text-gray-700">
+								Nombre
+							</label>
+							<input
+								type="text"
+								name="name"
+								value={editUserData.name}
+								onChange={handleNewUserData}
+								placeholder="Nombre"
+								className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+							/>
+						</div>
+						<div>
+							<label className="block text-sm font-medium text-gray-700">
+								Apellido
+							</label>
+							<input
+								type="text"
+								name="surname"
+								value={editUserData.surname}
+								onChange={handleNewUserData}
+								placeholder="Apellido"
+								className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+							/>
+						</div>
+						<div>
+							<label className="block text-sm font-medium text-gray-700">
+								Contacto
+							</label>
+							<input
+								type="text"
+								name="phone"
+								value={editUserData.phone}
+								onChange={handleNewUserData}
+								placeholder="Contacto"
+								className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+							/>
+						</div>
+						<div>
+							<label className="block text-sm font-medium text-gray-700">
+								Establecimiento
+							</label>
+							<input
+								type="text"
+								name="placeName"
+								value={editUserData.placeName}
+								onChange={handleNewUserData}
+								placeholder="Establecimiento"
+								className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+							/>
+						</div>
+						<div>
+							<label className="block text-sm font-medium text-gray-700">
+								Email
+							</label>
+							<input
+								type="email"
+								name="email"
+								value={editUserData.email}
+								onChange={handleNewUserData}
+								placeholder="Email"
+								className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+							/>
+						</div>
+						<div className="flex justify-around">
+							<div>
+								<button
+									onClick={() =>
+										handleEditClick(
+											userToEdit,
+											editUserData
+										)
+									}
+									className="mt-2 p-2 bg-navbarColor text-white rounded"
+								>
+									EDITAR
+								</button>
+							</div>
+
 							<button
-								onClick={() =>
-									handleEditClick(userToEdit, editUserData)
-								}
+								onClick={handleCancelButton}
 								className="mt-2 p-2 bg-navbarColor text-white rounded"
 							>
-								EDITAR
+								CANCELAR
 							</button>
 						</div>
-
-						<button
-							onClick={handleCancelButton}
-							className="mt-2 p-2 bg-navbarColor text-white rounded"
-						>
-							CANCELAR
-						</button>
 					</div>
 				</div>
 			)}
