@@ -31,7 +31,7 @@ const AdminDashboardCard = () => {
 			}
 		};
 		getAllUsers();
-	}, [token]);
+	}, [token, showForm]);
 
 	const handleOpenFormClick = (user: any) => {
 		setShowForm(true);
