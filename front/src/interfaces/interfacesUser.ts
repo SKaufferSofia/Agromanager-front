@@ -5,8 +5,8 @@ export interface IUser {
   placeName: string;
   email: string;
   phone?: string;
-  roles: IRoles[];
-  active: boolean;
+  roles?: IRoles[];
+  active?: boolean;
 }
 
 export interface IUserGoogle {
