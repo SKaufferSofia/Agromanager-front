@@ -6,7 +6,7 @@ import useUserData from "@/hooks/useUserData";
 import { PetitionLogin } from "@/lib/server/petitionUser";
 import { validateLogin } from "@/helpers/valitateLogin";
 import { useDispatch } from "react-redux";
-import { signIn, saveToken, saveUserData } from "@/redux/reducer";
+import { signInRedux, saveToken, saveUserData } from "@/redux/reducer";
 import Cookies from "js-cookie";
 import { toast } from "sonner";
 import LoginAuthNext from "./LoginAuthNext";
@@ -45,7 +45,7 @@ const LoginForm = () => {
           saveTokenStorage(token);
         },
         (login) => {
-          dispatch(signIn(login));
+          dispatch(signInRedux(login));
         },
         (data) => {
           dispatch(saveUserData(data));
@@ -54,12 +54,26 @@ const LoginForm = () => {
         (data) => Cookies.set("token", data, { expires: 30 })
       );
 
+      // Obtener el rol principal del usuario
+      const mainRole =
+        loginSuccess.user.roles
+          .map((role: any) => role.name)
+          .find((role: any) => role.includes("admin")) || "user";
+
+      // Guardar solo el rol principal en la cookie
+      Cookies.set("role", mainRole);
+
       if (loginSuccess) {
-        toast.success("Login exitoso", {
-          className: "mt-20 text-white bg-footerColor font-semibold text-xl",
-          duration: 2000,
-        });
-        router.push("/dashboard/plots");
+        if (loginSuccess.user.premiumExpiration === null) {
+          alert("Debe suscribirse");
+          router.push("/subscriptions");
+        } else if (mainRole === "admin") {
+          alert("Login exitoso");
+          router.push("/dashboard/admin-dashboard");
+        } else {
+          alert("Login exitoso");
+          router.push("/dashboard/plots");
+        }
       }
     } else {
       toast.warning("Complete todos los campos", {

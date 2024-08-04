@@ -1,6 +1,8 @@
 import {
   ILoginForm,
   IRegisterForm,
+  IUserGoogle,
+  SaveRoles,
   SaveToken,
   SaveUserData,
   SignIn,
@@ -37,14 +39,41 @@ export const PetitionLogin = async (
   signIn: SignIn,
   userData: SaveUserData,
   cookieToken: SaveToken
-): Promise<boolean> => {
+) => {
   try {
     const response = await axios.post(`${API}/auth/signin`, loginData);
     saveToken(response.data.token);
     signIn(response.data.isLoggin);
     userData(response.data.user);
     cookieToken(response.data.token);
-    return true;
+    return response.data;
+  } catch (error: any) {
+    if (axios.isAxiosError(error) && error.response) {
+      const axiosError = error.response.data.message;
+      alert("error: " + axiosError);
+    }
+    return false;
+  }
+};
+
+export const loginGoogle = async (
+  googleId: IUserGoogle,
+  saveToken: SaveToken,
+  signIn: SignIn,
+  userData: SaveUserData,
+  cookieToken: SaveToken
+): Promise<any> => {
+  try {
+    const response = await axios.post(`${API}/auth/google`, googleId, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    saveToken(response.data.token);
+    signIn(response.data.isLoggin);
+    userData(response.data.user);
+    cookieToken(response.data.token);
+    return response.data;
   } catch (error: any) {
     if (axios.isAxiosError(error) && error.response) {
       const axiosError = error.response.data.message;

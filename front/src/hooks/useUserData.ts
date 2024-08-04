@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { saveToken, saveUserData, signIn } from "@/redux/reducer";
+import { saveToken, saveUserData, signInRedux } from "@/redux/reducer";
 import { IUser } from "@/interfaces/interfacesUser";
 
 const useUserData = () => {
@@ -11,7 +11,7 @@ const useUserData = () => {
       const token = localStorage.getItem("token");
       if (token) {
         dispatch(saveToken(token));
-        dispatch(signIn(true));
+        dispatch(signInRedux(true));
       }
     }
   }, [dispatch]);
@@ -37,7 +37,7 @@ const useUserData = () => {
     if (typeof window !== "undefined") {
       localStorage.removeItem("token");
       localStorage.removeItem("userData");
-      dispatch(signIn(false));
+      dispatch(signInRedux(false));
     }
   };
 
