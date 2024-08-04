@@ -23,7 +23,7 @@ const StockTable: React.FC<StockTableProps> = ({
   handleEditClick,
 }) => {
   return (
-    <div className="overflow-x-auto p-4 w-full mx-auto">
+    <div className="w-full h-auto flex flex-col">
       <table className="table-auto w-full mx-auto glass-background shadow-lg shadow-gray-800 ">
         <thead>
           <tr>
