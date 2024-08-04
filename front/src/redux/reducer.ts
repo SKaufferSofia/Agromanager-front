@@ -7,19 +7,39 @@ import {
 } from "@/interfaces/interfaces";
 import { IUser } from "@/interfaces/interfacesUser";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ISuscribe } from "@/interfaces/interfacesSupscriptions";
+
+const savedSubscription =
+  typeof window !== "undefined"
+    ? JSON.parse(localStorage.getItem("subscription") || "null")
+    : null;
 
 interface InitialState {
   isLoggin: boolean;
   token: string;
+  registerData: {
+    email: string;
+    password: string;
+  };
   userData: IUser;
   plot: IPlotsType[];
   stock: Supply[];
   editStock: string[];
+  suppliesApplied: SupplyApplied[];
+  selectedSubscription: ISuscribe | null;
+  latitude: string;
+  longitude: string;
+  paymentLink: string;
+  subscription: ISuscribe;
 }
 
 const initialState: InitialState = {
   isLoggin: false,
   token: "",
+  registerData: {
+    email: "",
+    password: "",
+  },
   userData: {
     id: "",
     name: "",
@@ -33,6 +53,18 @@ const initialState: InitialState = {
   plot: [],
   stock: [],
   editStock: [],
+  suppliesApplied: [],
+  latitude: "",
+  longitude: "",
+  selectedSubscription: savedSubscription, // Cargar la suscripción desde localStorage
+  subscription: {
+    id: 0,
+    title: "",
+    price: 0,
+    describe: "",
+    unid: "",
+  },
+  paymentLink: "",
 };
 
 export const someSlice = createSlice({
@@ -47,6 +79,12 @@ export const someSlice = createSlice({
     },
     saveUserData: (state, action: PayloadAction<IUser>) => {
       state.userData = action.payload;
+    },
+    saveRegisterData: (
+      state,
+      action: PayloadAction<{ email: string; password: string }>
+    ) => {
+      state.registerData = action.payload;
     },
     savePlot: (state, action: PayloadAction<IPlotsType[]>) => {
       state.plot = action.payload;
@@ -79,15 +117,28 @@ export const someSlice = createSlice({
         plot.labors = labors;
       }
     },
-    updateSupplies: (
-      state,
-      action: PayloadAction<{ plotId: string; supplies: any[] }>
-    ) => {
-      const { plotId, supplies } = action.payload;
-      const plot = state.plot.find((plot) => plot.id === plotId);
-      if (plot) {
-        plot.supplies = supplies;
-      }
+    updateSupplies: (state, action: PayloadAction<SupplyApplied[]>) => {
+      state.suppliesApplied.push(...action.payload);
+      console.log(action.payload);
+    },
+    saveSuppliesApplied: (state, action: PayloadAction<SupplyApplied[]>) => {
+      state.suppliesApplied = action.payload;
+      // console.log(action.payload);
+    },
+    saveLatitude: (state, action: PayloadAction<string>) => {
+      state.latitude = action.payload;
+    },
+    saveLongitude: (state, action: PayloadAction<string>) => {
+      state.longitude = action.payload;
+    },
+    setSelectedSubscription: (state, action: PayloadAction<ISuscribe>) => {
+      state.selectedSubscription = action.payload;
+      console.log(action.payload);
+      console.log(state.selectedSubscription);
+    },
+
+    paymentLink: (state, action: PayloadAction<string>) => {
+      state.paymentLink = action.payload;
     },
   },
 });
@@ -95,6 +146,7 @@ export const someSlice = createSlice({
 export const {
   signIn,
   saveToken,
+  saveRegisterData,
   saveUserData,
   savePlot,
   addPlot,
@@ -104,5 +156,10 @@ export const {
   editStock,
   updateLabors,
   updateSupplies,
+  saveSuppliesApplied,
+  saveLatitude,
+  saveLongitude,
+  setSelectedSubscription,
+  paymentLink,
 } = someSlice.actions;
 export default someSlice.reducer;

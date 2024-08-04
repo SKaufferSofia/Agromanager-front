@@ -24,7 +24,7 @@ export const fetchPlots = async (
   }
 };
 export const createPlot = async (
-  plot: { surface: string; cereal: string },
+  plot: { surface: string; cereal: string; latitude: string; longitude: string},
   userId: string,
   token: string,
   savePlot: AddDataPlot
@@ -33,6 +33,7 @@ export const createPlot = async (
     const response = await axios.post(
       `${API_PUBLIC}/plots/create/${userId}`,
       plot,
+      
       {
         headers: {
           Authorization: `Bearer ${token}`,

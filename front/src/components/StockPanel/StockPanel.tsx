@@ -34,23 +34,17 @@ const StockPanel: React.FC<StockPanelProps> = ({ supplies }) => {
   );
 
   const token = useSelector((state: any) => state.token);
-
-  //PROBANDO REDUCER Y LOCAL.S
-
   const dispatch = useDispatch();
   const { updateStocksStorage } = useDataStock();
 
-  //AL EDITO FORM
   const handleEditClick = (supply: Supply) => {
     setEditingSupply(supply);
   };
 
-  //AL EDIT FORM
   const handleImageChange = (file: File | null) => {
     setImgFile(file);
   };
 
-  //AL SUBMIT EDIT FORM
   const handleEditSubmit = async (updatedSupply: Supply) => {
     if (!editingSupply) return;
 
@@ -59,7 +53,8 @@ const StockPanel: React.FC<StockPanelProps> = ({ supplies }) => {
       if (imgFile) {
         const uploadResponse = await uploadImageSupply(
           imgFile,
-          updatedSupply.id
+          updatedSupply.id,
+          token
         );
         supplyToUpdate = { ...supplyToUpdate, imgUrl: uploadResponse.imgUrl };
       }
@@ -86,12 +81,10 @@ const StockPanel: React.FC<StockPanelProps> = ({ supplies }) => {
     }
   };
 
-  //AL CREATE STOCK
   const handleNewSupply = (newSupply: Supply) => {
     setSuppliesUpdated((prevSupplies = []) => [...prevSupplies, newSupply]);
   };
 
-  //PIDO LAS CATEGORIAS Y MEDIDAS
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -120,13 +113,15 @@ const StockPanel: React.FC<StockPanelProps> = ({ supplies }) => {
   }, [supplies]);
 
   return (
-    <div className="w-full max-w-full bgColor min-h-screen flex-col">
-      <div className="w-[90%] mx-auto mt-8 mb-10">
-        <CreateStockForm
-          categories={categories}
-          measurements={measurements}
-          onNewSupply={handleNewSupply}
-        />
+    <div className="w-full max-w-full bgColor min-h-screen flex-col relative">
+      <div className="w-[90%] mx-auto mt-8 mb-10 z-10">
+        <div className={editingSupply ? "blurred" : ""}>
+          <CreateStockForm
+            categories={categories}
+            measurements={measurements}
+            onNewSupply={handleNewSupply}
+          />
+        </div>
 
         {error && (
           <div className="p-4 bg-red-500 text-white rounded-lg mb-6">
@@ -135,18 +130,22 @@ const StockPanel: React.FC<StockPanelProps> = ({ supplies }) => {
         )}
 
         {editingSupply && (
-          <StockEditForm
-            supply={editingSupply}
-            onSubmit={handleEditSubmit}
-            onCancel={() => setEditingSupply(null)}
-            onImageChange={handleImageChange}
-          />
+          <div className="absolute top-0 left-40  w-[75%] h-[50%] flex items-center justify-center z-20">
+            <StockEditForm
+              supply={editingSupply}
+              onSubmit={handleEditSubmit}
+              onCancel={() => setEditingSupply(null)}
+              onImageChange={handleImageChange}
+            />
+          </div>
         )}
 
-        <StockTable
-          supplies={suppliesUpdated}
-          handleEditClick={handleEditClick}
-        />
+        <div className={editingSupply ? "blurred" : ""}>
+          <StockTable
+            supplies={suppliesUpdated}
+            handleEditClick={handleEditClick}
+          />
+        </div>
       </div>
     </div>
   );

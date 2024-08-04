@@ -13,7 +13,8 @@ export const fetchSupplies = async (
   try {
     const response = await axios.get(`${API_PUBLIC}/supplies/${userId}`, {
       headers: {
-        Authorization:`Bearer ${token}`,
+
+        Authorization: `Bearer ${token}`,
       },
     });
     setStock(response.data);
@@ -54,7 +55,8 @@ export const createSupply = async (
     imgUrl: string;
   },
 
-  token: string
+  token: string,
+  addStock: (supply: Supply) => void
 ) => {
   try {
     const response = await axios.post(
@@ -66,6 +68,8 @@ export const createSupply = async (
         },
       }
     );
+
+    addStock(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -74,7 +78,8 @@ export const createSupply = async (
 
 export const uploadImageSupply = async (
   file: File | string,
-  supplyId: string
+  supplyId: string,
+  token: string
 ) => {
   try {
     const formData = new FormData();
@@ -82,7 +87,12 @@ export const uploadImageSupply = async (
     const response = await axios.post(
       `${API_PUBLIC}/files/uploadimage/${supplyId}`,
       formData,
-      { headers: { "Content-Type": "multipart/form-data" } }
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
     return response.data;
   } catch (error) {

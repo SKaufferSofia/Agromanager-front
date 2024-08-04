@@ -6,16 +6,24 @@ import icon2 from "../assets/icon-tractor.png";
 import icon3 from "../assets/icon-insumo.png";
 import MainButton from "@/components/MainButton/MainButton";
 import LandingButton from "@/components/LandingButton/LandingButton";
+import VideoContainer from "@/components/VideoContainer/VideoContainer";
 
 export default function Landing() {
   return (
     <main className="flex">
       <div className="relative">
-        <ImgContainer src="/img-landing.png" alt="scapelande-image">
+        {/* <ImgContainer src="/img-landing.png" alt="scapelande-image"> */}
+        <VideoContainer
+          src="/videos/4777160-uhd_3840_2160_30fps.mp4"
+          alt="landing video"
+        >
           <div className="mx-auto max-w-[80%] py-32 sm:py-38 lg:absolute lg:left-[10%]">
             <div className="text-center">
-              <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl sm:p-4">
-                Administra Tus Lotes Fácilmente
+              <h1 className="text-4xl font-light tracking-tight text-white sm:text-5xl sm:p-4">
+                Administra Tus Lotes{" "}
+                <span className="poppins-bold-italic uppercase">
+                  Fácilmente
+                </span>
               </h1>
               <p className="mt-6 text-lg leading-8 text-white">
                 Crea y gestiona lotes agrícolas, organiza labores y aplica
@@ -27,16 +35,19 @@ export default function Landing() {
               </div>
             </div>
           </div>
-        </ImgContainer>
-        <div className="w-full">
+          {/* </ImgContainer> */}
+        </VideoContainer>
+        <div className="w-full border-navbarColor border-8">
           <LandingCarousel />
         </div>
         <div className=" w-full bg-white">
           <div className="flex">
-            <div className="p-8 w-1/3 flex flex-col items-center text-center">
+            <div className="p-8 w-1/3 flex flex-col items-center text-center shadow-xl shadow-gray-600">
               <Image src={icon1} alt={"icon"} width={150} height={150} />
               <div className="text-textColor">
-                <h2 className="text-2xl mb-8 font-medium">Lotes</h2>
+                <h2 className="text-4xl mt-4 mb-8 poppins-regular-italic ">
+                  Lotes
+                </h2>
                 <p>
                   Gestiona fácilmente la creación y organización de lotes
                   agrícolas. Nuestra plataforma te permite mantener un registro
@@ -45,10 +56,12 @@ export default function Landing() {
                 </p>
               </div>
             </div>
-            <div className="p-8 w-1/3 flex flex-col items-center text-center">
+            <div className="p-8 w-1/3 flex flex-col items-center text-center shadow-xl shadow-gray-600">
               <Image src={icon2} alt={"icon"} width={150} height={150} />
               <div className="text-[#585858]">
-                <h2 className="text-2xl mb-8 font-medium">Labores</h2>
+                <h2 className="text-4xl mt-4 mb-8 poppins-regular-italic ">
+                  Labores
+                </h2>
                 <p>
                   Organiza y supervisa todas las labores agrícolas de tus lotes,
                   desde la siembra hasta la cosecha. Asigna tareas a
@@ -57,10 +70,12 @@ export default function Landing() {
                 </p>
               </div>
             </div>
-            <div className="p-8 w-1/3 flex flex-col items-center text-center">
+            <div className="p-8 w-1/3 flex flex-col items-center text-center shadow-xl shadow-gray-600">
               <Image src={icon3} alt={"icon"} width={150} height={150} />
               <div className="text-[#585858]">
-                <h2 className="text-2xl mb-8 font-medium">Insumos</h2>
+                <h2 className="text-4xl mt-4 mb-8 poppins-regular-italic ">
+                  Insumos
+                </h2>
                 <p>
                   Administra tu stock de insumos agrícolas, incluyendo
                   fertilizantes, herbicidas y otros productos esenciales. Mantén

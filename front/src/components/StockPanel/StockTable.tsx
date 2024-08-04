@@ -8,14 +8,14 @@ interface StockTableProps {
   handleEditClick: (supply: Supply) => void;
 }
 const TABLE_HEAD = [
-  "Name",
-  "Provider",
-  "Stock",
-  "Price",
-  "Category",
-  "Measurement",
-  "Image",
-  "Edit",
+  "Nombre",
+  "Proveedor",
+  "Cantidad",
+  "Precio",
+  "Categoria",
+  "Medidas",
+  "Imagen",
+  "Editar",
 ];
 
 const StockTable: React.FC<StockTableProps> = ({
@@ -23,14 +23,14 @@ const StockTable: React.FC<StockTableProps> = ({
   handleEditClick,
 }) => {
   return (
-    <div className="overflow-x-auto p-4 w-full mx-auto bg-white">
-      <table className="table-auto w-full mx-auto bg-white">
+    <div className="overflow-x-auto p-4 w-full mx-auto">
+      <table className="table-auto w-full mx-auto glass-background shadow-lg shadow-gray-800 ">
         <thead>
           <tr>
             {TABLE_HEAD.map((head) => (
               <th
                 key={head}
-                className="border-b bg-gray-100 p-4 text-left text-gray-600"
+                className="border-b bg-navbarColor bg-opacity-60 p-4 text-left text-lg text-gray-900 poppins-medium"
               >
                 {head}
               </th>
@@ -40,27 +40,46 @@ const StockTable: React.FC<StockTableProps> = ({
         <tbody>
           {supplies?.length > 0 ? (
             supplies.map((supply) => (
-              <tr key={supply.id}>
-                <td className="p-4">{supply.name}</td>
-                <td className="p-4">{supply.provider}</td>
-                <td className="p-4">
-                  <span className="inline-flex items-center px-4 py-2 rounded-full text-md poppins-light bg-green-300 text-green-900">
+              <tr
+                key={supply.id}
+                className="border-gray-400 border-y-2 hover:bg-gray-300  transition duration-150 ease-in-out"
+              >
+                <td className="p-4 text-navbarColor poppins-bold">
+                  {supply.name}
+                </td>
+                <td className="p-4 text-gray-900 poppins-light">
+                  {supply.provider}
+                </td>
+                <td className="p-4 text-gray-900 poppins-light">
+                  <span
+                    className={`p-[10px] inline-flex items-center w-10 h-10 text-center rounded-full text-md poppins-light ${
+                      supply.stock <= 5
+                        ? "bg-yellow-700 text-gray-900 p-[14px]"
+                        : "bg-light-green-700 text-gray-900"
+                    }`}
+                  >
                     {supply.stock}
                   </span>
                 </td>
-                <td className="p-4">${supply.price.toFixed(2)}</td>
-                <td className="p-4">{supply.category.name}</td>
-                <td className="p-4">{supply.measurement.name}</td>
+                <td className="p-4 text-gray-900 poppins-light">
+                  ${supply.price.toFixed(2)}
+                </td>
+                <td className="p-4 text-gray-900 poppins-light">
+                  {supply.category.name}
+                </td>
+                <td className="p-4 text-gray-900 poppins-light">
+                  {supply.measurement.name}
+                </td>
                 <td className="p-4">
                   {supply.imgUrl && (
                     <Image
                       width={80}
-                      height={80}
+                      height={90}
                       src={
                         typeof supply.imgUrl === "string" ? supply.imgUrl : ""
                       }
                       alt={supply.name}
-                      className="object-cover rounded-xl"
+                      className="object-cover rounded-xl hover:scale-150 transition duration-300 ease-in-out"
                     />
                   )}
                 </td>
@@ -104,7 +123,7 @@ const StockTable: React.FC<StockTableProps> = ({
                 colSpan={TABLE_HEAD.length}
                 className="p-4 text-center text-gray-500"
               >
-                No supplies available
+                No hay insumos disponibles
               </td>
             </tr>
           )}

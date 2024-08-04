@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { signIn, saveToken, saveUserData } from "@/redux/reducer";
 import Cookies from "js-cookie";
 import { toast } from "sonner";
+import LoginAuthNext from "./LoginAuthNext";
 
 const LoginForm = () => {
 	const router = useRouter();
@@ -64,67 +65,64 @@ const LoginForm = () => {
 		}
 	};
 
-	return (
-		<div className="p-8 w-full flex flex-col min-h-screen justify-center items-center">
-			<div className="w-full max-w-md mb-24">
-				<h2 className="text-4xl text-textColor font-semibold mb-4 text-center">
-					Iniciar Sesión
-				</h2>
-				<h3 className="text-xl text-textColor font-semibold mb-4 text-center">
-					Comienza con tu prueba gratuita
-				</h3>
-				<form
-					onSubmit={handleSumbit}
-					className="space-y-5 flex flex-col h-full"
-				>
-					<div>
-						<label className="block text-sm font-medium text-gray-700">
-							E-mail
-							{!loginData.email && (
-								<span className="text-red-500"> * </span>
-							)}
-						</label>
-						<input
-							type="text"
-							name="email"
-							onChange={handleChange}
-							placeholder="E-mail"
-							className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-						/>
-					</div>
-					<div>
-						<label className="block text-sm font-medium text-gray-700">
-							Contraseña
-							{!loginData.password && (
-								<span className="text-red-500"> * </span>
-							)}
-						</label>
-						<div className="relative">
-							<input
-								type={showPassword ? "text" : "password"}
-								name="password"
-								onChange={handleChange}
-								placeholder="Contraseña"
-								className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-							/>
-							<button
-								type="button"
-								onClick={handleOnclickPassword}
-							>
-								{showPassword ? (
-									<FaEye
-										size={17}
-										className="absolute right-3 top-5 -translate-y-1/2 text-textGreen"
-									/>
-								) : (
-									<FaEyeSlash
-										size={17}
-										className="absolute right-3 top-5 -translate-y-1/2  text-textColor"
-									/>
-								)}
-							</button>
-						</div>
-					</div>
+
+  return (
+    <div className="p-8 w-full flex flex-col min-h-screen justify-center items-center">
+      <div className="w-full max-w-md mb-24">
+        <h2 className="text-4xl text-textColor font-semibold mb-4 text-center">
+          Iniciar Sesión
+        </h2>
+        <h3 className="text-xl text-textColor font-semibold mb-4 text-center">
+          Comienza con tu prueba gratuita
+        </h3>
+        <div className="flex justify-center items-center p-5">
+          <LoginAuthNext />
+        </div>
+        <form
+          onSubmit={handleSumbit}
+          className="space-y-5 flex flex-col h-full"
+        >
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              E-mail
+              {!loginData.email && <span className="text-red-500"> * </span>}
+            </label>
+            <input
+              type="text"
+              name="email"
+              onChange={handleChange}
+              placeholder="E-mail"
+              className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Contraseña
+              {!loginData.password && <span className="text-red-500"> * </span>}
+            </label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                onChange={handleChange}
+                placeholder="Contraseña"
+                className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+              />
+              <button type="button" onClick={handleOnclickPassword}>
+                {showPassword ? (
+                  <FaEye
+                    size={17}
+                    className="absolute right-3 top-5 -translate-y-1/2 text-textGreen"
+                  />
+                ) : (
+                  <FaEyeSlash
+                    size={17}
+                    className="absolute right-3 top-5 -translate-y-1/2  text-textColor"
+                  />
+                )}
+              </button>
+            </div>
+          </div>
 
 					<div className="mt-auto flex justify-center">
 						<button

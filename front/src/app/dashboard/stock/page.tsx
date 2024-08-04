@@ -10,29 +10,31 @@ import { Supply } from "@/interfaces/interfaces";
 import { fetchSupplies } from "@/lib/server/petitionStock";
 import { useDispatch, useSelector } from "react-redux";
 import { saveStock, updateStock } from "@/redux/reducer";
+import useDataStock from "@/hooks/useDataStock";
 
 const StockDashboard: React.FC = () => {
-  const { savePlotsStorage } = useDataPlot();
   const userId = useSelector((state: any) => state.userData.id);
-  console.log(userId);
   const token = useSelector((state: any) => state.token);
-  console.log(token);
 
   const [supplies, setSupplies] = useState<Supply[]>([]);
 
   const [error, setError] = useState<string | null>(null);
   const dispatch = useDispatch();
   const edit = useSelector((state: any) => state.editStock);
+  const { saveStockStorage } = useDataStock();
 
   useEffect(() => {
-    const id = userId;
-
     if (userId && token) {
       const loadSupplies = async () => {
         try {
-          const suppliesData = await fetchSupplies(id, token, (supplies) => {
-            dispatch(saveStock(supplies));
-          });
+          const suppliesData = await fetchSupplies(
+            userId,
+            token,
+            (supplies) => {
+              dispatch(saveStock(supplies));
+              saveStockStorage(supplies);
+            }
+          );
           setSupplies(suppliesData);
         } catch (error) {
           console.log(error);
@@ -40,15 +42,27 @@ const StockDashboard: React.FC = () => {
       };
       loadSupplies();
     }
-
-    console.log(supplies);
   }, [edit, token, userId, dispatch]);
 
   const { plots, error: plotsError } = useFetchPlots(userId, token);
 
   return (
-    <div className="w-screen h-full flex flex-col sm:flex-row">
-      <div className="mt-24 h-min-screen bg-sideNavbarColor bg-opacity-20">
+    <div className="w-screen h-screen flex flex-col sm:flex-row ">
+      <div className={`absolute inset-0 z-0 h-full `}>
+        <video
+          autoPlay
+          muted
+          loop
+          className="w-full h-full blur-sm object-cover  "
+        >
+          <source
+            src="/videos/4800100-uhd_4096_2160_30fps.mp4"
+            type="video/mp4"
+          ></source>
+        </video>
+        <div className="w-full bg-white opacity-55 absolute inset-0"></div>
+      </div>
+      <div className="mt-[86px] h-min-screen bg-sideNavbarColor bg-opacity-20 z-10">
         {plotsError ? (
           <div className="p-4 bg-red-500 text-white rounded-lg mb-6">
             {plotsError}
@@ -57,7 +71,7 @@ const StockDashboard: React.FC = () => {
           <SideNavbar plots={plots} />
         )}
       </div>
-      <div className="flex-grow mt-24 w-screen">
+      <div className="flex-grow mt-24 w-screen z-10 ">
         <StockPanel supplies={supplies} />
       </div>
     </div>

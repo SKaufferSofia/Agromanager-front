@@ -33,6 +33,8 @@ export interface IPlotsType {
   cereal: string;
   labors: Labors[] | null;
   supplies: Supply[] | null;
+  latitude?: string;
+  longitude?: string;
 }
 export interface IPlotsDashboardType {
   id: string;
@@ -40,6 +42,8 @@ export interface IPlotsDashboardType {
   cereal: string;
   labors: Labors[] | null;
   supplies: SupplyApplied[] | null;
+  latitude?: string;
+  longitude?: string;
 }
 
 export interface Labors {
@@ -80,6 +84,8 @@ export interface ICreatePlot {
   surface: string;
   cereal: string;
   user: string;
+  latitude?: string;
+  longitude?: string;
 }
 
 export interface StockTableProps {
@@ -98,6 +104,22 @@ export interface SupplyApplied {
   id: string;
   quantity: number;
   supply: Supply;
+}
+
+export interface IRole {
+  active: boolean
+}
+export interface IUserForAdmin {
+  id: string;
+  name: string;
+  surname: string;
+  phone?: string;
+  placeName: string;
+  email: string;
+  active: boolean;
+  plots: IPlotsType[];
+  supplies: Supply[];
+  roles: IRole[];
 }
 
 export type SaveDataPlot = (arg: IPlotsType[]) => void;
