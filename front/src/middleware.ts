@@ -19,6 +19,7 @@ export async function middleware(request: NextRequest) {
       response.cookies.set("dataGoogle", loginData, {
         maxAge: 60 * 60 * 24 * 30,
       });
+
       return response;
     } catch (error) {
       console.error("Error al decodificar el token de Google:", error);
