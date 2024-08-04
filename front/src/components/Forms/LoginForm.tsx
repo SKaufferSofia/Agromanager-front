@@ -8,6 +8,7 @@ import { validateLogin } from "@/helpers/valitateLogin";
 import { useDispatch } from "react-redux";
 import { signIn, saveToken, saveUserData } from "@/redux/reducer";
 import Cookies from "js-cookie";
+import { toast } from "sonner";
 
 const LoginForm = () => {
 	const router = useRouter();
@@ -56,7 +57,10 @@ const LoginForm = () => {
 				router.push("/dashboard/plots");
 			}
 		} else {
-			alert("Complete todos los campos");
+			toast.warning("Complete todos los campos", {
+				className: "bg-red-500 text-white text-xl",
+				duration: 3000,
+			});
 		}
 	};
 

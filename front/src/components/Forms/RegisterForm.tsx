@@ -5,6 +5,7 @@ import { petitionRegister } from "@/lib/server/petitionUser";
 import { useRouter } from "next/navigation";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import useForm from "@/hooks/useForm";
+import { toast } from "sonner";
 
 const RegisterForm = () => {
 	const router = useRouter();
@@ -40,7 +41,10 @@ const RegisterForm = () => {
 				router.push("/login");
 			}
 		} else {
-			alert("complete todos los campos");
+			toast.warning("Complete todos los campos", {
+				className: "bg-red-500 text-white text-xl",
+				duration: 3000,
+			});
 		}
 	};
 
