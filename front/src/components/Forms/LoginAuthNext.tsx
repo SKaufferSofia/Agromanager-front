@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import Cookies from "js-cookie";
 import { Button } from "@material-tailwind/react";
@@ -10,21 +10,24 @@ import { saveToken, saveUserData, signInRedux } from "@/redux/reducer";
 import useUserData from "@/hooks/useUserData";
 
 const LoginAuthNext = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const dispatch = useDispatch();
   const router = useRouter();
   const { saveTokenStorage, saveUserDataStorage } = useUserData();
+  const [hasRequested, setHasRequested] = useState(false);
 
   useEffect(() => {
-    if (session) {
+    if (session && !hasRequested) {
       saveDataBase();
     }
-  }, [session]);
+  }, [session, hasRequested]);
 
   const saveDataBase = async () => {
+    setHasRequested(true);
     const dataGoogle = Cookies.get("dataGoogle");
     if (dataGoogle) {
       const data = JSON.parse(dataGoogle);
+      console.log(data);
 
       const response = await loginGoogle(
         data,

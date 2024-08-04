@@ -13,7 +13,7 @@ export interface IUserGoogle {
   id: string;
   name: string;
   email: string;
-  picture?: string;
+  image?: string;
 }
 
 export interface IRoles {

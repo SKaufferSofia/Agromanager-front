@@ -56,7 +56,11 @@ export const loginGoogle = async (
   cookieToken: SaveToken
 ): Promise<any> => {
   try {
-    const response = await axios.post(`${API}/auth/google`, googleId);
+    const response = await axios.post(`${API}/auth/google`, googleId, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     saveToken(response.data.token);
     signIn(response.data.isLoggin);
     userData(response.data.user);
