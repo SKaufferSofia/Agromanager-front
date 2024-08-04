@@ -7,18 +7,25 @@ import {
 } from "@/interfaces/interfacesUser";
 import { NEXT_PUBLIC_API_URL } from "./envs";
 import axios from "axios";
+import { Toaster, toast } from "sonner";
 
 const API = NEXT_PUBLIC_API_URL;
 
 export const petitionRegister = async (regiterData: IRegisterForm) => {
   try {
     const response = await axios.post(`${API}/auth/signup`, regiterData);
-
+    toast.success("Registro exitoso", {
+      className: "mt-20 text-white bg-footerColor font-semibold text-xl",
+      duration: 2000,
+    });
     return response.data;
   } catch (error: any) {
     if (axios.isAxiosError(error) && error.response) {
       const axiosError = error.response.data.message;
-      alert("error: " + axiosError);
+      toast.warning(axiosError, {
+        className: "bg-red-500 text-white text-lg",
+        duration: 5000,
+      });
     }
     return false;
   }
@@ -41,7 +48,10 @@ export const PetitionLogin = async (
   } catch (error: any) {
     if (axios.isAxiosError(error) && error.response) {
       const axiosError = error.response.data.message;
-      alert("error: " + axiosError);
+      toast.warning(axiosError, {
+        className: "bg-red-500 text-white text-xl",
+        duration: 2000,
+      });
     }
     return false;
   }
@@ -64,7 +74,10 @@ export const getUserById = async (
   } catch (error: any) {
     if (axios.isAxiosError(error) && error.response) {
       const axiosError = error.response.data.message;
-      alert("error: " + axiosError);
+      toast.warning(axiosError, {
+        className: "bg-red-500 text-white text-xl",
+        duration: 2000,
+      });
     }
     return false;
   }

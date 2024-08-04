@@ -4,6 +4,7 @@ import { Supply } from "@/interfaces/interfaces";
 
 const API_PUBLIC = NEXT_PUBLIC_API_URL;
 import { saveStock, updateStock } from "@/redux/reducer";
+import { toast } from "sonner";
 export const fetchSupplies = async (
   userId: string,
   token: string,
@@ -70,7 +71,10 @@ export const createSupply = async (
     addStock(response.data);
     return response.data;
   } catch (error) {
-    console.log(error);
+    toast.warning("Debes completar todos los campos", {
+      className: "bg-red-500 text-white text-lg ",
+      duration: 3000,
+    });
   }
 };
 
@@ -94,8 +98,11 @@ export const uploadImageSupply = async (
     );
     return response.data;
   } catch (error) {
+    toast.warning("Error al subir imagen", {
+      className: "bg-red-500 text-white text-lg ",
+      duration: 3000,
+    });
     console.log(error);
-    throw error;
   }
 };
 
@@ -114,7 +121,10 @@ export const updateSupply = async (
         },
       }
     );
-
+    toast.success("Insumo modificado", {
+      className: "mt-20 text-white bg-footerColor font-semibold text-xl",
+      duration: 3000,
+    });
     return response.data;
   } catch (error) {
     console.log(error);

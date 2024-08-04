@@ -12,11 +12,13 @@ import {
 import { RootState } from "@/redux/store";
 import { saveStock, updateSupplies } from "@/redux/reducer";
 import useDataPlot from "@/hooks/useDataPlot";
+import { toast } from "sonner";
 import { fetchSupplies } from "@/lib/server/petitionStock";
 import useDataStock from "@/hooks/useDataStock";
 
+
 interface AddSupplyInputProps {
-  plotId: string;
+	plotId: string;
 }
 
 const AddSupplyInput: React.FC<AddSupplyInputProps> = ({ plotId }) => {
@@ -49,8 +51,7 @@ const AddSupplyInput: React.FC<AddSupplyInputProps> = ({ plotId }) => {
               response.find((supply: Supply) => supply.category.id === id)
                 ?.category
           ) as Category[];
-
-          setCategories(uniqueCategories);
+ setCategories(uniqueCategories);
         } catch (error) {
           console.error("Error fetching supplies:", error);
         }
@@ -59,27 +60,28 @@ const AddSupplyInput: React.FC<AddSupplyInputProps> = ({ plotId }) => {
     getSuppliesByUser();
   }, [userId, token]);
 
-  const handleCategoryChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const selectedCategoryId = event.target.value;
-    const selectedCategory =
-      categories.find((category) => category.id === selectedCategoryId) || null;
-    setActiveCategory(selectedCategory);
-    if (selectedCategory) {
-      const suppliesByCategory = supplies.filter(
-        (supply) => supply.category.id === selectedCategory.id
-      );
-      setFilteredSupplies(suppliesByCategory);
-    } else {
-      setFilteredSupplies(supplies);
-    }
-  };
+	const handleCategoryChange = (
+		event: React.ChangeEvent<HTMLSelectElement>
+	) => {
+		const selectedCategoryId = event.target.value;
+		const selectedCategory =
+			categories.find((category) => category.id === selectedCategoryId) ||
+			null;
+		setActiveCategory(selectedCategory);
+		if (selectedCategory) {
+			const suppliesByCategory = supplies.filter(
+				(supply) => supply.category.id === selectedCategory.id
+			);
+			setFilteredSupplies(suppliesByCategory);
+		} else {
+			setFilteredSupplies(supplies);
+		}
+	};
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
+	const handleSubmit = async (event: React.FormEvent) => {
+		event.preventDefault();
 
-    try {
+	    try {
       const response = await axios.post(
         `${NEXT_PUBLIC_API_URL}/plots/addSupply`,
         {
@@ -105,8 +107,20 @@ const AddSupplyInput: React.FC<AddSupplyInputProps> = ({ plotId }) => {
       // console.log("Updated supplies:", updatedSupplies);
 
       // dispatch(updateSupplies({ plotId, supplies: updatedSupplies }));
+      toast.success("Insumo Agregado", {
+				className:
+					"mt-20 text-white bg-footerColor font-semibold text-xl",
+				duration: 2000,
+			});
     } catch (error) {
-      console.error("Error creating supply:", error);
+      if (axios.isAxiosError(error) && error.response) {
+				const axiosError = error.response.data.message;
+				toast.warning(axiosError, {
+					className: "bg-red-500 text-white text-lg ",
+					duration: 3000,
+				});
+			}
+
     }
   };
 

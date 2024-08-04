@@ -29,6 +29,7 @@ export class AuthService {
 
     async signIn(signInDto: SignInDto) {
         const userFound = await this.UsersRepository.getUserByEmail(signInDto.email)
+
         if(!userFound){
             throw new BadRequestException("Credenciales incorrectas")
         }

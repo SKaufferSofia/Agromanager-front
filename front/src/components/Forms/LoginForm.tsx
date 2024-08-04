@@ -8,6 +8,7 @@ import { validateLogin } from "@/helpers/valitateLogin";
 import { useDispatch } from "react-redux";
 import { signIn, saveToken, saveUserData } from "@/redux/reducer";
 import Cookies from "js-cookie";
+import { toast } from "sonner";
 import LoginAuthNext from "./LoginAuthNext";
 
 const LoginForm = () => {
@@ -54,11 +55,17 @@ const LoginForm = () => {
       );
 
       if (loginSuccess) {
-        alert("Login exitoso");
+        toast.success("Login exitoso", {
+          className: "mt-20 text-white bg-footerColor font-semibold text-xl",
+          duration: 2000,
+        });
         router.push("/dashboard/plots");
       }
     } else {
-      alert("Complete todos los campos");
+      toast.warning("Complete todos los campos", {
+        className: "bg-red-500 text-white text-xl",
+        duration: 3000,
+      });
     }
   };
 

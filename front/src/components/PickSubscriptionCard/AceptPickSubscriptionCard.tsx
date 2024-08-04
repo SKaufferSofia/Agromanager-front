@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { getUserById } from "@/lib/server/petitionUser";
 import { saveUserData } from "@/redux/reducer";
 import useUserData from "@/hooks/useUserData";
+import { toast } from "sonner";
 
 const AceptPickSubscriptionCard: React.FC = () => {
   const subscription = useSelector((state: any) => state.selectedSubscription);
@@ -57,8 +58,11 @@ const AceptPickSubscriptionCard: React.FC = () => {
   }
 
   const handleSumbit = async () => {
-    alert("Login exitoso");
     router.push("/dashboard/plots");
+    toast.success("Login exitoso", {
+      className: "mt-20 text-white bg-footerColor font-semibold text-xl",
+      duration: 2000,
+    });
   };
 
   return (

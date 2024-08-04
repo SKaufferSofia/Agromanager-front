@@ -5,6 +5,7 @@ import { createSupply, uploadImageSupply } from "@/lib/server/petitionStock";
 import { useDispatch, useSelector } from "react-redux";
 import useDataStock from "@/hooks/useDataStock";
 import MainButton from "../MainButton/MainButton";
+import { toast } from "sonner";
 import { addStock } from "@/redux/reducer";
 
 interface CreateStockFormProps {
@@ -55,6 +56,10 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
           addStockStorage(data);
         }
       );
+      toast.success("Insumo agregado", {
+        className: "mt-20 text-white bg-footerColor font-semibold text-xl",
+        duration: 3000,
+      });
       const createdSupplyId = newSupplyResponse.id;
 
       if (imgFile) {
@@ -68,7 +73,6 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
           ...newSupplyResponse,
           imgUrl: uploadResponse.imgUrl,
         };
-
         onNewSupply(updatedSupply);
       } else {
         onNewSupply(newSupplyResponse);
