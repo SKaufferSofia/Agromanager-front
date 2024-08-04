@@ -31,6 +31,7 @@ export default function ProfileMenu() {
     clearPlotsStorage();
     clearStocksStorage();
     Cookies.remove("token");
+    Cookies.remove("role");
     router.push("/");
   };
 

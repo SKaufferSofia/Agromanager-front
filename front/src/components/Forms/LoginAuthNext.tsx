@@ -45,11 +45,31 @@ const LoginAuthNext = () => {
         (data) => Cookies.set("token", data, { expires: 30 })
       );
 
-      if (response.user.premiumExpiration === null) {
-        router.push("/subscriptions");
-      } else {
-        router.push("/dashboard/plots");
+      const mainRole =
+        response.user.roles
+          .map((role: any) => role.name)
+          .find((role: any) => role.includes("admin")) || "user";
+
+      Cookies.set("role", mainRole);
+
+      if (response) {
+        if (response.user.premiumExpiration === null) {
+          alert("Login exitoso");
+          router.push("/subscriptions");
+        } else if (mainRole === "admin") {
+          alert("Login exitoso");
+          router.push("/dashboard/admin-dashboard");
+        } else {
+          alert("Login exitoso");
+          router.push("/dashboard/plots");
+        }
       }
+
+      // if (response.user.premiumExpiration === null) {
+      //   router.push("/subscriptions");
+      // } else {
+      //   router.push("/dashboard/plots");
+      // }
       return response;
     }
   };
