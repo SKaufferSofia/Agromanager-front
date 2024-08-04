@@ -19,7 +19,7 @@ import { useSelector } from "react-redux";
 export default function ProfileMenu() {
   const router = useRouter();
   const roles = useSelector((state: any) => state.userData.roles);
-  console.log(roles);
+  const isAdmin = roles.some((role: any) => role.name === "admin");
 
   const { logOut } = useUserData();
   const { clearPlotsStorage } = useDataPlot();
@@ -52,24 +52,35 @@ export default function ProfileMenu() {
           />
         </Button>
       </MenuHandler>
-      <MenuList className="p-1 bg-black border-black">
-        <Link href="/dashboard/myprofile">
-          <MenuItem className="flex items-center gap-2 rounded poppins-semibold text-white">
-            MI PERFIL
+      {isAdmin ? (
+        <MenuList className="p-1 bg-black border-black">
+          <MenuItem
+            className="flex items-center gap-2 rounded poppins-semibold text-red-400"
+            onClick={handleLogOut}
+          >
+            CERRAR SESIÓN
           </MenuItem>
-        </Link>
-        {/* <Link href="/profile/orders">
+        </MenuList>
+      ) : (
+        <MenuList className="p-1 bg-black border-black">
+          <Link href="/dashboard/myprofile">
+            <MenuItem className="flex items-center gap-2 rounded poppins-semibold text-white">
+              MI PERFIL
+            </MenuItem>
+          </Link>
+          {/* <Link href="/profile/orders">
           <MenuItem className="flex items-center gap-2 rounded poppins-semibold text-white">
             
           </MenuItem>
         </Link> */}
-        <MenuItem
-          className="flex items-center gap-2 rounded poppins-semibold text-red-400"
-          onClick={handleLogOut}
-        >
-          CERRAR SESIÓN
-        </MenuItem>
-      </MenuList>
+          <MenuItem
+            className="flex items-center gap-2 rounded poppins-semibold text-red-400"
+            onClick={handleLogOut}
+          >
+            CERRAR SESIÓN
+          </MenuItem>
+        </MenuList>
+      )}
     </Menu>
   );
 }
