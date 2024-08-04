@@ -9,15 +9,15 @@ import { toast } from "sonner";
 import { addStock } from "@/redux/reducer";
 
 interface CreateStockFormProps {
-	categories: Category[];
-	measurements: Measurement[];
-	onNewSupply: (supply: Supply) => void;
+  categories: Category[];
+  measurements: Measurement[];
+  onNewSupply: (supply: Supply) => void;
 }
 
 const CreateStockForm: React.FC<CreateStockFormProps> = ({
-	categories,
-	measurements,
-	onNewSupply,
+  categories,
+  measurements,
+  onNewSupply,
 }) => {
   const [name, setName] = useState("");
   const [provider, setProvider] = useState("");
@@ -32,21 +32,20 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
   //PROBANDO REDUCER Y LOCA LS.
   const { addStockStorage } = useDataStock();
 
-	//AL SUBMIT CREATE FORM
-	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault();
+  //AL SUBMIT CREATE FORM
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-		try {
-			const newSupply = {
-				name,
-				provider,
-				stock,
-				price,
-				category,
-				measurement,
-				imgUrl: "",
-			};
-
+    try {
+      const newSupply = {
+        name,
+        provider,
+        stock,
+        price,
+        category,
+        measurement,
+        imgUrl: "",
+      };
 
       const newSupplyResponse = await createSupply(
         userId,
@@ -57,12 +56,12 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
           addStockStorage(data);
         }
       );
+      toast.success("Insumo agregado", {
+        className: "mt-20 text-white bg-footerColor font-semibold text-xl",
+        duration: 3000,
+      });
       const createdSupplyId = newSupplyResponse.id;
-        toast.success("Insumo agregado", {
-				className:
-					"mt-20 text-white bg-footerColor font-semibold text-xl",
-				duration: 3000,
-			});
+
       if (imgFile) {
         const uploadResponse = await uploadImageSupply(
           imgFile,
@@ -70,10 +69,10 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
           token
         );
 
-				const updatedSupply = {
-					...newSupplyResponse,
-					imgUrl: uploadResponse.imgUrl,
-				};
+        const updatedSupply = {
+          ...newSupplyResponse,
+          imgUrl: uploadResponse.imgUrl,
+        };
         onNewSupply(updatedSupply);
       } else {
         onNewSupply(newSupplyResponse);

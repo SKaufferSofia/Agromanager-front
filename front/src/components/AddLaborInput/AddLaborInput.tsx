@@ -22,48 +22,47 @@ const AddLaborInput: React.FC<AddLaborInputProps> = ({ plotId }) => {
   const dispatch = useDispatch();
   const { updatePlotsStorage } = useDataPlot();
 
-	const handleSubmit = async (event: React.FormEvent) => {
-		event.preventDefault();
-		try {
-			const response = await axios.post(
-				`${NEXT_PUBLIC_API_URL}/plots/addLabor`,
-				{
-					labor: {
-						name,
-						contractor,
-						price: parseFloat(price),
-						surface: parseFloat(surface),
-					},
-					plotId: plotId,
-				},
-				{
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
-				}
-			);
-			const updatedLabors: Labors[] = response.data.labors;
-			dispatch(updateLabors({ plotId, labors: updatedLabors }));
-			updatePlotsStorage(plotId, updatedLabors);
-			toast.success("Labor Agregada", {
-				className:
-					"mt-20 text-white bg-footerColor font-semibold text-xl",
-				duration: 3000,
-			});
-			setName("");
-			setContractor("");
-			setPrice("");
-			setSurface("");
-		} catch (error) {
-			if (axios.isAxiosError(error) && error.response) {
-				const axiosError = error.response.data.message;
-				toast.warning("Debes completar todos los campos", {
-					className: "bg-red-500 text-white text-lg ",
-					duration: 3000,
-				});
-			}
-		}
-	};
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post(
+        `${NEXT_PUBLIC_API_URL}/plots/addLabor`,
+        {
+          labor: {
+            name,
+            contractor,
+            price: parseFloat(price),
+            surface: parseFloat(surface),
+          },
+          plotId: plotId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const updatedLabors: Labors[] = response.data.labors;
+      dispatch(updateLabors({ plotId, labors: updatedLabors }));
+      updatePlotsStorage(plotId, updatedLabors);
+      toast.success("Labor Agregada", {
+        className: "mt-20 text-white bg-footerColor font-semibold text-xl",
+        duration: 3000,
+      });
+      setName("");
+      setContractor("");
+      setPrice("");
+      setSurface("");
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const axiosError = error.response.data.message;
+        toast.warning("Debes completar todos los campos", {
+          className: "bg-red-500 text-white text-lg ",
+          duration: 3000,
+        });
+      }
+    }
+  };
 
   return (
     <div>

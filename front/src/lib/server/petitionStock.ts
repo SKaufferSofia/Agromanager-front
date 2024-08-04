@@ -13,7 +13,6 @@ export const fetchSupplies = async (
   try {
     const response = await axios.get(`${API_PUBLIC}/supplies/${userId}`, {
       headers: {
-
         Authorization: `Bearer ${token}`,
       },
     });
@@ -72,7 +71,10 @@ export const createSupply = async (
     addStock(response.data);
     return response.data;
   } catch (error) {
-    console.log(error);
+    toast.warning("Debes completar todos los campos", {
+      className: "bg-red-500 text-white text-lg ",
+      duration: 3000,
+    });
   }
 };
 
@@ -96,8 +98,11 @@ export const uploadImageSupply = async (
     );
     return response.data;
   } catch (error) {
+    toast.warning("Error al subir imagen", {
+      className: "bg-red-500 text-white text-lg ",
+      duration: 3000,
+    });
     console.log(error);
-    throw error;
   }
 };
 
@@ -116,11 +121,10 @@ export const updateSupply = async (
         },
       }
     );
-toast.success("Insumo modificado", {
-				className:
-					"mt-20 text-white bg-footerColor font-semibold text-xl",
-				duration: 3000,
-			});
+    toast.success("Insumo modificado", {
+      className: "mt-20 text-white bg-footerColor font-semibold text-xl",
+      duration: 3000,
+    });
     return response.data;
   } catch (error) {
     console.log(error);

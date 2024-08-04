@@ -5,6 +5,7 @@ import useDataStock from "@/hooks/useDataStock";
 import { useDispatch } from "react-redux";
 import { updateStock } from "@/redux/reducer";
 import MainButton from "../MainButton/MainButton";
+import { toast } from "sonner";
 
 const StockEditForm: React.FC<StockEditFormProps> = ({
   supply,
@@ -37,12 +38,14 @@ const StockEditForm: React.FC<StockEditFormProps> = ({
 
   return (
     <div className="bg-white w-[80%] mx-auto p-6 rounded-md shadow-lg">
-      <h2 className="text-xl font-semibold text-gray-800 mb-4">Edit Supply</h2>
+      <h2 className="text-xl font-semibold text-gray-800 mb-4">
+        Editar Insumo
+      </h2>
       <form className="grid grid-cols-2 gap-4" onSubmit={handleSubmit}>
         <input
           type="text"
           name="name"
-          placeholder="Name"
+          placeholder="Nombre"
           value={updatedSupply.name}
           onChange={handleInputChange}
           className="px-4 py-2 border rounded-lg"
@@ -50,7 +53,7 @@ const StockEditForm: React.FC<StockEditFormProps> = ({
         <input
           type="text"
           name="provider"
-          placeholder="Provider"
+          placeholder="Provedor"
           value={updatedSupply.provider}
           onChange={handleInputChange}
           className="px-4 py-2 border rounded-lg"
@@ -58,7 +61,7 @@ const StockEditForm: React.FC<StockEditFormProps> = ({
         <input
           type="number"
           name="stock"
-          placeholder="Stock"
+          placeholder="Cantidad"
           value={updatedSupply.stock}
           onChange={handleInputChange}
           className="px-4 py-2 border rounded-lg"
@@ -66,7 +69,7 @@ const StockEditForm: React.FC<StockEditFormProps> = ({
         <input
           type="number"
           name="price"
-          placeholder="Price"
+          placeholder="Precio"
           value={updatedSupply.price}
           onChange={handleInputChange}
           className="px-4 py-2 border rounded-lg"
