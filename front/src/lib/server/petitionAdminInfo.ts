@@ -47,3 +47,23 @@ export const editUserById = async (
     throw error;  
   }
 };
+export const deleteUserById = async (
+  userToDeleteId: string,
+  token: string
+) => {
+  try {
+    const response = await axios.delete(
+      `${API_PUBLIC}/users/${userToDeleteId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.log("Error in deleteUserById:", error);
+    throw error;
+  }
+};

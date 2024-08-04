@@ -1,6 +1,10 @@
 "use client";
 
-import { editUserById, fetchAllUsers } from "@/lib/server/petitionAdminInfo";
+import {
+	deleteUserById,
+	editUserById,
+	fetchAllUsers,
+} from "@/lib/server/petitionAdminInfo";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { IUserForAdmin } from "@/interfaces/interfaces";
@@ -87,6 +91,18 @@ const AdminDashboardCard = () => {
 			console.error("No token available for authentication");
 		}
 	};
+	const handleDeleteClick = async (userToEdit: IUserForAdmin | null) => {
+		if (token && userToEdit) {
+			try {
+				await deleteUserById(userToEdit.id, token);
+				alert(`Usuario eliminado correctamente`);
+			} catch (error) {
+				console.error("Error updating user:", error);
+			}
+		} else {
+			console.error("No token available for authentication");
+		}
+	};
 
 	return (
 		<div>
@@ -142,6 +158,32 @@ const AdminDashboardCard = () => {
 												<path d="M39.086,17.914l7,7l-24.581,24.581l-9.201,4.412c-1.367,0.457 -2.668,-0.844 -2.211,-2.211l4.412,-9.201zM41.914,15.086l4.5,-4.5c0.781,-0.781 2.047,-0.781 2.828,0l4.172,4.172c0.781,0.781 0.781,2.047 0,2.828l-4.5,4.5z"></path>
 											</g>
 										</g>
+									</svg>
+								</button>
+							</div>
+							<div>
+								<button onClick={() => handleDeleteClick(user)}>
+									<svg
+										width="20"
+										height="20"
+										viewBox="0 0 36 36"
+										fill="#FF0000"
+									>
+										<path d="M27.14,34H8.86A2.93,2.93,0,0,1,6,31V11.23H8V31a.93.93,0,0,0,.86,1H27.14A.93.93,0,0,0,28,31V11.23h2V31A2.93,2.93,0,0,1,27.14,34Z" />
+										<path d="M30.78,9H5A1,1,0,0,1,5,7H30.78a1,1,0,0,1,0,2Z" />
+										<rect
+											x="21"
+											y="13"
+											width="2"
+											height="15"
+										/>
+										<rect
+											x="13"
+											y="13"
+											width="2"
+											height="15"
+										/>
+										<path d="M23,5.86H21.1V4H14.9V5.86H13V4a2,2,0,0,1,1.9-2h6.2A2,2,0,0,1,23,4Z" />
 									</svg>
 								</button>
 							</div>
