@@ -38,7 +38,7 @@ const SuscribeCardListHome = ({
           <div className="inner text-gray-50 ">
             <h3 className="poppins-bold text-2xl">{title}</h3>
             <p className="poppins-regular text-xl">{describe}</p>
-            <Link href={`/login`}>
+            <Link href="/subscriptions">
               <button className="flip-box-button">Suscribite</button>
             </Link>
           </div>
