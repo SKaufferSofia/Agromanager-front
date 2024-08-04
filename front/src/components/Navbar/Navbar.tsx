@@ -20,7 +20,6 @@ import ProfileMenu from "./ProfileMenu";
 const NavbarComponent: React.FC = () => {
   const pathname = usePathname();
   const [bgColor, setBgColor] = React.useState("transparent");
-  const isLogged = useSelector((state: any) => state.isLoggin);
   const isSubscription = useSelector(
     (state: any) => state.userData.premiumExpiration
   );

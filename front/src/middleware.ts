@@ -20,6 +20,55 @@ export async function middleware(request: NextRequest) {
         maxAge: 60 * 60 * 24 * 30,
       });
 
+      const publicRoutes = [
+        "/login",
+        "/register",
+        "/",
+        "/home",
+        "/about",
+        "/contact",
+      ];
+
+      if (token) {
+        if (publicRoutes.includes(request.nextUrl.pathname)) {
+          return NextResponse.redirect(
+            new URL("/dashboard/plots", request.url)
+          );
+        }
+      }
+
+      if (token) {
+        if (role?.value === "admin") {
+          // Rutas que el admin no puede acceder
+          const userRestrictedRoutes = [
+            "/dashboard/plots",
+            "/dashboard/myprofile",
+            "/dashboard/plots/:id",
+            "/dashboard/mysubscriptions",
+            "/dashboard/stock",
+          ];
+
+          if (
+            userRestrictedRoutes.some((route) =>
+              request.nextUrl.pathname.startsWith(route)
+            )
+          ) {
+            return NextResponse.redirect(
+              new URL("/dashboard/admin-dashboard", request.url)
+            );
+          }
+        } else if (role?.value === "user") {
+          // Rutas que el usuario no puede acceder
+          if (
+            request.nextUrl.pathname.startsWith("/dashboard/admin-dashboard")
+          ) {
+            return NextResponse.redirect(
+              new URL("/dashboard/plots", request.url)
+            );
+          }
+        }
+      }
+
       return response;
     } catch (error) {
       console.error("Error al decodificar el token de Google:", error);

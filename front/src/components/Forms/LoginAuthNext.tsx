@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 import { Button } from "@material-tailwind/react";
 import { loginGoogle } from "@/lib/server/petitionUser";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { saveToken, saveUserData, signInRedux } from "@/redux/reducer";
 import useUserData from "@/hooks/useUserData";
 
