@@ -20,12 +20,20 @@ export const fetchAllUsers = async (
 };
 
 export const editUserById = async (
- userToEditId: string,
-  token: string,
+  userToEditId: string,
+  userData: {
+    name: string;
+    surname: string;
+    phone: string | undefined;
+    placeName: string;
+    email: string;
+  },
+  token: string
 ) => {
   try {
     const response = await axios.put(
       `${API_PUBLIC}/users/${userToEditId}`,
+      userData, 
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -35,6 +43,7 @@ export const editUserById = async (
 
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.log("Error in editUserById:", error);
+    throw error;  
   }
-}
+};
