@@ -54,7 +54,7 @@ const LoginAuthNext = () => {
 
       if (response) {
         if (response.user.premiumExpiration === null) {
-          alert("Login exitoso");
+          alert("Debes suscribirte");
           router.push("/subscriptions");
         } else if (mainRole === "admin") {
           alert("Login exitoso");
@@ -64,12 +64,6 @@ const LoginAuthNext = () => {
           router.push("/dashboard/plots");
         }
       }
-
-      // if (response.user.premiumExpiration === null) {
-      //   router.push("/subscriptions");
-      // } else {
-      //   router.push("/dashboard/plots");
-      // }
       return response;
     }
   };
