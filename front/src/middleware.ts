@@ -10,6 +10,27 @@ export async function middleware(request: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
+  if (tokenGoogle) {
+    try {
+      console.log("Token de Google decodificado:", tokenGoogle);
+
+      const { user } = tokenGoogle;
+
+      const loginData = JSON.stringify(user);
+
+      const response = NextResponse.next();
+
+      response.cookies.set("dataGoogle", loginData, {
+        maxAge: 60 * 60 * 24 * 30,
+      });
+
+      return response;
+    } catch (error) {
+      console.error("Error al decodificar el token de Google:", error);
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+  }
+
   // Definir las rutas públicas
   const publicRoutes = [
     "/login",
@@ -22,7 +43,7 @@ export async function middleware(request: NextRequest) {
 
   // Redirigir a la página del dashboard si ya está autenticado
   if (publicRoutes.includes(request.nextUrl.pathname)) {
-    if (token) {
+    if (token && tokenGoogle) {
       return NextResponse.redirect(new URL("/dashboard/plots", request.url));
     }
     return NextResponse.next();
@@ -38,7 +59,7 @@ export async function middleware(request: NextRequest) {
   ];
 
   // Redirigir a la página de login si no está autenticado y accede a una ruta protegida
-  if (!token) {
+  if (!token && !tokenGoogle) {
     if (
       protectedRoutes.some((route) =>
         request.nextUrl.pathname.startsWith(route)
@@ -49,33 +70,6 @@ export async function middleware(request: NextRequest) {
   }
 
   // Si hay un token de Google, decodificarlo y desestructurarlo
-  if (tokenGoogle) {
-    try {
-      const { user } = tokenGoogle;
-
-      const loginData = JSON.stringify(user);
-      console.log("Login data:", loginData);
-
-      const response = NextResponse.next();
-
-      response.cookies.set("dataGoogle", loginData, {
-        maxAge: 60 * 60 * 24 * 30,
-      });
-
-      return response;
-
-      // Desestructurar el objeto JSON del token
-      // const { sub, email, name } = tokenGoogle;
-      // console.log("Sub:", sub);
-      // console.log("Email:", email);
-      // console.log("Name:", name);
-
-      // Puedes usar estas variables como necesites en tu lógica
-    } catch (error) {
-      console.error("Error al decodificar el token de Google:", error);
-      return NextResponse.redirect(new URL("/login", request.url));
-    }
-  }
 
   return NextResponse.next();
 }

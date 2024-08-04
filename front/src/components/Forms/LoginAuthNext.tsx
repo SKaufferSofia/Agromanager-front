@@ -45,9 +45,12 @@ const LoginAuthNext = () => {
         (data) => Cookies.set("token", data, { expires: 30 })
       );
 
-      if (response) {
+      if (response.user.premiumExpiration === null) {
+        router.push("/subscriptions");
+      } else {
         router.push("/dashboard/plots");
       }
+      return response;
     }
   };
 
