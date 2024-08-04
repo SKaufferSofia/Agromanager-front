@@ -48,7 +48,7 @@ const AddLaborInput: React.FC<AddLaborInputProps> = ({ plotId }) => {
 			toast.success("Labor Agregada", {
 				className:
 					"mt-20 text-white bg-footerColor font-semibold text-xl",
-				duration: 5000,
+				duration: 3000,
 			});
 			setName("");
 			setContractor("");
@@ -59,7 +59,7 @@ const AddLaborInput: React.FC<AddLaborInputProps> = ({ plotId }) => {
 				const axiosError = error.response.data.message;
 				toast.warning("Debes completar todos los campos", {
 					className: "bg-red-500 text-white text-lg ",
-					duration: 2000,
+					duration: 3000,
 				});
 			}
 		}
