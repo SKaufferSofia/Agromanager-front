@@ -55,6 +55,10 @@ const LoginForm = () => {
       );
 
       if (loginSuccess) {
+        toast.success("Login exitoso", {
+          className: "mt-20 text-white bg-footerColor font-semibold text-xl",
+          duration: 2000,
+        });
         router.push("/dashboard/plots");
       }
     } else {
