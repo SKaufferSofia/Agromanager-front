@@ -20,7 +20,9 @@ import ProfileMenu from "./ProfileMenu";
 const NavbarComponent: React.FC = () => {
   const pathname = usePathname();
   const [bgColor, setBgColor] = React.useState("transparent");
-  const isLogged = useSelector((state: any) => state.isLoggin);
+  const isSubscription = useSelector(
+    (state: any) => state.userData.premiumExpiration
+  );
 
   const router = useRouter();
 
@@ -96,7 +98,7 @@ const NavbarComponent: React.FC = () => {
         color="transparent"
         className={`sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 ${bgColor} transition-colors ease-in-out duration-300 lg:px-16 lg:py-1`}
       >
-        {!isLogged ? (
+        {!isSubscription ? (
           <div className="flex items-center justify-between text-white">
             <a href="/" className="flex items-center space-x-3">
               <Image

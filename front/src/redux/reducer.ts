@@ -71,7 +71,7 @@ export const someSlice = createSlice({
   name: "some",
   initialState,
   reducers: {
-    signIn: (state, action: PayloadAction<boolean>) => {
+    signInRedux: (state, action: PayloadAction<boolean>) => {
       state.isLoggin = action.payload;
     },
     saveToken: (state, action: PayloadAction<string>) => {
@@ -144,7 +144,7 @@ export const someSlice = createSlice({
 });
 
 export const {
-  signIn,
+  signInRedux,
   saveToken,
   saveRegisterData,
   saveUserData,
