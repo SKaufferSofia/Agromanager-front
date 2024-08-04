@@ -53,12 +53,26 @@ const LoginForm = () => {
         (data) => Cookies.set("token", data, { expires: 30 })
       );
 
-      if (loginSuccess.user.premiumExpiration === null) {
-        alert("Debe suscribirse");
-        router.push("/subscriptions");
-      } else {
-        alert("Login exitoso");
-        router.push("/dashboard/plots");
+      // Obtener el rol principal del usuario
+      const mainRole =
+        loginSuccess.user.roles
+          .map((role: any) => role.name)
+          .find((role: any) => role.includes("admin")) || "user";
+
+      // Guardar solo el rol principal en la cookie
+      Cookies.set("role", mainRole);
+
+      if (loginSuccess) {
+        if (loginSuccess.user.premiumExpiration === null) {
+          alert("Debe suscribirse");
+          router.push("/subscriptions");
+        } else if (mainRole === "admin") {
+          alert("Login exitoso");
+          router.push("/dashboard/admin-dashboard");
+        } else {
+          alert("Login exitoso");
+          router.push("/dashboard/plots");
+        }
       }
     } else {
       alert("Complete todos los campos");

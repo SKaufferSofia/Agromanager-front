@@ -3,6 +3,7 @@ import { getToken } from "next-auth/jwt";
 
 export async function middleware(request: NextRequest) {
   const token = request.cookies.get("token");
+  const role = request.cookies.get("role");
 
   // Obtener y decodificar el token de Google
   const tokenGoogle = await getToken({
@@ -12,18 +13,12 @@ export async function middleware(request: NextRequest) {
 
   if (tokenGoogle) {
     try {
-      console.log("Token de Google decodificado:", tokenGoogle);
-
       const { user } = tokenGoogle;
-
       const loginData = JSON.stringify(user);
-
       const response = NextResponse.next();
-
       response.cookies.set("dataGoogle", loginData, {
         maxAge: 60 * 60 * 24 * 30,
       });
-
       return response;
     } catch (error) {
       console.error("Error al decodificar el token de Google:", error);
@@ -41,9 +36,9 @@ export async function middleware(request: NextRequest) {
     "/contact",
   ];
 
-  // Redirigir a la página del dashboard si ya está autenticado
+  // Redirigir a la página del dashboard si ya está autenticado y accede a una ruta pública
   if (publicRoutes.includes(request.nextUrl.pathname)) {
-    if (token && tokenGoogle) {
+    if (token || tokenGoogle) {
       return NextResponse.redirect(new URL("/dashboard/plots", request.url));
     }
     return NextResponse.next();
@@ -72,7 +67,34 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Si hay un token de Google, decodificarlo y desestructurarlo
+  // Verificar el rol del usuario y restringir el acceso a rutas específicas
+  if (token || tokenGoogle) {
+    if (role?.value === "admin") {
+      // Rutas que el admin no puede acceder
+      const userRestrictedRoutes = [
+        "/dashboard/plots",
+        "/dashboard/myprofile",
+        "/dashboard/plots/:id",
+        "/dashboard/mysubscriptions",
+        "/dashboard/stock",
+      ];
+
+      if (
+        userRestrictedRoutes.some((route) =>
+          request.nextUrl.pathname.startsWith(route)
+        )
+      ) {
+        return NextResponse.redirect(
+          new URL("/dashboard/admin-dashboard", request.url)
+        );
+      }
+    } else if (role?.value === "user") {
+      // Rutas que el usuario no puede acceder
+      if (request.nextUrl.pathname.startsWith("/dashboard/admin-dashboard")) {
+        return NextResponse.redirect(new URL("/dashboard/plots", request.url));
+      }
+    }
+  }
 
   return NextResponse.next();
 }

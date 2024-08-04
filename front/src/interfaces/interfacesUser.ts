@@ -48,3 +48,4 @@ export type SignIn = (arg: boolean) => void;
 export type SaveToken = (arg: string) => void;
 export type SaveUserData = (arg: IUser) => void;
 export type SaveUserDataGoogle = (arg: IUserGoogle) => void;
+export type SaveRoles = (arg: IRoles[]) => void;
