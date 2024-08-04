@@ -31,14 +31,14 @@ export const PetitionLogin = async (
   signIn: SignIn,
   userData: SaveUserData,
   cookieToken: SaveToken
-): Promise<boolean> => {
+) => {
   try {
     const response = await axios.post(`${API}/auth/signin`, loginData);
     saveToken(response.data.token);
     signIn(response.data.isLoggin);
     userData(response.data.user);
     cookieToken(response.data.token);
-    return true;
+    return response.data;
   } catch (error: any) {
     if (axios.isAxiosError(error) && error.response) {
       const axiosError = error.response.data.message;

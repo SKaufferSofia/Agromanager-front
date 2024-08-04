@@ -53,7 +53,10 @@ const LoginForm = () => {
         (data) => Cookies.set("token", data, { expires: 30 })
       );
 
-      if (loginSuccess) {
+      if (loginSuccess.user.premiumExpiration === null) {
+        alert("Debe suscribirse");
+        router.push("/subscriptions");
+      } else {
         alert("Login exitoso");
         router.push("/dashboard/plots");
       }
