@@ -12,59 +12,58 @@ import { toast } from "sonner";
 import LoginAuthNext from "./LoginAuthNext";
 
 const LoginForm = () => {
-	const router = useRouter();
-	const dispatch = useDispatch();
+  const router = useRouter();
+  const dispatch = useDispatch();
 
-	const {
-		loginData,
-		setLoginData,
-		errorLogin,
-		setErrorLogin,
-		showPassword,
-		setShowPassword,
-	} = useForm();
+  const {
+    loginData,
+    setLoginData,
+    errorLogin,
+    setErrorLogin,
+    showPassword,
+    setShowPassword,
+  } = useForm();
 
-	const { saveTokenStorage, saveUserDataStorage } = useUserData();
+  const { saveTokenStorage, saveUserDataStorage } = useUserData();
 
-	const handleOnclickPassword = () => setShowPassword(!showPassword);
+  const handleOnclickPassword = () => setShowPassword(!showPassword);
 
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = event.target;
-		setLoginData({ ...loginData, [name]: value });
-		setErrorLogin(validateLogin({ ...loginData, [name]: value }));
-	};
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setLoginData({ ...loginData, [name]: value });
+    setErrorLogin(validateLogin({ ...loginData, [name]: value }));
+  };
 
-	const handleSumbit = async (event: React.FormEvent) => {
-		event.preventDefault();
+  const handleSumbit = async (event: React.FormEvent) => {
+    event.preventDefault();
 
-		if (Object.keys(errorLogin).length === 0) {
-			const loginSuccess = await PetitionLogin(
-				loginData,
-				(token) => {
-					dispatch(saveToken(token));
-					saveTokenStorage(token);
-				},
-				(login) => {
-					dispatch(signIn(login));
-				},
-				(data) => {
-					dispatch(saveUserData(data));
-					saveUserDataStorage(data);
-				},
-				(data) => Cookies.set("token", data, { expires: 30 })
-			);
+    if (Object.keys(errorLogin).length === 0) {
+      const loginSuccess = await PetitionLogin(
+        loginData,
+        (token) => {
+          dispatch(saveToken(token));
+          saveTokenStorage(token);
+        },
+        (login) => {
+          dispatch(signIn(login));
+        },
+        (data) => {
+          dispatch(saveUserData(data));
+          saveUserDataStorage(data);
+        },
+        (data) => Cookies.set("token", data, { expires: 30 })
+      );
 
-			if (loginSuccess) {
-				router.push("/dashboard/plots");
-			}
-		} else {
-			toast.warning("Complete todos los campos", {
-				className: "bg-red-500 text-white text-xl",
-				duration: 3000,
-			});
-		}
-	};
-
+      if (loginSuccess) {
+        router.push("/dashboard/plots");
+      }
+    } else {
+      toast.warning("Complete todos los campos", {
+        className: "bg-red-500 text-white text-xl",
+        duration: 3000,
+      });
+    }
+  };
 
   return (
     <div className="p-8 w-full flex flex-col min-h-screen justify-center items-center">
@@ -124,34 +123,34 @@ const LoginForm = () => {
             </div>
           </div>
 
-					<div className="mt-auto flex justify-center">
-						<button
-							type="submit"
-							className="w-32 p-2 flex justify-center border-footerColor border-2 rounded-md shadow-sm text-sm font-medium text-footerColor hover:bg-gray-200 focus:ring-offset-2"
-						>
-							INICIAR SESION
-						</button>
-					</div>
-					<div className="mt-1">
-						{!loginData.password && (
-							<p className=" text-sm text-red-500 font-medium ">
-								{" "}
-								(*) Todos los campos requeridos
-							</p>
-						)}
-					</div>
-					<div className="flex justify-center mt-4 py-4">
-						<a
-							href="/register"
-							className="text-textColor md:hover:scale-105 md:hover:ease-in-out"
-						>
-							No tenes una cuenta? Suscribite aquí
-						</a>
-					</div>
-				</form>
-			</div>
-		</div>
-	);
+          <div className="mt-auto flex justify-center">
+            <button
+              type="submit"
+              className="w-32 p-2 flex justify-center border-footerColor border-2 rounded-md shadow-sm text-sm font-medium text-footerColor hover:bg-gray-200 focus:ring-offset-2"
+            >
+              INICIAR SESION
+            </button>
+          </div>
+          <div className="mt-1">
+            {!loginData.password && (
+              <p className=" text-sm text-red-500 font-medium ">
+                {" "}
+                (*) Todos los campos requeridos
+              </p>
+            )}
+          </div>
+          <div className="flex justify-center mt-4 py-4">
+            <a
+              href="/register"
+              className="text-textColor md:hover:scale-105 md:hover:ease-in-out"
+            >
+              No tenes una cuenta? Suscribite aquí
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default LoginForm;
