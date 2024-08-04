@@ -22,6 +22,7 @@ const AdminDashboardCard = () => {
 	});
 	const [showForm, setShowForm] = useState(false);
 	const [userToEdit, setUserToEdit] = useState<IUserForAdmin | null>(null);
+	const [deletedUsers, setDeletedUsers] = useState<boolean>(false);
 
 	useEffect(() => {
 		const getAllUsers = async () => {
@@ -35,7 +36,7 @@ const AdminDashboardCard = () => {
 			}
 		};
 		getAllUsers();
-	}, [token, showForm]);
+	}, [token, showForm, deletedUsers]);
 
 	const handleOpenFormClick = (user: any) => {
 		setShowForm(true);
@@ -95,6 +96,7 @@ const AdminDashboardCard = () => {
 		if (token && userToEdit) {
 			try {
 				await deleteUserById(userToEdit.id, token);
+				setDeletedUsers(true);
 				alert(`Usuario eliminado correctamente`);
 			} catch (error) {
 				console.error("Error updating user:", error);
@@ -107,27 +109,35 @@ const AdminDashboardCard = () => {
 	return (
 		<div>
 			<div className="bg-white shadow-md">
-				<div className="flex font-bold p-4 border-b border-gray-200">
-					<div className="flex-1">Nombre</div>
-					<div className="flex-1">Apellido</div>
-					<div className="flex-1">Contacto</div>
-					<div className="flex-1">Establecimiento</div>
-					<div className="flex-1">Activo</div>
+				<div className="flex font-bold p-4 justify-between bg-altBgColor ">
+					<div className="flex-1 text-start">Nombre</div>
+					<div className="flex-1 text-start">Apellido</div>
+					<div className="flex-1 text-start">Contacto</div>
+					<div className="flex-1 text-center">Establecimiento</div>
+					<div className="flex-1 text-end">Activo</div>
+					<div className="flex-1 text-end">Editar</div>
+					<div className="flex-1 text-end">Borrar</div>
 				</div>
 				{newArrayUsers &&
 					newArrayUsers.map((user) => (
 						<div
-							className="flex p-4 border-b border-gray-200"
+							className="flex p-3 border-b border-gray-200"
 							key={user.id}
 						>
-							<div className="p-4 w-1/4">{user.name}</div>
-							<div className="p-4 w-1/4">{user.surname}</div>
-							<div className="p-4 w-1/4">{user.email}</div>
-							<div className="p-4 w-1/4">{user.placeName}</div>
-							<div className="p-4 w-1/4">
+							<div className="flex-1 text-start">{user.name}</div>
+							<div className="flex-1 text-start">
+								{user.surname}
+							</div>
+							<div className="flex-1 text-start">
+								{user.email}
+							</div>
+							<div className="flex-1 text-center">
+								{user.placeName}
+							</div>
+							<div className="flex-1 text-end">
 								{user.active ? "Si" : "No"}
 							</div>
-							<div>
+							<div className="flex-1 text-end">
 								<button
 									onClick={() => handleOpenFormClick(user)}
 								>
@@ -161,7 +171,7 @@ const AdminDashboardCard = () => {
 									</svg>
 								</button>
 							</div>
-							<div>
+							<div className="flex-1 text-end">
 								<button onClick={() => handleDeleteClick(user)}>
 									<svg
 										width="20"
@@ -190,6 +200,7 @@ const AdminDashboardCard = () => {
 						</div>
 					))}
 			</div>
+
 			{showForm === true && (
 				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
 					<div className="bg-white w-[80%] max-w-lg p-6 rounded-md shadow-lg relative">
