@@ -6,7 +6,9 @@ import { createPlot } from "@/lib/server/petitionPlots";
 import { useDispatch } from "react-redux";
 import { addPlot } from "@/redux/reducer";
 import useDataPlot from "@/hooks/useDataPlot";
+import { toast } from "sonner";
 import Map from "../WeatherComponent/WeatherMapComponent";
+
 const PlotPanel: React.FC<PlotPanelProps> = ({ plots, setPlots }) => {
 	const dispatch = useDispatch();
 
@@ -33,7 +35,10 @@ const PlotPanel: React.FC<PlotPanelProps> = ({ plots, setPlots }) => {
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
 		if (!cereal || !surface) {
-			console.error("Cereal and surface are required.");
+				toast.warning("Debes completar todos lo campos", {
+				className: "bg-red-500 text-white text-lg ",
+				duration: 3000,
+			});
 			return;
 		}
 		const newPlot = { cereal, surface, latitude, longitude };
@@ -53,7 +58,11 @@ const PlotPanel: React.FC<PlotPanelProps> = ({ plots, setPlots }) => {
 				setSurface("");
 			}
 		} catch (error) {
-			console.error("Error al crear el Lote:", error);
+			toast.warning("Error al crear el lote", {
+				className: "bg-red-500 text-white text-lg ",
+				duration: 3000,
+			});
+
 		}
 	};
 

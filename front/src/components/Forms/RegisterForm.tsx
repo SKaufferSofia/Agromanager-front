@@ -5,6 +5,7 @@ import { PetitionLogin, petitionRegister } from "@/lib/server/petitionUser";
 import { useRouter } from "next/navigation";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import useForm from "@/hooks/useForm";
+import { toast } from "sonner";
 import { ILoginForm } from "@/interfaces/interfacesUser";
 import { useDispatch } from "react-redux";
 import {
@@ -71,12 +72,14 @@ const RegisterForm = () => {
         );
 
         if (loginSuccess) {
-          alert("registrado exitoso");
           router.push("/subscriptions");
         }
       }
     } else {
-      alert("complete todos los campos");
+      toast.warning("Complete todos los campos", {
+        className: "bg-red-500 text-white text-xl",
+        duration: 3000,
+      });
     }
   };
 

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { API_WEATHER } from "@/lib/server/envs";
 import { saveLatitude, saveLongitude } from "@/redux/reducer";
+import { toast } from "sonner";
 
 declare global {
   interface Window {
@@ -154,7 +155,9 @@ const MapComponent: React.FC = () => {
         return { latitude, longitude };
       })
       .catch((e) => {
-        alert("Geocode was not successful for the following reason: " + e);
+        toast.error(
+          "Geocode was not successful for the following reason: " + e
+        );
       });
   };
 

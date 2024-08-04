@@ -8,6 +8,7 @@ import { validateLogin } from "@/helpers/valitateLogin";
 import { useDispatch } from "react-redux";
 import { signInRedux, saveToken, saveUserData } from "@/redux/reducer";
 import Cookies from "js-cookie";
+import { toast } from "sonner";
 import LoginAuthNext from "./LoginAuthNext";
 
 const LoginForm = () => {
@@ -75,7 +76,10 @@ const LoginForm = () => {
         }
       }
     } else {
-      alert("Complete todos los campos");
+      toast.warning("Complete todos los campos", {
+        className: "bg-red-500 text-white text-xl",
+        duration: 3000,
+      });
     }
   };
 
