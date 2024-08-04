@@ -51,6 +51,11 @@ const CreateStockForm: React.FC<CreateStockFormProps> = ({
 				token
 			);
 			const createdSupplyId = newSupplyResponse.id;
+			toast.success("Insumo agregado", {
+				className:
+					"mt-20 text-white bg-footerColor font-semibold text-xl",
+				duration: 3000,
+			});
 			console.log("New Supply Response:", newSupplyResponse);
 
 			if (imgFile) {
