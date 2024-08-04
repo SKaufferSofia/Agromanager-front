@@ -14,9 +14,12 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import useDataStock from "@/hooks/useDataStock";
 import { signOut } from "next-auth/react";
+import { useSelector } from "react-redux";
 
 export default function ProfileMenu() {
   const router = useRouter();
+  const roles = useSelector((state: any) => state.userData.roles);
+  console.log(roles);
 
   const { logOut } = useUserData();
   const { clearPlotsStorage } = useDataPlot();

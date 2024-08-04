@@ -56,6 +56,9 @@ export async function middleware(request: NextRequest) {
     "/dashboard/plots/:id",
     "/dashboard/mysubscriptions",
     "/dashboard/stock",
+    "/dashboard/admin-dashboard",
+    "/subscriptions",
+    "/subscriptions/accept-subscription",
   ];
 
   // Redirigir a la página de login si no está autenticado y accede a una ruta protegida
@@ -84,5 +87,6 @@ export const config = {
     "/",
     "/dashboard/:path*",
     "/auth/:path*",
+    "/subscriptions/:path*",
   ],
 };
