@@ -16,6 +16,7 @@ import {
 } from "@/redux/reducer";
 import Cookies from "js-cookie";
 import useUserData from "@/hooks/useUserData";
+import MainButton from "../MainButton/MainButton";
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -89,8 +90,9 @@ const RegisterForm = () => {
         <h2 className="text-4xl text-textColor font-semibold mb-4 text-center">
           Registrarse
         </h2>
-        <h3 className="text-xl text-textColor font-semibold mb-4 text-center">
-          Comienza con una prueba gratuita
+        <h3 className="text-xl text-textColor poppins-regular-italic mb-4 text-center">
+          Comienza con una prueba gratuitab <br />{" "}
+          <b className="text-textGreen">por 15 días</b>
         </h3>
         <form
           onSubmit={handleSubmit}
@@ -107,7 +109,7 @@ const RegisterForm = () => {
               value={regiterData.name}
               onChange={handleChange}
               placeholder="Nombre"
-              className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+              className="p-2 w-full flex justify-center rounded-md shadow-sm sm:text-sm"
             />
           </div>
           <div>
@@ -123,7 +125,7 @@ const RegisterForm = () => {
               value={regiterData.surname}
               onChange={handleChange}
               placeholder="Apellido"
-              className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+              className="p-2 w-full flex justify-center rounded-md shadow-sm sm:text-sm"
             />
           </div>
           <div>
@@ -132,12 +134,12 @@ const RegisterForm = () => {
               {!regiterData.phone && <span className="text-red-500"> * </span>}
             </label>
             <input
-              type="text"
+              type="number"
               name="phone"
               value={regiterData.phone}
               onChange={handleChange}
               placeholder="Teléfono"
-              className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+              className="p-2 w-full flex justify-center rounded-md shadow-sm sm:text-sm"
             />
           </div>
           <div>
@@ -153,7 +155,7 @@ const RegisterForm = () => {
               value={regiterData.placeName}
               onChange={handleChange}
               placeholder="Nombre del campo"
-              className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+              className="p-2 w-full flex justify-center rounded-md shadow-sm sm:text-sm"
             />
           </div>
           <div>
@@ -167,7 +169,7 @@ const RegisterForm = () => {
               value={regiterData.email}
               onChange={handleChange}
               placeholder="E-mail"
-              className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+              className="p-2 w-full flex justify-center rounded-md shadow-sm sm:text-sm"
             />
             {errorRegister.email && (
               <p className="text-red-500 text-xs mt-1">{errorRegister.email}</p>
@@ -187,7 +189,7 @@ const RegisterForm = () => {
                 value={regiterData.password}
                 onChange={handleChange}
                 placeholder="Contraseña"
-                className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+                className="p-2 w-full flex justify-center rounded-md shadow-sm sm:text-sm"
               />
               <button type="button" onClick={handleOnClickShowPassword}>
                 {showPassword ? (
@@ -225,7 +227,7 @@ const RegisterForm = () => {
                 value={regiterData.confirmPassword}
                 onChange={handleChange}
                 placeholder="Confirmar contraseña"
-                className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+                className="p-2 w-full flex justify-center rounded-md shadow-sm sm:text-sm"
               />
               <button type="button" onClick={handleOnClickShowConfirmPassword}>
                 {showConfirmPassword ? (
@@ -258,12 +260,7 @@ const RegisterForm = () => {
             )}
           </div>
           <div className="mt-auto flex justify-center">
-            <button
-              type="submit"
-              className="w-32 p-2 flex justify-center border-footerColor border-2 rounded-md shadow-sm text-sm font-medium text-footerColor hover:bg-gray-200 focus:ring-offset-2"
-            >
-              REGISTRARSE
-            </button>
+            <MainButton text="Registrarme" />
           </div>
         </form>
       </div>

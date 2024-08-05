@@ -4,7 +4,7 @@ import LandingButton from "../LandingButton/LandingButton";
 
 const ContactForm: React.FC = () => {
   return (
-    <div className="p-7 w-[50%] flex flex-col justify-center items-center rounded-2xl z-10 bg-black bg-opacity-60">
+    <div className="p-7 w-[50%] ml-10 flex flex-col justify-center items-center rounded-2xl z-10 bg-black bg-opacity-60">
       <div className="w-full max-w-md">
         <h2 className="text-4xl text-gray-50 font-semibold mb-4 text-center">
           Estamos para ayudarte.

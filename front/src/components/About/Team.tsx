@@ -43,7 +43,7 @@ const TeamComponent: React.FC = () => {
   ];
 
   return (
-    <div className="h-[calc(60vh)]">
+    <div className="h-[calc(65vh)]">
       <div className="w-full h-[13rem] bg-gradient-to-t from-bgColor relative -mt-52 py-10">
         <div className="bg-white py-24 sm:py-20 sm:w-[80%] sm:mx-auto rounded-2xl">
           <div className="mx-auto grid max-w-7xl gap-x-8 gap-y-20 px-6 lg:px-8 xl:grid-cols-3">

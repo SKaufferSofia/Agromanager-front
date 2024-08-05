@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { saveToken, saveUserData, signInRedux } from "@/redux/reducer";
 import useUserData from "@/hooks/useUserData";
+import { toast } from "sonner";
 
 const LoginAuthNext = () => {
   const { data: session } = useSession();
@@ -54,13 +55,22 @@ const LoginAuthNext = () => {
 
       if (response) {
         if (response.user.premiumExpiration === null) {
-          alert("Debes suscribirte");
+          toast.info("Debe suscribirse", {
+            className: "bg-orange-500 text-white text-xl",
+            duration: 3000,
+          });
           router.push("/subscriptions");
         } else if (mainRole === "admin") {
-          alert("Login exitoso");
+          toast.success("Login exitoso", {
+            className: "mt-20 text-white bg-footerColor font-semibold text-xl",
+            duration: 2000,
+          });
           router.push("/dashboard/admin-dashboard");
         } else {
-          alert("Login exitoso");
+          toast.success("Login exitoso", {
+            className: "mt-20 text-white bg-footerColor font-semibold text-xl",
+            duration: 2000,
+          });
           router.push("/dashboard/plots");
         }
       }
@@ -77,7 +87,7 @@ const LoginAuthNext = () => {
       <Button
         size="sm"
         variant="outlined"
-        className="flex items-center gap-3 text-textColor border border-textGreen hover:text-gray-900"
+        className="flex items-center gap-3 text-textColor border border-textGreen hover:text-gray-900 hover:scale-105 hover:bg-gray-100"
         onClick={signInWithGoogle}
       >
         <img
@@ -85,7 +95,7 @@ const LoginAuthNext = () => {
           alt="metamask"
           className="h-6 w-6"
         />
-        Continue con Google
+        Inicia Sesion con Google
       </Button>
     </div>
   );

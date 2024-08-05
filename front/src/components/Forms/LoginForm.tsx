@@ -10,6 +10,7 @@ import { signInRedux, saveToken, saveUserData } from "@/redux/reducer";
 import Cookies from "js-cookie";
 import { toast } from "sonner";
 import LoginAuthNext from "./LoginAuthNext";
+import MainButton from "../MainButton/MainButton";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -65,13 +66,22 @@ const LoginForm = () => {
 
       if (loginSuccess) {
         if (loginSuccess.user.premiumExpiration === null) {
-          alert("Debe suscribirse");
+          toast.info("Debe suscribirse", {
+            className: "bg-orange-500 text-white text-xl",
+            duration: 3000,
+          });
           router.push("/subscriptions");
         } else if (mainRole === "admin") {
-          alert("Login exitoso");
+          toast.success("Login exitoso", {
+            className: "mt-20 text-white bg-footerColor font-semibold text-xl",
+            duration: 2000,
+          });
           router.push("/dashboard/admin-dashboard");
         } else {
-          alert("Login exitoso");
+          toast.success("Login exitoso", {
+            className: "mt-20 text-white bg-footerColor font-semibold text-xl",
+            duration: 2000,
+          });
           router.push("/dashboard/plots");
         }
       }
@@ -84,12 +94,12 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="p-8 w-full flex flex-col min-h-screen justify-center items-center">
-      <div className="w-full max-w-md mb-24">
+    <div className="w-full flex flex-col justify-center items-center">
+      <div className="w-full h-[calc(100vh)] max-w-md mt-20">
         <h2 className="text-4xl text-textColor font-semibold mb-4 text-center">
           Iniciar Sesión
         </h2>
-        <h3 className="text-xl text-textColor font-semibold mb-4 text-center">
+        <h3 className="text-xl text-textColor poppins-regular-italic mb-4 text-center">
           Comienza con tu prueba gratuita
         </h3>
         <div className="flex justify-center items-center p-5">
@@ -109,7 +119,7 @@ const LoginForm = () => {
               name="email"
               onChange={handleChange}
               placeholder="E-mail"
-              className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+              className="p-2 w-full flex justify-center rounded-md shadow-sm sm:text-sm"
             />
           </div>
           <div>
@@ -123,7 +133,7 @@ const LoginForm = () => {
                 name="password"
                 onChange={handleChange}
                 placeholder="Contraseña"
-                className="p-2 w-full flex justify-center border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+                className="p-2 w-full flex justify-center  rounded-md shadow-sm sm:text-sm"
               />
               <button type="button" onClick={handleOnclickPassword}>
                 {showPassword ? (
@@ -139,17 +149,6 @@ const LoginForm = () => {
                 )}
               </button>
             </div>
-          </div>
-
-          <div className="mt-auto flex justify-center">
-            <button
-              type="submit"
-              className="w-32 p-2 flex justify-center border-footerColor border-2 rounded-md shadow-sm text-sm font-medium text-footerColor hover:bg-gray-200 focus:ring-offset-2"
-            >
-              INICIAR SESION
-            </button>
-          </div>
-          <div className="mt-1">
             {!loginData.password && (
               <p className=" text-sm text-red-500 font-medium ">
                 {" "}
@@ -157,12 +156,16 @@ const LoginForm = () => {
               </p>
             )}
           </div>
-          <div className="flex justify-center mt-4 py-4">
+          <div className="mt-auto flex justify-center">
+            <MainButton text="Iniciar Sesion" />
+          </div>
+          <div className="flex justify-center mt-2 py-4 text-gray-900">
+            No tenes una cuenta?{" "}
             <a
               href="/register"
-              className="text-textColor md:hover:scale-105 md:hover:ease-in-out"
+              className="text-textGreen font-semibold md:hover:scale-105 ml-3 md:hover:ease-in-out"
             >
-              No tenes una cuenta? Suscribite aquí
+              Suscribite aquí
             </a>
           </div>
         </form>
