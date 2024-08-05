@@ -7,7 +7,7 @@ const subscriptions: ISuscribe[] = [
     price: 0,
     unid: "gratis",
     describe:
-      "Disfruta de todos los beneficios de nuestra aplicación durante 15 días de forma totalmente gratuita. Perfecta para probar todas las características antes de decidirte por una suscripción de pago. No se requiere tarjeta de crédito.",
+      "Disfruta de todos los beneficios de nuestra aplicación durante 30 días de forma totalmente gratuita. Perfecta para probar todas las características antes de decidirte por una suscripción de pago. No se requiere tarjeta de crédito.",
   },
   {
     id: 2,

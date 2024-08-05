@@ -5,7 +5,7 @@ const suscribes = [
     price: 0,
     unid: "mo",
     describe:
-      "Accede a las funcionalidades básicas de la aplicación sin costo alguno POR 15 DÍAS.",
+      "Accede a las funcionalidades básicas de la aplicación sin costo alguno POR 30 DÍAS.",
   },
   {
     id: 2,
