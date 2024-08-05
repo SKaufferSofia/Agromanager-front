@@ -37,15 +37,15 @@ export const PetitionLogin = async (
   loginData: ILoginForm,
   saveToken: SaveToken,
   signIn: SignIn,
-  userData: SaveUserData,
-  cookieToken: SaveToken
+  userData: SaveUserData
+  // cookieToken: SaveToken
 ) => {
   try {
     const response = await axios.post(`${API}/auth/signin`, loginData);
     saveToken(response.data.token);
     signIn(response.data.isLoggin);
     userData(response.data.user);
-    cookieToken(response.data.token);
+    // cookieToken(response.data.token);
     return response.data;
   } catch (error: any) {
     if (axios.isAxiosError(error) && error.response) {
@@ -60,8 +60,8 @@ export const loginGoogle = async (
   googleId: IUserGoogle,
   saveToken: SaveToken,
   signIn: SignIn,
-  userData: SaveUserData,
-  cookieToken: SaveToken
+  userData: SaveUserData
+  // cookieToken: SaveToken
 ): Promise<any> => {
   try {
     const response = await axios.post(`${API}/auth/google`, googleId, {
@@ -72,7 +72,7 @@ export const loginGoogle = async (
     saveToken(response.data.token);
     signIn(response.data.isLoggin);
     userData(response.data.user);
-    cookieToken(response.data.token);
+    // cookieToken(response.data.token);
     return response.data;
   } catch (error: any) {
     if (axios.isAxiosError(error) && error.response) {

@@ -42,8 +42,7 @@ const LoginAuthNext = () => {
         (data) => {
           dispatch(saveUserData(data));
           saveUserDataStorage(data);
-        },
-        (data) => Cookies.set("token", data, { expires: 30 })
+        }
       );
 
       const mainRole =
@@ -65,12 +64,14 @@ const LoginAuthNext = () => {
             className: "mt-20 text-white bg-footerColor font-semibold text-xl",
             duration: 2000,
           });
+          Cookies.set("token", response.token, { expires: 30 });
           router.push("/dashboard/admin-dashboard");
         } else {
           toast.success("Login exitoso", {
             className: "mt-20 text-white bg-footerColor font-semibold text-xl",
             duration: 2000,
           });
+          Cookies.set("token", response.token, { expires: 30 });
           router.push("/dashboard/plots");
         }
       }

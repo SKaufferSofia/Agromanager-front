@@ -92,9 +92,11 @@ const PlotDetailDashboard: React.FC = () => {
             <p className="m-10 flex text-lg font-semibold">
               Tipo de cereal: {currentPlot.cereal}
             </p>
-            <p className="m-10 flex text-lg font-semibold">
-              Ubicacíon: {location}, {country}
-            </p>
+            {location && country && (
+              <p className="m-10 flex text-lg font-semibold">
+                Ubicación: {location}, {country}
+              </p>
+            )}
           </div>
         </div>
         <div className="p-8">

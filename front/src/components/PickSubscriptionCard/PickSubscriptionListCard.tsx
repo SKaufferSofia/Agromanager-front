@@ -52,7 +52,7 @@ const PickSubscriptionListCard = ({
             >
               <span className="mt-5 text-4xl">$</span>
               {price}
-              <span className="self-end text-4xl">/{unid}</span>
+              <span className="self-end text-2xl">/{unid}</span>
             </Typography>
             {isChecked && (
               <div className="absolute top-2 right-2 transition-opacity duration-300 ease-in-out opacity-100">

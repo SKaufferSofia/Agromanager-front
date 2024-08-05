@@ -68,11 +68,11 @@ const RegisterForm = () => {
           (data) => {
             dispatch(saveUserData(data));
             saveUserDataStorage(data);
-          },
-          (data) => Cookies.set("token", data, { expires: 30 })
+          }
         );
 
         if (loginSuccess) {
+          Cookies.set("userData", JSON.stringify(loginSuccess.user));
           router.push("/subscriptions");
         }
       }

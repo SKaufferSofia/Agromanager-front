@@ -99,15 +99,6 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
           }}
         >
           <Tab
-            value="Insumos"
-            onClick={() => setActiveTab("Insumos")}
-            className={`p-2 text-xl ${
-              activeTab === "Insumos" ? "text-white" : ""
-            }`}
-          >
-            Insumos
-          </Tab>
-          <Tab
             value="Labores"
             onClick={() => setActiveTab("Labores")}
             className={`p-2 text-xl ${
@@ -115,6 +106,15 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
             }`}
           >
             Labores
+          </Tab>
+          <Tab
+            value="Insumos"
+            onClick={() => setActiveTab("Insumos")}
+            className={`p-2 text-xl ${
+              activeTab === "Insumos" ? "text-white" : ""
+            }`}
+          >
+            Insumos
           </Tab>
         </TabsHeader>
         {activeTab === "Insumos" && (

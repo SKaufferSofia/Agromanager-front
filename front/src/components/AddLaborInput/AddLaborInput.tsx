@@ -122,7 +122,7 @@ const AddLaborInput: React.FC<AddLaborInputProps> = ({ plotId }) => {
         <div className="mt-5">
           <button
             type="submit"
-            className="w-25 h-9 p-2 flex items-center justify-center border-footerColor border-2 rounded-md shadow-sm text-sm font-medium text-footerColor hover:bg-gray-100 focus:ring-offset-2"
+            className="w-25 h-9 p-2 flex items-center justify-center  border-footerColor border-2 rounded-md shadow-sm text-md font-medium text-footerColor hover:bg-footerColor hover:text-white hover:ease-in-out focus:ring-offset-2"
           >
             Agregar
           </button>
