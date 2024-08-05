@@ -21,12 +21,12 @@ input[type="file"] {
 
 .team-member-image {
   transition: transform 0.3s ease, opacity 0.3s ease;
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .team-member-image:hover {
   opacity: 1;
-  transform: scale(1.5) rotateY(180deg);
+  transform: scale(1.2) rotateY(180deg);
 }
 
 /* CARDS */

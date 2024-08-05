@@ -113,8 +113,8 @@ const StockPanel: React.FC<StockPanelProps> = ({ supplies }) => {
   }, [supplies]);
 
   return (
-    <div className="w-full max-w-full bgColor min-h-screen flex-col relative">
-      <div className="w-[90%] mx-auto mt-8 mb-10 z-10">
+    <div className="w-full max-w-full bgColor min-h-screen flex-col relative flex-grow ">
+      <div className="w-[90%] mx-auto mt-8 mb-10 z-10 flex-grow">
         <div className={editingSupply ? "blurred" : ""}>
           <CreateStockForm
             categories={categories}

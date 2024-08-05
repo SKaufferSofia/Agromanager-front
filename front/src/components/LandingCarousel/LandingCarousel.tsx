@@ -11,7 +11,7 @@ const slides = [
     src: image1,
     alt: "Lote agrícola",
     title: (
-      <span className="poppins-thin">
+      <span className="poppins-extralight">
         Gestiona tus{" "}
         <span className="poppins-bold-italic uppercase"> lotes</span>
         <hr className="border-[1px] border-gray-700 w-full"></hr>
@@ -24,7 +24,7 @@ const slides = [
     src: image2,
     alt: "Labores agrícolas",
     title: (
-      <span className="poppins-thin">
+      <span className="poppins-extralight">
         Organiza tus{" "}
         <span className="poppins-bold-italic uppercase">labores</span>
         <hr className="border-[1px] border-gray-700 w-full"></hr>
@@ -37,7 +37,7 @@ const slides = [
     src: image3,
     alt: "Insumos agrícolas",
     title: (
-      <span className="poppins-thin">
+      <span className="poppins-extralight">
         Administra tus{" "}
         <span className="poppins-bold-italic uppercase">insumos</span>
         <hr className="border-[1px] border-gray-700 w-full"></hr>

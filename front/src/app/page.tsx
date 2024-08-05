@@ -37,12 +37,12 @@ export default function Landing() {
           </div>
           {/* </ImgContainer> */}
         </VideoContainer>
-        <div className="w-full border-navbarColor border-8">
+        <div className="w-full border-navbarColor border-y-[3rem]">
           <LandingCarousel />
         </div>
-        <div className=" w-full bg-white">
-          <div className="flex">
-            <div className="p-8 w-1/3 flex flex-col items-center text-center shadow-xl shadow-gray-600">
+        <div className=" w-full bg-white shadow-xl p-4">
+          <div className="flex ">
+            <div className="p-8 w-1/3 flex flex-col items-center text-center shadow-inner">
               <Image src={icon1} alt={"icon"} width={150} height={150} />
               <div className="text-textColor">
                 <h2 className="text-4xl mt-4 mb-8 poppins-regular-italic ">
@@ -56,7 +56,7 @@ export default function Landing() {
                 </p>
               </div>
             </div>
-            <div className="p-8 w-1/3 flex flex-col items-center text-center shadow-xl shadow-gray-600">
+            <div className="p-8 w-1/3 flex flex-col items-center text-center shadow-inner">
               <Image src={icon2} alt={"icon"} width={150} height={150} />
               <div className="text-[#585858]">
                 <h2 className="text-4xl mt-4 mb-8 poppins-regular-italic ">
@@ -70,7 +70,7 @@ export default function Landing() {
                 </p>
               </div>
             </div>
-            <div className="p-8 w-1/3 flex flex-col items-center text-center shadow-xl shadow-gray-600">
+            <div className="p-8 w-1/3 flex flex-col items-center text-center shadow-inner">
               <Image src={icon3} alt={"icon"} width={150} height={150} />
               <div className="text-[#585858]">
                 <h2 className="text-4xl mt-4 mb-8 poppins-regular-italic ">
