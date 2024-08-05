@@ -52,7 +52,7 @@ const SideNavbar: React.FC<IPlotsNavbar> = ({ plots }) => {
             {plots.map((plot: IPlotsType) => (
               <li
                 key={plot.id}
-                className="py-2 px-4 rounded poppins-light textColor hover:border-white hover:border-2"
+                className="py-2 px-4 rounded poppins-light textColor hover:bg-white hover:text-textGreen"
               >
                 <Link href={`/dashboard/plots/${plot.id}`}>{plot.cereal}</Link>
               </li>

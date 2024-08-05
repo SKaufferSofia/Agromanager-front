@@ -3,27 +3,27 @@ import { ISuscribe } from "@/interfaces/interfacesSupscriptions";
 const subscriptions: ISuscribe[] = [
   {
     id: 1,
-    title: "Suscripcion gratuita",
+    title: "Suscripción gratuita",
     price: 0,
-    unid: "mo",
+    unid: "gratis",
     describe:
-      "Lorem ipsum dolor sit amet consect etur adipisicing elit. Itaque amet indis perferendis blanditiis repellendus etur quidem assumenda.Lorem ipsum dolor sit amet consect etur adipisicing elit. Itaque amet indis perferendis blanditiis repellendus etur quidem assumenda.",
+      "Disfruta de todos los beneficios de nuestra aplicación durante 15 días de forma totalmente gratuita. Perfecta para probar todas las características antes de decidirte por una suscripción de pago. No se requiere tarjeta de crédito.",
   },
   {
     id: 2,
-    title: "Suscripcion por mes",
+    title: "Suscripción mensual",
     price: 10,
-    unid: "mo",
+    unid: "por mes",
     describe:
-      "Lorem ipsum dolor sit amet consect etur adipisicing elit. Itaque amet indis perferendis blanditiis repellendus etur quidem assumenda.Lorem ipsum dolor sit amet consect etur adipisicing elit. Itaque amet indis perferendis blanditiis repellendus etur quidem assumenda.",
+      "Accede a todas las funciones premium de nuestra aplicación abonando una cuota mensual. Ideal para quienes prefieren la flexibilidad de pagar mes a mes sin comprometerse a largo plazo.",
   },
   {
     id: 3,
-    title: "Suscripcion anual",
+    title: "Suscripción anual",
     price: 30,
-    unid: "an",
+    unid: "por año",
     describe:
-      "Lorem ipsum dolor sit amet consect etur adipisicing elit. Itaque amet indis perferendis blanditiis repellendus etur quidem assumenda.Lorem ipsum dolor sit amet consect etur adipisicing elit. Itaque amet indis perferendis blanditiis repellendus etur quidem assumenda.",
+      "Obtén un descuento significativo al suscribirte por un año completo. Disfruta de todos los beneficios premium de nuestra aplicación y ahorra en comparación con la suscripción mensual.",
   },
 ];
 

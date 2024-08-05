@@ -51,8 +51,7 @@ const LoginForm = () => {
         (data) => {
           dispatch(saveUserData(data));
           saveUserDataStorage(data);
-        },
-        (data) => Cookies.set("token", data, { expires: 30 })
+        }
       );
 
       // Obtener el rol principal del usuario
@@ -76,12 +75,14 @@ const LoginForm = () => {
             className: "mt-20 text-white bg-footerColor font-semibold text-xl",
             duration: 2000,
           });
+          Cookies.set("token", loginSuccess.token, { expires: 30 });
           router.push("/dashboard/admin-dashboard");
         } else {
           toast.success("Login exitoso", {
             className: "mt-20 text-white bg-footerColor font-semibold text-xl",
             duration: 2000,
           });
+          Cookies.set("token", loginSuccess.token, { expires: 30 });
           router.push("/dashboard/plots");
         }
       }

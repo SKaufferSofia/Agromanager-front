@@ -36,7 +36,7 @@ const MyProfile = () => {
 
   return (
     <div className="w-screen h-full flex flex-col sm:flex-row">
-      <div className="mt-24 h-full bg-sideNavbarColor bg-opacity-20 sm:w-1/4">
+      <div className="mt-[86px] h-min-screen bg-sideNavbarColor bg-opacity-10 ">
         <SideNavbar plots={plots} />
       </div>
       <div className="p-8 flex-grow mt-24 sm:w-3/4">

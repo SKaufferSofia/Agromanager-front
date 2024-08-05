@@ -4,6 +4,7 @@ import { getToken } from "next-auth/jwt";
 export async function middleware(request: NextRequest) {
   const token = request.cookies.get("token");
   const role = request.cookies.get("role");
+  const userData = request.cookies.get("userData");
 
   // Obtener y decodificar el token de Google
   const tokenGoogle = await getToken({
@@ -99,12 +100,21 @@ export async function middleware(request: NextRequest) {
     "/dashboard/plots",
     "/dashboard/myprofile",
     "/dashboard/plots/:id",
-    "/dashboard/mysubscriptions",
+    "/dashboard/mysubscription",
     "/dashboard/stock",
     "/dashboard/admin-dashboard",
+  ];
+
+  const subscriptions = [
     "/subscriptions",
     "/subscriptions/accept-subscription",
   ];
+
+  if (!userData) {
+    if (subscriptions.includes(request.nextUrl.pathname)) {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+  }
 
   // Redirigir a la página de login si no está autenticado y accede a una ruta protegida
   if (!token && !tokenGoogle) {

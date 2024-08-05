@@ -15,6 +15,7 @@ import Cookies from "js-cookie";
 import useDataStock from "@/hooks/useDataStock";
 import { signOut } from "next-auth/react";
 import { useSelector } from "react-redux";
+import { FaList, FaListAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
 
 export default function ProfileMenu() {
   const router = useRouter();
@@ -53,30 +54,33 @@ export default function ProfileMenu() {
         </Button>
       </MenuHandler>
       {isAdmin ? (
-        <MenuList className="p-1 bg-black border-black">
+        <MenuList className="p-1">
           <MenuItem
-            className="flex items-center gap-2 rounded poppins-semibold text-red-400"
+            className="flex items-center gap-2 rounded poppins-semibold text-red-400 "
             onClick={handleLogOut}
           >
             CERRAR SESIÓN
           </MenuItem>
         </MenuList>
       ) : (
-        <MenuList className="p-1 bg-black border-black">
+        <MenuList className="p-1">
           <Link href="/dashboard/myprofile">
-            <MenuItem className="flex items-center gap-2 rounded poppins-semibold text-white">
+            <MenuItem className="flex items-center gap-2 rounded poppins-semibold text-textColor">
+              <FaUser />
               MI PERFIL
             </MenuItem>
           </Link>
-          {/* <Link href="/profile/orders">
-          <MenuItem className="flex items-center gap-2 rounded poppins-semibold text-white">
-            
-          </MenuItem>
-        </Link> */}
+          <Link href="/dashboard/mysubscription">
+            <MenuItem className="flex items-center gap-2 rounded poppins-semibold text-textColor">
+              <FaListAlt />
+              MIS SUSCRIPCIONES
+            </MenuItem>
+          </Link>
           <MenuItem
             className="flex items-center gap-2 rounded poppins-semibold text-red-400"
             onClick={handleLogOut}
           >
+            <FaSignOutAlt />
             CERRAR SESIÓN
           </MenuItem>
         </MenuList>
