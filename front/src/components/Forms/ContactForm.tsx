@@ -1,8 +1,10 @@
 import React from "react";
+import MainButton from "../MainButton/MainButton";
+import LandingButton from "../LandingButton/LandingButton";
 
 const ContactForm: React.FC = () => {
   return (
-    <div className="p-5 w-[80%] flex flex-col justify-center items-center z-10 bg-black bg-opacity-60">
+    <div className="p-7 w-[50%] flex flex-col justify-center items-center rounded-2xl z-10 bg-black bg-opacity-60">
       <div className="w-full max-w-md">
         <h2 className="text-4xl text-gray-50 font-semibold mb-4 text-center">
           Estamos para ayudarte.
@@ -45,9 +47,7 @@ const ContactForm: React.FC = () => {
           </div>
 
           <div className="mt-auto flex justify-center">
-            <button className="w-32 p-2 flex justify-center border-footerColor border-2 rounded-md shadow-sm text-sm font-medium text-footerColor hover:bg-gray-200 focus:ring-offset-2">
-              Enviar
-            </button>
+            <LandingButton text="Enviar" />
           </div>
         </form>
       </div>
