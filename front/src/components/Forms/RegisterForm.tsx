@@ -91,8 +91,8 @@ const RegisterForm = () => {
           Registrarse
         </h2>
         <h3 className="text-xl text-textColor poppins-regular-italic mb-4 text-center">
-          Comienza con una prueba gratuitab <br />{" "}
-          <b className="text-textGreen">por 15 días</b>
+          Comienza con una prueba gratuita <br />{" "}
+          <b className="text-textGreen">por 30 dias</b>
         </h3>
         <form
           onSubmit={handleSubmit}

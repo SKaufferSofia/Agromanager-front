@@ -62,7 +62,7 @@ const StockDashboard: React.FC = () => {
         </video>
         <div className="w-full bg-white opacity-55 absolute inset-0"></div>
       </div> */}
-      <div className="mt-[86px] h-min-screen bg-sideNavbarColor bg-opacity-20 z-10">
+      <div className="mt-[86px] h-min-screen bg-sideNavbarColor bg-opacity-20">
         {plotsError ? (
           <div className="p-4 bg-red-500 text-white rounded-lg mb-6">
             {plotsError}
@@ -71,7 +71,7 @@ const StockDashboard: React.FC = () => {
           <SideNavbar plots={plots} />
         )}
       </div>
-      <div className="flex-grow mt-24 w-screen z-10 ">
+      <div className="flex-grow mt-24 w-screen ">
         <StockPanel supplies={supplies} />
       </div>
     </div>

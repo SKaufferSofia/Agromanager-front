@@ -56,7 +56,7 @@ const Footer: React.FC = () => {
           </div>
 
           <p className="text-sm w-full md:w-1/3 px-4 py-6 justify-center">
-            © {new Date().getFullYear()} Agricultural Manager. <br />
+            © {new Date().getFullYear()} AgroManager. <br />
             Todos los derechos reservados.
           </p>
         </div>

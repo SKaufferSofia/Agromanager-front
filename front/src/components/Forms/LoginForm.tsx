@@ -54,16 +54,15 @@ const LoginForm = () => {
         }
       );
 
-      // Obtener el rol principal del usuario
-      const mainRole =
-        loginSuccess.user.roles
-          .map((role: any) => role.name)
-          .find((role: any) => role.includes("admin")) || "user";
-
-      // Guardar solo el rol principal en la cookie
-      Cookies.set("role", mainRole);
-
       if (loginSuccess) {
+        // Obtener el rol principal del usuario
+        const mainRole =
+          loginSuccess.user.roles
+            .map((role: any) => role.name)
+            .find((role: any) => role.includes("admin")) || "user";
+
+        // Guardar solo el rol principal en la cookie
+        Cookies.set("role", mainRole);
         if (loginSuccess.user.premiumExpiration === null) {
           toast.info("Debe suscribirse", {
             className: "bg-orange-500 text-white text-xl",
@@ -166,7 +165,7 @@ const LoginForm = () => {
               href="/register"
               className="text-textGreen font-semibold md:hover:scale-105 ml-3 md:hover:ease-in-out"
             >
-              Suscribite aquí
+              Registrarte aquí
             </a>
           </div>
         </form>
