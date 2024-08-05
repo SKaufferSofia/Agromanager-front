@@ -84,7 +84,7 @@ const NavbarComponent: React.FC = () => {
       <li>
         <a
           href="/contact"
-          className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 lg:hover:scale-105 lg:hover:ease-in-out md:p-0"
+          className="block py-2 px-3 text-white rounded hover:bg-gray-100 hover:ease-in-out md:hover:bg-transparent md:border-0 lg:hover:scale-105 lg:hover:ease-in-out md:p-0"
         >
           CONTACTO
         </a>
