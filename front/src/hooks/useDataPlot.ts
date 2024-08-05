@@ -33,6 +33,18 @@ const useDataPlot = () => {
     localStorage.setItem("suppliesApplied", JSON.stringify(suppliesApplied));
   };
 
+  const addSuppliesAppliedStorage = (supplyApplied: SupplyApplied) => {
+    const suppliesAppliedStorage = localStorage.getItem("suppliesApplied");
+    if (suppliesAppliedStorage) {
+      const parsedSuppliesAppliedStorage = JSON.parse(suppliesAppliedStorage);
+      parsedSuppliesAppliedStorage.push(supplyApplied);
+      localStorage.setItem(
+        "suppliesApplied",
+        JSON.stringify(parsedSuppliesAppliedStorage)
+      );
+    }
+  };
+
   const savePlotsStorage = (plots: IPlotsType[]) => {
     localStorage.setItem("plots", JSON.stringify(plots));
   };
@@ -93,6 +105,7 @@ const useDataPlot = () => {
     clearPlotsStorage,
     updatePlotsStorageWithSupplies,
     saveSuppliesAppliedStorage,
+    addSuppliesAppliedStorage,
   };
 };
 
