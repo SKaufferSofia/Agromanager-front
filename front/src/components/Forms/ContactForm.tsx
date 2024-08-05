@@ -21,7 +21,7 @@ const ContactForm: React.FC = () => {
               type="text"
               name="name"
               placeholder="Nombre"
-              className="p-2 w-full flex justify-center border border-gray-50 rounded-sm shadow-sm sm:text-sm"
+              className="p-2 w-full flex justify-center rounded-md shadow-sm sm:text-sm"
             />
           </div>
           <div>
@@ -32,7 +32,7 @@ const ContactForm: React.FC = () => {
               type="email"
               name="email"
               placeholder="E-mail"
-              className="p-2 w-full flex justify-center border border-gray-50 rounded-sm shadow-sm sm:text-sm"
+              className="p-2 w-full flex justify-center rounded-md shadow-sm sm:text-sm"
             />
           </div>
           <div>
@@ -42,7 +42,7 @@ const ContactForm: React.FC = () => {
             <textarea
               name="message"
               placeholder="Mensaje"
-              className="p-2 w-full flex justify-center border border-gray-50 rounded-sm shadow-sm sm:text-sm"
+              className="p-2 w-full flex justify-center rounded-md shadow-sm sm:text-sm"
             />
           </div>
 
