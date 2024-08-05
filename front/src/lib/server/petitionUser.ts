@@ -50,7 +50,10 @@ export const PetitionLogin = async (
   } catch (error: any) {
     if (axios.isAxiosError(error) && error.response) {
       const axiosError = error.response.data.message;
-      alert("error: " + axiosError);
+      toast.warning(axiosError, {
+        className: "bg-red-500 text-white text-xl",
+        duration: 2000,
+      });
     }
     return false;
   }

@@ -100,7 +100,7 @@ export async function middleware(request: NextRequest) {
     "/dashboard/plots",
     "/dashboard/myprofile",
     "/dashboard/plots/:id",
-    "/dashboard/mysubscriptions",
+    "/dashboard/mysubscription",
     "/dashboard/stock",
     "/dashboard/admin-dashboard",
   ];

@@ -1,11 +1,10 @@
+import { toast } from "sonner";
 import { NEXT_PUBLIC_API_URL } from "./envs";
 import axios from "axios";
 
 const API_PUBLIC = NEXT_PUBLIC_API_URL;
 
-export const fetchAllUsers = async (
-    token: string,
-)=> {
+export const fetchAllUsers = async (token: string) => {
   try {
     const response = await axios.get(`${API_PUBLIC}/users/getall`, {
       headers: {
@@ -33,7 +32,7 @@ export const editUserById = async (
   try {
     const response = await axios.put(
       `${API_PUBLIC}/users/${userToEditId}`,
-      userData, 
+      userData,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -44,13 +43,14 @@ export const editUserById = async (
     return response.data;
   } catch (error) {
     console.log("Error in editUserById:", error);
-    throw error;  
+    toast.error("Error al editar el usuario", {
+      className: "bg-red-500 text-white text-lg",
+      duration: 3000,
+    });
+    throw error;
   }
 };
-export const deleteUserById = async (
-  userToDeleteId: string,
-  token: string
-) => {
+export const deleteUserById = async (userToDeleteId: string, token: string) => {
   try {
     const response = await axios.delete(
       `${API_PUBLIC}/users/${userToDeleteId}`,

@@ -8,6 +8,8 @@ import { IUserForAdmin } from "@/interfaces/interfaces";
 import { IUser } from "@/interfaces/interfacesUser";
 import { editUserById } from "@/lib/server/petitionAdminInfo";
 import { useState } from "react";
+import { toast } from "sonner";
+import useUserData from "@/hooks/useUserData";
 
 const ProfileComponent = () => {
   const userData = useSelector((state: any) => state.userData);
@@ -22,6 +24,7 @@ const ProfileComponent = () => {
     email: "",
   });
   const [showForm, setShowForm] = useState(false);
+  const { saveUserDataStorage } = useUserData();
 
   const handleCancelButton = () => {
     setShowForm(false);
@@ -49,6 +52,15 @@ const ProfileComponent = () => {
 
         await editUserById(userId, requestBody, token);
 
+        saveUserDataStorage({
+          ...userData,
+          name: editUserData.name,
+          surname: editUserData.surname,
+          phone: editUserData.phone,
+          placeName: editUserData.placeName,
+          email: editUserData.email,
+        });
+
         setEditUserData({
           name: "",
           surname: "",
@@ -56,12 +68,18 @@ const ProfileComponent = () => {
           placeName: "",
           email: "",
         });
-
-        alert(`Usuario editado correctamente:
+        toast.success(
+          `Usuario editado correctamente:
         Nombre: ${requestBody.name} ${requestBody.surname}
         Teléfono: ${requestBody.phone}
         Establecimiento: ${requestBody.placeName}
-        Email: ${requestBody.email}`);
+        Email: ${requestBody.email}`,
+          {
+            className:
+              "w-[28rem] mt-20 text-white bg-footerColor font-semibold text-xl",
+            duration: 3000,
+          }
+        );
         setShowForm(false);
       } catch (error) {
         console.error("Error updating user:", error);
@@ -122,7 +140,11 @@ const ProfileComponent = () => {
               </div>
             </div>
           </div>
-          {/* {showForm === true && (
+          <div onClick={() => setShowForm(true)}>
+            <LandingButton text="Editar Perfil" />
+          </div>
+
+          {showForm === true && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
               <div className="bg-white w-[80%] max-w-lg p-6 rounded-md shadow-lg relative">
                 <h3>Editar usuario</h3>
@@ -136,7 +158,7 @@ const ProfileComponent = () => {
                     value={editUserData.name}
                     onChange={handleNewUserData}
                     placeholder="Nombre"
-                    className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+                    className="p-2 w-full text-black flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
                   />
                 </div>
                 <div>
@@ -149,7 +171,7 @@ const ProfileComponent = () => {
                     value={editUserData.surname}
                     onChange={handleNewUserData}
                     placeholder="Apellido"
-                    className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+                    className="p-2 w-full flex text-black justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
                   />
                 </div>
                 <div>
@@ -162,7 +184,7 @@ const ProfileComponent = () => {
                     value={editUserData.phone}
                     onChange={handleNewUserData}
                     placeholder="Contacto"
-                    className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+                    className="p-2 w-full flex text-black justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
                   />
                 </div>
                 <div>
@@ -175,7 +197,7 @@ const ProfileComponent = () => {
                     value={editUserData.placeName}
                     onChange={handleNewUserData}
                     placeholder="Establecimiento"
-                    className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+                    className="p-2 w-full text-black flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
                   />
                 </div>
                 <div>
@@ -188,7 +210,7 @@ const ProfileComponent = () => {
                     value={editUserData.email}
                     onChange={handleNewUserData}
                     placeholder="Email"
-                    className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+                    className="p-2 w-full flex text-black justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
                   />
                 </div>
                 <div className="flex justify-around">
@@ -210,9 +232,7 @@ const ProfileComponent = () => {
                 </div>
               </div>
             </div>
-          )} */}
-
-          <LandingButton text="Editar Perfil" />
+          )}
         </div>
       </div>
     </div>
