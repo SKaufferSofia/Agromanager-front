@@ -7,92 +7,102 @@ import image2 from "../../../public/LandinImg/img-campo2.png";
 import image3 from "../../../public/LandinImg/img-campo3.png";
 
 const slides = [
-	{
-		src: image1,
-		alt: "image 1",
-		title: "Landing Info",
-		description:
-			"Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen.Landing Info",
-	},
-	{
-		src: image2,
-		alt: "image 2",
-		title: "Landing Info 2",
-		description:
-			"Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen.Landing Info",
-	},
-	{
-		src: image3,
-		alt: "image 3",
-		title: "Landing Info 3",
-		description:
-			"Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen.Landing Info",
-	},
+  {
+    src: image1,
+    alt: "Lote agrícola",
+    title: (
+      <span className="poppins-extralight">
+        Gestiona tus{" "}
+        <span className="poppins-bold-italic uppercase"> lotes</span>
+        <hr className="border-[1px] border-gray-700 w-full"></hr>
+      </span>
+    ),
+    description:
+      "Crea y organiza tus lotes agrícolas de manera eficiente. Mantén un registro detallado de cada lote, incluyendo su ubicación, tamaño y estado actual.",
+  },
+  {
+    src: image2,
+    alt: "Labores agrícolas",
+    title: (
+      <span className="poppins-extralight">
+        Organiza tus{" "}
+        <span className="poppins-bold-italic uppercase">labores</span>
+        <hr className="border-[1px] border-gray-700 w-full"></hr>
+      </span>
+    ),
+    description:
+      "Supervisa todas las labores agrícolas, desde la siembra hasta la cosecha. Asigna tareas a contratistas y asegúrate de que todas las actividades se realicen a tiempo.",
+  },
+  {
+    src: image3,
+    alt: "Insumos agrícolas",
+    title: (
+      <span className="poppins-extralight">
+        Administra tus{" "}
+        <span className="poppins-bold-italic uppercase">insumos</span>
+        <hr className="border-[1px] border-gray-700 w-full"></hr>
+      </span>
+    ),
+    description:
+      "Mantén un control preciso de tus insumos agrícolas, como fertilizantes y herbicidas. Gestiona tu stock y asegúrate de tener siempre los productos necesarios.",
+  },
 ];
 
 const LandingCarousel: React.FC = () => {
-	const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-	const nextSlide = () => {
-		setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-	};
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+  };
 
-	const prevSlide = () => {
-		setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
-	};
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+  };
 
-	useEffect(() => {
-		const interval = setInterval(() => {
-			nextSlide();
-		}, 5000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 5000);
 
-		return () => clearInterval(interval);
-	}, []);
-	return (
-		<div className="relative h-[calc(70vh)] overflow-hidden">
-			{slides.map((slide, index) => (
-				<div
-					key={index}
-					className={`m-12 absolute flex transition-transform duration-1000 ease-in-out ${
-						index === currentSlide
-							? "translate-x-0"
-							: "translate-x-full"
-					}`}
-				>
-					<div className="flex items-center justify-center overflow-hidden">
-						<div className="w-3/4 md:w-3/4 text-textColor">
-							<h1 className="mb-4 text-3xl md:text-3xl lg:text-4xl">
-								{slide.title}
-							</h1>
-							<p className="mb-10 opacity-80">
-								{slide.description}
-							</p>
-						</div>
-					</div>
-					<div className="w-full hidden sm:block mr-10 ">
-						<Image
-							src={slide.src}
-							alt={slide.alt}
-							width={600}
-							height={600}
-						/>
-					</div>
-				</div>
-			))}
-			<button
-				onClick={prevSlide}
-				className="absolute top-1/3 left-10 transform -translate-y-1/2 p-2 rounded-full shadow-lg"
-			>
-				&lt;
-			</button>
-			<button
-				onClick={nextSlide}
-				className="absolute top-1/3 right-10 transform -translate-y-1/2 p-2 rounded-full shadow-lg"
-			>
-				&gt;
-			</button>
-		</div>
-	);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative h-[calc(70vh)] overflow-hidden">
+      {slides.map((slide, index) => (
+        <div
+          key={index}
+          className={`absolute flex flex-col md:flex-row items-center justify-center w-full h-full transition-transform duration-1000 ease-in-out ${
+            index === currentSlide ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div className="flex flex-col items-center justify-center text-center w-full md:w-3/4 lg:w-1/2 p-4">
+            <h1 className="mb-4 text-2xl md:text-3xl lg:text-4xl text-textColor">
+              {slide.title}
+            </h1>
+            <p className="mb-16 w-3/4 mx-auto text-base md:text-lg lg:text-md text-textColor opacity-80">
+              {slide.description}
+            </p>
+          </div>
+          <div className="w-full md:w-1/2 lg:flex lg:h-[80vh]">
+            <Image src={slide.src} alt={slide.alt} layout="responsive" />
+          </div>
+        </div>
+      ))}
+      <button
+        onClick={prevSlide}
+        className="absolute top-1/2 left-4 transform -translate-y-1/2 p-2 rounded-full shadow-lg bg-white"
+      >
+        &lt;
+      </button>
+      <button
+        onClick={nextSlide}
+        className="absolute top-1/2 right-4 transform -translate-y-1/2 p-2 rounded-full shadow-lg bg-white"
+      >
+        &gt;
+      </button>
+    </div>
+  );
 };
 
 export default LandingCarousel;

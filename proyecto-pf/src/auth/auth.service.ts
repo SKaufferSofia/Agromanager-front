@@ -16,8 +16,11 @@ export class AuthService {
 
     async signUp(createUserDto: CreateUserDto) {
         const finededUser = await this.UsersRepository.getUserByEmail(createUserDto.email) 
-        if (finededUser) {throw new ConflictException("ya existe un usuario con ese correo")}
-        if (createUserDto.password !== createUserDto.confirmPassword) {throw new BadRequestException("las contraseñas no coinciden")}
+        if (finededUser){
+            throw new ConflictException(`Ya existe un usuario con el correo: ${createUserDto.email}`)}
+        if (createUserDto.password !== createUserDto.confirmPassword){
+            throw new BadRequestException("Las contraseñas no coinciden")
+        }
 
         const hashedPassword = await bcrypt.hash(createUserDto.password, 10)
 
@@ -26,9 +29,16 @@ export class AuthService {
 
     async signIn(signInDto: SignInDto) {
         const userFound = await this.UsersRepository.getUserByEmail(signInDto.email)
-        if(!userFound) {throw new BadRequestException("las credenciales son incorrectas1")}
+        if(!userFound){
+            throw new BadRequestException("Credenciales incorrectas")
+        }
+        if(!userFound.password){
+            throw new BadRequestException("Inicia Sesion con google")
+        }
         const confirmPassword: boolean = await bcrypt.compare(signInDto.password, userFound.password) 
-        if (!confirmPassword) {throw new BadRequestException("credenciales incorrectas")} 
+        if (!confirmPassword){
+            throw new BadRequestException("Credenciales incorrectas")
+        } 
 
         const payload = {
             sub: userFound.id,
@@ -40,10 +50,40 @@ export class AuthService {
         
         const token = this.JwtService.sign(payload)
 
-        return { message: 'login exitoso', token, isLoggin: true, user };
+        return { message: 'Sesion iniciada correctamente', token, isLoggin: true, user };
     }
 
     giveAdmin(id: UUID){
         return this.UsersRepository.giveAdmin(id)
+    }
+
+
+
+    async googleAuth(googleUser) { 
+        const user = await this.UsersRepository.getUserByEmail(googleUser.email)
+        if (!user) {
+            const user = (await this.UsersRepository.createUserGoogle(googleUser)).rest
+            const payload = {
+                sub: user.id,
+                email: user.email,
+                roles: user.roles
+            }
+
+            const token = this.JwtService.sign(payload)
+
+        return { message: 'registro y Sesion iniciada correctamente', token, isLoggin: true, user };
+        } else if (user) {
+            if (user.googleId !== googleUser.id) {throw new BadRequestException("El id del usuario es incorrecto")}
+
+            const payload = {
+                sub: user.id,
+                email: user.email,
+                roles: user.roles
+            }
+
+            const token = this.JwtService.sign(payload)
+
+        return { message: 'Sesion iniciada correctamente', token, isLoggin: true, user };
+        }  
     }
 }

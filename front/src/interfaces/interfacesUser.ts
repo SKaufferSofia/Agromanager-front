@@ -4,9 +4,16 @@ export interface IUser {
   surname: string;
   placeName: string;
   email: string;
-  phone?: number;
-  roles: IRoles[];
-  active: boolean;
+  phone?: string;
+  roles?: IRoles[];
+  active?: boolean;
+}
+
+export interface IUserGoogle {
+  id: string;
+  name: string;
+  email: string;
+  image?: string;
 }
 
 export interface IRoles {
@@ -40,3 +47,5 @@ export interface ILoginFormErrors {
 export type SignIn = (arg: boolean) => void;
 export type SaveToken = (arg: string) => void;
 export type SaveUserData = (arg: IUser) => void;
+export type SaveUserDataGoogle = (arg: IUserGoogle) => void;
+export type SaveRoles = (arg: IRoles[]) => void;

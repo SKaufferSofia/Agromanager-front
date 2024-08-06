@@ -1,68 +1,78 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
-//import plots from "@/helpers/plotsArray";
 import SideNavbar from "@/components/Navbar/sideNavbar";
 import StockPanel from "@/components/StockPanel/StockPanel";
-import { IPlotsType, PlotPanelProps } from "@/interfaces/interfaces";
-import { useSelector } from "react-redux";
-import { fetchStock } from "@/lib/server/petitionStock";
-import { fetchPlots } from "@/lib/server/petitionPlots";
-import { useDispatch } from "react-redux";
-import { savePlot } from "@/redux/reducer";
+
+import useDataPlot from "@/hooks/useDataPlot";
+
+import useFetchPlots from "@/hooks/plotsHooksPetitions";
+import { Supply } from "@/interfaces/interfaces";
+import { fetchSupplies } from "@/lib/server/petitionStock";
+import { useDispatch, useSelector } from "react-redux";
+import { saveStock, updateStock } from "@/redux/reducer";
+import useDataStock from "@/hooks/useDataStock";
 
 const StockDashboard: React.FC = () => {
-  const dispatch = useDispatch();
-
   const userId = useSelector((state: any) => state.userData.id);
-  console.log("User ID:", userId);
   const token = useSelector((state: any) => state.token);
-  console.log("Token:", token);
-  const [plots, setPlots] = useState<IPlotsType[]>([]);
 
-  // useEffect(() => {
-  //   const getStock = async () => {
-  //     if (userId && token) {
-  //       try {
-  //         const fetchedPlots = await fetchStock(userId);
-  //         setPlots(fetchedPlots);
-  //         console.log("Fetched plots:", fetchedPlots);
-  //       } catch (error) {
-  //         console.error("Error fetching plots:", error);
-  //       }
-  //     }
-  //   };
+  const [supplies, setSupplies] = useState<Supply[]>([]);
 
-  //   getStock();
-  // }, [userId, token]);
+  const [error, setError] = useState<string | null>(null);
+  const dispatch = useDispatch();
+  const edit = useSelector((state: any) => state.editStock);
+  const { saveStockStorage } = useDataStock();
 
   useEffect(() => {
-    const getPlots = async () => {
-      if (userId && token) {
+    if (userId && token) {
+      const loadSupplies = async () => {
         try {
-          const fetchedPlots = await fetchPlots(userId, token, (plots) => {
-            dispatch(savePlot(plots));
-          });
-          setPlots(fetchedPlots);
-          console.log("Fetched plots:", fetchedPlots);
+          const suppliesData = await fetchSupplies(
+            userId,
+            token,
+            (supplies) => {
+              dispatch(saveStock(supplies));
+              saveStockStorage(supplies);
+            }
+          );
+          setSupplies(suppliesData);
         } catch (error) {
-          console.error("Error fetching plots:", error);
+          console.log(error);
         }
-      }
-    };
+      };
+      loadSupplies();
+    }
+  }, [edit, token, userId, dispatch]);
 
-    getPlots();
-  }, [userId, token]);
-
-  console.log();
+  const { plots, error: plotsError } = useFetchPlots(userId, token);
 
   return (
-    <div className="w-screen h-full flex flex-col sm:flex-row">
-      <div className="mt-24 h-min-screen  bg-sideNavbarColor bg-opacity-20 ">
-        <SideNavbar plots={plots} />
+    <div className="w-screen min-h-screen flex flex-col sm:flex-row ">
+      {/* <div className="absolute inset-0 z-0 min-h-full flex-grow">
+        <video
+          autoPlay
+          muted
+          loop
+          className="w-full h-full blur-sm object-cover "
+        >
+          <source
+            src="/videos/4800100-uhd_4096_2160_30fps.mp4"
+            type="video/mp4"
+          ></source>
+        </video>
+        <div className="w-full bg-white opacity-55 absolute inset-0"></div>
+      </div> */}
+      <div className="mt-[86px] h-min-screen bg-sideNavbarColor bg-opacity-20">
+        {plotsError ? (
+          <div className="p-4 bg-red-500 text-white rounded-lg mb-6">
+            {plotsError}
+          </div>
+        ) : (
+          <SideNavbar plots={plots} />
+        )}
       </div>
-      <div className=" flex-grow mt-24 w-screen">
-        <StockPanel plots={plots} setPlots={setPlots} />
+      <div className="flex-grow mt-24 w-screen ">
+        <StockPanel supplies={supplies} />
       </div>
     </div>
   );

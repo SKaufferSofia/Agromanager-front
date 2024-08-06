@@ -6,7 +6,7 @@ const Home: React.FC = () => {
   return (
     <div className="flex min-h-screen flex-col py-28">
       <HomeCarousel />
-      <div className="flex min-h-screen flex-col justify-center items-center ">
+      <div className="flex min-h-screen flex-col justify-center items-center mt-5">
         <SuscribeCardHome />
       </div>
     </div>

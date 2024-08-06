@@ -1,25 +1,45 @@
 "use client";
-
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import { NEXT_PUBLIC_API_URL } from "@/lib/server/envs";
+import { updateLabors } from "@/redux/reducer";
+import useDataPlot from "@/hooks/useDataPlot";
+import { RootState } from "@/redux/store";
+import { Labors } from "@/interfaces/interfaces";
+import { toast } from "sonner";
+import ErrorAlert from "../CustomsAlerts/ErrorAlert";
+import { validateLaborInput } from "@/helpers/ValidateAddLabor";
 
-const AddLaborInput: React.FC = () => {
+interface AddLaborInputProps {
+	plotId: string;
+}
+
+const AddLaborInput: React.FC<AddLaborInputProps> = ({ plotId }) => {
 	const [name, setName] = useState("");
 	const [contractor, setContractor] = useState("");
 	const [price, setPrice] = useState("");
 	const [surface, setSurface] = useState("");
-	const plotId = 20;
+	const token = useSelector((state: RootState) => state.token);
+	const dispatch = useDispatch();
+	const { updatePlotsStorage } = useDataPlot();
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
-		console.log("Nombre del Labor:", name);
-		console.log("Contratista:", contractor);
-		console.log("Precio:", price);
-		console.log("Superficie:", surface);
+
+		const errors = validateLaborInput({ name, contractor, price, surface });
+
+		if (errors.general) {
+			toast(<ErrorAlert message={errors.general} />, {
+				className: "bg-red-400 text-white",
+				duration: 5000,
+			});
+			return;
+		}
+
 		try {
 			const response = await axios.post(
-				"http://localhost:3001/plots/addLabor",
+				`${NEXT_PUBLIC_API_URL}/plots/addLabor`,
 				{
 					labor: {
 						name,
@@ -27,15 +47,38 @@ const AddLaborInput: React.FC = () => {
 						price: parseFloat(price),
 						surface: parseFloat(surface),
 					},
-					plotId,
+					plotId: plotId,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
 				}
 			);
-
-			console.log(response.data);
+			const updatedLabors: Labors[] = response.data.labors;
+			dispatch(updateLabors({ plotId, labors: updatedLabors }));
+			updatePlotsStorage(plotId, updatedLabors);
+			toast.success("Labor added successfully", {
+				className:
+					"mt-20 text-white bg-footerColor font-semibold text-xl",
+				duration: 3000,
+			});
+			setName("");
+			setContractor("");
+			setPrice("");
+			setSurface("");
 		} catch (error) {
-			console.error("Error creating labor:", error);
+			if (axios.isAxiosError(error) && error.response) {
+				const axiosError = error.response.data.message;
+				console.log(axiosError);
+				toast(<ErrorAlert message={axiosError} />, {
+					className: "bg-[#ffc402]",
+					duration: 5000,
+				});
+			}
 		}
 	};
+
 	return (
 		<div>
 			<form className="flex" onSubmit={handleSubmit}>
@@ -94,7 +137,7 @@ const AddLaborInput: React.FC = () => {
 				<div className="mt-5">
 					<button
 						type="submit"
-						className="w-25 h-9 p-2 flex items-center justify-center border-footerColor border-2 rounded-md shadow-sm text-sm font-medium text-footerColor hover:bg-gray-100 focus:ring-offset-2"
+						className="w-25 h-9 p-2 flex items-center justify-center  border-footerColor border-2 rounded-md shadow-sm text-md font-medium text-footerColor hover:bg-footerColor hover:text-white hover:ease-in-out focus:ring-offset-2"
 					>
 						Agregar
 					</button>

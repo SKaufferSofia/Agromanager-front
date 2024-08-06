@@ -5,25 +5,18 @@ import {
 
 export const validateRegister = (data: IRegisterForm): IRegisterFormErrors => {
   const errors: IRegisterFormErrors = {};
-  if (!data.name) {
-    errors.name = "El nombre es requerido";
-  }
-
-  if (!data.surname) {
-    errors.surname = "El apellido es requerido";
-  }
-
-  if (!data.placeName) {
-    errors.placeName = "El nombre de la tienda es requerido";
-  }
 
   if (data.email && !/\S+@\S+\.\S+/.test(data.email)) {
-    errors.email = "El email es invalid";
+    errors.email = "El email es invalido";
   }
 
-  if (data.password && data.password.length < 8) {
-    errors.password =
-      "La contraseña debe ser mayor a 8 caracteres, una letra mayuscula, una minuscula y un numero";
+  if (data.password) {
+    const password = data.password;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (!passwordRegex.test(password)) {
+      errors.password =
+        "La contraseña debe ser mayor a 8 caracteres, una letra mayúscula, una minúscula y un número";
+    }
   }
 
   if (!data.confirmPassword && data.confirmPassword) {

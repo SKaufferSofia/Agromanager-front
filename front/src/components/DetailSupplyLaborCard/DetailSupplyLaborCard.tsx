@@ -1,176 +1,179 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Tabs, TabsHeader, TabsBody, Tab } from "@material-tailwind/react";
+import {
+  IPlotsDashboardType,
+  Labors,
+  Supply,
+  SupplyApplied,
+} from "@/interfaces/interfaces";
+import { NEXT_PUBLIC_API_URL } from "@/lib/server/envs";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import useDataPlot from "@/hooks/useDataPlot";
+import { saveSuppliesApplied } from "@/redux/reducer";
 
-const DetailSupplyLaborCard = () => {
-	const [activeTab, setActiveTab] = React.useState("html");
+interface DetailSupplyLaborCardProps {
+  currentPlot: IPlotsDashboardType;
+}
 
-	// useEffect(() => {
-	// 	const fetchData = async () => {
-	// 		try {
-	// 			const res = await axios.get("http://localhost:4000/supplies/1");
-	// 			console.log(res);
-	// 		} catch (error) {
-	// 			console.log("Error fetching:", error);
-	// 		}
-	// 	};
-	// 	fetchData();
-	// }, []);
+const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
+  currentPlot,
+}) => {
+  const [activeTab, setActiveTab] = useState("Labores");
+  const [suppliesAdded, setFetchedSupplies] = useState<SupplyApplied[]>([]);
+  const token = useSelector((state: RootState) => state.token);
+  const supplies = useSelector((state: RootState) => state.suppliesApplied);
+  const dispatch = useDispatch();
+  const { saveSuppliesAppliedStorage } = useDataPlot();
 
-	const labors = [
-		{
-			id: "987e4567-e89b-12d3-a456-426614174000",
-			name: "Labor 1",
-			contractor: "Contractor A",
-			price: 500,
-			surface: 100,
-			plotId: "123e4567-e89b-12d3-a456-426614174012",
-		},
-		{
-			id: "987e4567-e89b-12d3-a456-426614174001",
-			name: "Labor 2",
-			contractor: "Contractor B",
-			price: 700,
-			surface: 200,
-			plotId: "123e4567-e89b-12d3-a456-426614174013",
-		},
-		{
-			id: "987e4567-e89b-12d3-a456-426614174002",
-			name: "Labor 3",
-			contractor: "Contractor C",
-			price: 900,
-			surface: 300,
-			plotId: "123e4567-e89b-12d3-a456-426614174014",
-		},
-	];
+  const calculateLaborTotalPrice = (items: Labors[] | null): number => {
+    let totalPrice = 0;
+    if (!items) return 0;
+    items.forEach((labor) => {
+      totalPrice += labor.price * labor.surface;
+    });
+    return totalPrice;
+  };
 
-	const supplies = [
-		{
-			id: "123e4567-e89b-12d3-a456-426614174000",
-			name: "Supply 1",
-			provider: "Provider A",
-			stock: 100,
-			price: 200,
-			categoryId: "123e4567-e89b-12d3-a456-426614174001",
-			measurementId: "123e4567-e89b-12d3-a456-426614174002",
-			userId: "123e4567-e89b-12d3-a456-426614174003",
-		},
-		{
-			id: "123e4567-e89b-12d3-a456-426614174004",
-			name: "Supply 2",
-			provider: "Provider B",
-			stock: 50,
-			price: 150,
-			categoryId: "123e4567-e89b-12d3-a456-426614174005",
-			measurementId: "123e4567-e89b-12d3-a456-426614174006",
-			userId: "123e4567-e89b-12d3-a456-426614174007",
-		},
-		{
-			id: "123e4567-e89b-12d3-a456-426614174008",
-			name: "Supply 3",
-			provider: "Provider C",
-			stock: 200,
-			price: 300,
-			categoryId: "123e4567-e89b-12d3-a456-426614174009",
-			measurementId: "123e4567-e89b-12d3-a456-426614174010",
-			userId: "123e4567-e89b-12d3-a456-426614174011",
-		},
-	];
-	const calculateTotalPrice = (items: { price: number }[]): number => {
-		return items.reduce((total, item) => total + item.price, 0);
-	};
+  const calculateSuppliesTotalPrice = (
+    items: SupplyApplied[] | null
+  ): number => {
+    let totalPrice = 0;
 
-	const totalSupplyPrice = calculateTotalPrice(supplies);
-	const totalLaborPrice = calculateTotalPrice(labors);
-	return (
-		<div className=" mt-8 ">
-			<Tabs value={activeTab}>
-				<TabsHeader
-					className="rounded-none border-b border-blue-gray-50 bg-transparent p-0"
-					indicatorProps={{
-						className:
-							"bg-transparent border-b-2 border-gray-900 shadow-none rounded-none",
-					}}
-				>
-					<Tab
-						value="Insumos"
-						onClick={() => setActiveTab("Insumos")}
-						className={`p-2 text-xl ${
-							activeTab === "Insumos" ? "text-white" : ""
-						}`}
-					>
-						Insumos
-					</Tab>
-					<Tab
-						value="Labores"
-						onClick={() => setActiveTab("Labores")}
-						className={`p-2 text-xl ${
-							activeTab === "Labores" ? "text-white" : ""
-						}`}
-					>
-						Labores
-					</Tab>
-				</TabsHeader>
-				{activeTab === "Insumos" && (
-					<TabsBody className="bg-white h-4/5 w-10/12 rounded-md mx-auto mt-8 mb-10">
-						<div className="flex font-bold p-4">
-							<div className="flex-1">Nombre</div>
-							<div className="flex-1">Proveedor</div>
-							<div className="flex-1">Cantidad</div>
-							<div className="flex-1">Precio</div>
-						</div>
-						{supplies.map((supply) => (
-							<div className="flex p-4" key={supply.id}>
-								<div className="flex-1">{supply.name}</div>
-								<div className="flex-1">{supply.provider}</div>
-								<div className="flex-1">{supply.stock}</div>
-								<div className="flex-1">${supply.price}</div>
-							</div>
-						))}
-						<div className="flex justify-end font-bold">
-							<div className="px-6 py-4">Total Price</div>
-							<div className="px-6 py-4">${totalSupplyPrice}</div>
-						</div>
-					</TabsBody>
-				)}
-				{activeTab === "Labores" && (
-					<TabsBody className="bg-white h-4/5 w-10/12 rounded-md mx-auto mt-8 mb-10">
-						<div className="flex font-bold flex-1 p-4">
-							<div className="flex-1">Nombre</div>
-							<div className="flex-1">Contratista</div>
-							<div className="flex-1">Superficie</div>
-							<div className="flex-1">Precio</div>
-						</div>
-						<div>
-							{labors.map((labor) => (
-								<div
-									className="flex justify-around p-4"
-									key={labor.id}
-								>
-									<div className="flex-1">{labor.name}</div>
-									<div className="flex-1">
-										{labor.contractor}
-									</div>
-									<div className="flex-1">
-										{labor.surface}
-									</div>
-									<div className="flex-1">${labor.price}</div>
-								</div>
-							))}
-							<div className="flex font-bold justify-end">
-								<div className="px-6 py-4">Total Price</div>
-								<div className="px-6 py-4">
-									${totalLaborPrice}
-								</div>
-							</div>
-						</div>
-					</TabsBody>
-				)}
-			</Tabs>
-		</div>
-	);
+    if (!items) return 0;
+    items.forEach((supply) => {
+      if (supply.supply) {
+        totalPrice += supply.quantity * supply.supply.price;
+      }
+    });
+    return totalPrice;
+  };
+  const newArrayId: string[] = [];
+  if (currentPlot.supplies) {
+    currentPlot.supplies.forEach((supply) => {
+      newArrayId.push(supply.id);
+    });
+  }
+
+  useEffect(() => {
+    const suppliesByIds: any[] = [];
+    const fetchSupplies = async () => {
+      try {
+        for (const id of newArrayId) {
+          const response = await axios.get(
+            `${NEXT_PUBLIC_API_URL}/plots/supplies/applied/${id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          console.log(
+            `Fetched supplies for plot ${id}:`,
+            suppliesByIds.push(response.data)
+          );
+          dispatch(saveSuppliesApplied(suppliesByIds));
+          saveSuppliesAppliedStorage(suppliesByIds);
+        }
+      } catch (error) {
+        console.error("Error fetching supplies:", error);
+      }
+    };
+    fetchSupplies();
+  }, [currentPlot]);
+
+  const totalLaborPrice = calculateLaborTotalPrice(currentPlot.labors);
+  const totalSupplyPrice = calculateSuppliesTotalPrice(supplies);
+
+  return (
+    <div className=" mt-8 ">
+      <Tabs value={activeTab}>
+        <TabsHeader
+          className="rounded-none border-b border-blue-gray-50 bg-transparent p-0"
+          indicatorProps={{
+            className:
+              "bg-transparent border-b-2 border-gray-900 shadow-none rounded-none",
+          }}
+        >
+          <Tab
+            value="Labores"
+            onClick={() => setActiveTab("Labores")}
+            className={`p-2 text-xl ${
+              activeTab === "Labores" ? "text-white" : ""
+            }`}
+          >
+            Labores
+          </Tab>
+          <Tab
+            value="Insumos"
+            onClick={() => setActiveTab("Insumos")}
+            className={`p-2 text-xl ${
+              activeTab === "Insumos" ? "text-white" : ""
+            }`}
+          >
+            Insumos
+          </Tab>
+        </TabsHeader>
+        {activeTab === "Insumos" && (
+          <TabsBody className="bg-white h-4/5 w-10/12 rounded-md mx-auto mt-8 mb-10">
+            <div className="flex font-bold p-4">
+              <div className="flex-1">Nombre</div>
+              <div className="flex-1">Proveedor</div>
+              <div className="flex-1">Cantidad</div>
+              <div className="flex-1">Precio</div>
+              <div className="flex-1">Precio total</div>
+            </div>
+            {supplies &&
+              supplies.map((supply) => (
+                <div className="flex p-4" key={supply.id}>
+                  <div className="flex-1">{supply.supply.name}</div>
+                  <div className="flex-1">{supply.supply.provider}</div>
+                  <div className="flex-1">{supply.quantity}</div>
+                  <div className="flex-1">{supply.supply.price}</div>
+                  <div className="flex-1">
+                    {supply.supply.price * supply.quantity}
+                  </div>
+                </div>
+              ))}
+            <div className="flex justify-end font-bold">
+              <div className="px-6 py-4">Precio Total</div>
+              <div className="px-6 py-4">{totalSupplyPrice}</div>
+            </div>
+          </TabsBody>
+        )}
+        {activeTab === "Labores" && (
+          <TabsBody className="bg-white h-4/5 w-10/12 rounded-md mx-auto mt-8 mb-10">
+            <div className="flex font-bold flex-1 p-4">
+              <div className="flex-1">Nombre</div>
+              <div className="flex-1">Contratista</div>
+              <div className="flex-1">Superficie</div>
+              <div className="flex-1">Precio unitario</div>
+              <div className="flex-1">Precio total</div>
+            </div>
+            <div>
+              {currentPlot.labors &&
+                currentPlot.labors.map((labor, index) => (
+                  <div className="flex justify-around p-4" key={index}>
+                    <div className="flex-1">{labor.name}</div>
+                    <div className="flex-1">{labor.contractor}</div>
+                    <div className="flex-1">{labor.surface}</div>
+                    <div className="flex-1">${labor.price}</div>
+                    <div className="flex-1">${labor.price * labor.surface}</div>
+                  </div>
+                ))}
+              <div className="flex font-bold justify-end">
+                <div className="px-6 py-4">Precio Total</div>
+                <div className="px-6 py-4">${totalLaborPrice}</div>
+              </div>
+            </div>
+          </TabsBody>
+        )}
+      </Tabs>
+    </div>
+  );
 };
 
 export default DetailSupplyLaborCard;
