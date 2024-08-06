@@ -22,6 +22,7 @@ const AdminDashboardCard = () => {
 		phone: "",
 		placeName: "",
 		email: "",
+		active: true,
 	});
 	const [showForm, setShowForm] = useState(false);
 	const [userToEdit, setUserToEdit] = useState<IUserForAdmin | null>(null);
@@ -40,7 +41,7 @@ const AdminDashboardCard = () => {
 		};
 		getAllUsers();
 	}, [token, showForm, deletedUsers]);
-
+	console.log(newArrayUsers);
 	const handleOpenFormClick = (user: any) => {
 		setShowForm(true);
 		setUserToEdit(user);
@@ -366,6 +367,29 @@ const AdminDashboardCard = () => {
 								placeholder="Email"
 								className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
 							/>
+						</div>
+						<div className="mb-4">
+							<label
+								className="block text-gray-700 text-sm font-bold mb-2"
+								htmlFor="active"
+							>
+								Active
+							</label>
+							<input
+								type="checkbox"
+								id="active"
+								checked={editUserData.active}
+								onChange={(e) =>
+									setEditUserData({
+										...editUserData,
+										active: e.target.checked,
+									})
+								}
+								className="mr-2 leading-tight"
+							/>
+							<span className="text-sm">
+								{editUserData.active ? "Active" : "Inactive"}
+							</span>
 						</div>
 						<div className="flex justify-around">
 							<div>
