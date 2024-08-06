@@ -22,10 +22,7 @@ export const petitionRegister = async (regiterData: IRegisterForm) => {
     });
     return response.data;
   } catch (error: any) {
-    toast.error("Error en el registro", {
-      className: "bg-red-500 text-white text-lg",
-      duration: 5000,
-    });
+    console.error(error);
     return false;
   }
 };
@@ -43,10 +40,7 @@ export const PetitionLogin = async (
     userData(response.data.user);
     return response.data;
   } catch (error: any) {
-    toast.error("Error en el inicio de sesión", {
-      className: "bg-red-500 text-white text-lg",
-      duration: 5000,
-    });
+    console.error(error);
     return false;
   }
 };

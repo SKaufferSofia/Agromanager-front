@@ -17,6 +17,7 @@ import {
 import Cookies from "js-cookie";
 import useUserData from "@/hooks/useUserData";
 import MainButton from "../MainButton/MainButton";
+import ErrorAlert from "../CustomsAlerts/ErrorAlert";
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -50,6 +51,29 @@ const RegisterForm = () => {
 
     if (Object.keys(errorRegister).length === 0) {
       const registerSuccess = await petitionRegister(regiterData);
+
+      if (
+        !regiterData.name &&
+        !regiterData.surname &&
+        !regiterData.placeName &&
+        !regiterData.email &&
+        !regiterData.password &&
+        !regiterData.confirmPassword
+      ) {
+        toast.error(
+          <ErrorAlert message={"Todos los campos son requeridos"} />,
+          {
+            className: "w-[25rem] bg-red-500 text-white text-xl",
+            duration: 3000,
+          }
+        );
+      } else if (!registerSuccess) {
+        toast.error("Email ya registrado", {
+          className: "w-[23rem] bg-red-500 text-white text-xl",
+          duration: 3000,
+        });
+      }
+
       if (registerSuccess) {
         const loginData: ILoginForm = {
           email: regiterData.email,
