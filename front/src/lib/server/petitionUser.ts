@@ -22,13 +22,7 @@ export const petitionRegister = async (regiterData: IRegisterForm) => {
     });
     return response.data;
   } catch (error: any) {
-    if (axios.isAxiosError(error) && error.response) {
-      const axiosError = error.response.data.message;
-      toast.warning(axiosError, {
-        className: "bg-red-500 text-white text-lg",
-        duration: 5000,
-      });
-    }
+    console.error(error);
     return false;
   }
 };
@@ -38,23 +32,15 @@ export const PetitionLogin = async (
   saveToken: SaveToken,
   signIn: SignIn,
   userData: SaveUserData
-  // cookieToken: SaveToken
 ) => {
   try {
     const response = await axios.post(`${API}/auth/signin`, loginData);
     saveToken(response.data.token);
     signIn(response.data.isLoggin);
     userData(response.data.user);
-    // cookieToken(response.data.token);
     return response.data;
   } catch (error: any) {
-    if (axios.isAxiosError(error) && error.response) {
-      const axiosError = error.response.data.message;
-      toast.warning(axiosError, {
-        className: "bg-red-500 text-white text-xl",
-        duration: 2000,
-      });
-    }
+    console.error(error);
     return false;
   }
 };

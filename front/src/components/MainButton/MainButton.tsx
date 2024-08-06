@@ -11,6 +11,7 @@ const MainButton: React.FC<MainButtonProps> = ({ text, path }) => {
   const handleButtonClick = () => {
     path && router.push(path);
   };
+
   return (
     <div className="flex items-center justify-center">
       <button

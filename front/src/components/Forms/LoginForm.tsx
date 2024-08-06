@@ -11,6 +11,7 @@ import Cookies from "js-cookie";
 import { toast } from "sonner";
 import LoginAuthNext from "./LoginAuthNext";
 import MainButton from "../MainButton/MainButton";
+import ErrorAlert from "../CustomsAlerts/ErrorAlert";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -54,6 +55,22 @@ const LoginForm = () => {
         }
       );
 
+      if (!loginData.password && !loginData.email) {
+        toast.error(
+          <ErrorAlert message={"Todos los campos son requeridos"} />,
+          {
+            className:
+              "w-[25rem] poppins-regular bg-red-500 text-white text-lg",
+            duration: 3000,
+          }
+        );
+      } else if (!loginSuccess) {
+        toast.error("Email o contraseña incorrectos", {
+          className: "w-[23rem] bg-red-500 text-white text-xl",
+          duration: 3000,
+        });
+      }
+
       if (loginSuccess) {
         // Obtener el rol principal del usuario
         const mainRole =
@@ -86,8 +103,8 @@ const LoginForm = () => {
         }
       }
     } else {
-      toast.warning("Complete todos los campos", {
-        className: "bg-red-500 text-white text-xl",
+      toast.error("Todos los campos son requeridos", {
+        className: "w-[23rem] bg-red-500 text-white text-xl",
         duration: 3000,
       });
     }
@@ -121,6 +138,9 @@ const LoginForm = () => {
               placeholder="E-mail"
               className="p-2 w-full flex justify-center rounded-md shadow-sm sm:text-sm"
             />
+            {errorLogin.email && (
+              <p className="text-red-500 text-xs mt-1">{errorLogin.email}</p>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
@@ -147,15 +167,20 @@ const LoginForm = () => {
                     className="absolute right-3 top-5 -translate-y-1/2  text-textColor"
                   />
                 )}
+                {errorLogin.password && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errorLogin.password}
+                  </p>
+                )}
               </button>
             </div>
-            {!loginData.password && (
-              <p className=" text-sm text-red-500 font-medium ">
-                {" "}
-                (*) Todos los campos requeridos
-              </p>
-            )}
           </div>
+          {!loginData.password && (
+            <p className=" text-sm text-red-500 font-medium ">
+              {" "}
+              (*) Todos los campos requeridos
+            </p>
+          )}
           <div className="mt-auto flex justify-center">
             <MainButton text="Iniciar Sesion" />
           </div>
