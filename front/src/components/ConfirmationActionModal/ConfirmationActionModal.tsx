@@ -8,6 +8,7 @@ interface ConfirmationActionModalProps {
 	openModalButtonStyle?: string;
 	modalTitle?: React.ReactNode;
 	modalBody?: React.ReactNode;
+	onConfirm?: () => void;
 }
 
 const ConfirmationActionModal: React.FC<ConfirmationActionModalProps> = ({
@@ -17,11 +18,18 @@ const ConfirmationActionModal: React.FC<ConfirmationActionModalProps> = ({
 	openModalButtonStyle = "",
 	modalTitle,
 	modalBody,
+	onConfirm,
 }) => {
 	const [showConfirmationModal, setConfirmationModal] = useState(false);
 
 	const handleModalClick = () => {
 		setConfirmationModal(true);
+	};
+	const handleConfirmClick = () => {
+		if (onConfirm) {
+			onConfirm();
+		}
+		handleCloseModal();
 	};
 	const handleCloseModal = () => {
 		setConfirmationModal(false);
@@ -65,7 +73,7 @@ const ConfirmationActionModal: React.FC<ConfirmationActionModalProps> = ({
 							</button>
 							<button
 								className="w-25 h-9 p-2 flex items-center justify-center  border-footerColor border-2 rounded-md shadow-sm text-md font-medium text-footerColor hover:bg-footerColor hover:text-white hover:ease-in-out focus:ring-offset-2"
-								onClick={handleCloseModal}
+								onClick={handleConfirmClick}
 							>
 								{confirmButtonText}
 							</button>
