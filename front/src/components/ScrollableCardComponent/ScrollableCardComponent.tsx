@@ -7,12 +7,12 @@ interface ScrollableCardProps {
 
 const ScrollableCard: React.FC<ScrollableCardProps> = ({ title, content }) => {
 	return (
-		<div className="max-h-32">
-			<div className="bg-white shadow-md">
-				<div className="flex font-bold p-4 justify-between bg-altBgColor">
-					<div className="flex-1 text-start">{title}</div>
+		<div className="h-64 bg-white  overflow-auto shadow-md">
+			<div>
+				<div className="flex font-bold p-4 justify-center bg-altBgColor">
+					<div>{title}</div>
 				</div>
-				<div className="flex p-4">{content}</div>
+				<div>{content}</div>
 			</div>
 		</div>
 	);

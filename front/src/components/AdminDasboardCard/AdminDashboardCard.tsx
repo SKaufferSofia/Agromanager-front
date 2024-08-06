@@ -217,52 +217,83 @@ const AdminDashboardCard = () => {
 						</div>
 					))}
 			</div>
-			<div className="mt-20">
+			<div className="mt-20 w-1/2">
 				<ScrollableCard
 					title="Usuarios inactivos"
 					content={
-						<table className="min-w-full bg-white">
-							<thead>
-								<tr>
-									<th className="py-2 px-4 font-bold">
-										First Name
-									</th>
-									<th className="py-2 px-4 font-bold">
-										Last Name
-									</th>
-									<th className="py-2 px-4 font-bold">
-										Email
-									</th>
-									<th className="py-2 px-4 font-bold">
-										Place
-									</th>
-								</tr>
-							</thead>
-							<tbody>
+						<div>
+							<div className="flex">
+								<div className="flex-1 py-2 px-4 border-gray-200 border-b font-semibold text-start">
+									Nombre
+								</div>
+								<div className="flex-1 py-2 px-4 border-gray-200 border-b font-semibold text-start">
+									Apellido
+								</div>
+								<div className="flex-1 py-2 px-4 border-gray-200 border-b font-semibold text-start">
+									Email
+								</div>
+								<div className="flex-1 py-2 px-4 border-gray-200 border-b font-semibold text-start hidden sm:hidden md:hidden lg:block">
+									Establecimiento
+								</div>
+							</div>
+							<div>
 								{newArrayUsers &&
 									newArrayUsers
-										.filter((user) => user.active !== true)
+										.filter((user) => user.active == !true)
 										.map((user) => (
-											<tr
+											<div
 												key={user.id}
-												className="border-b"
+												className="flex border-b border-gray-200"
 											>
-												<td className="py-2 px-4">
+												<div className="py-2 px-4 flex-1 text-start">
 													{user.name}
-												</td>
-												<td className="py-2 px-4">
+												</div>
+												<div className="py-2 px-4 flex-1 text-start">
 													{user.surname}
-												</td>
-												<td className="py-2 px-4">
+												</div>
+												<div className="py-2 px-4 flex-1 text-start">
 													{user.email}
-												</td>
-												<td className="py-2 px-4">
+												</div>
+
+												<div className="py-2 px-4 flex-1 text-start hidden sm:hidden md:hidden lg:block">
 													{user.placeName}
-												</td>
-											</tr>
+												</div>
+												<div className="mt-2 mr-2 text-end">
+													<button
+														onClick={() =>
+															handleDeleteClick(
+																user
+															)
+														}
+													>
+														<svg
+															width="20"
+															height="20"
+															viewBox="0 0 36 36"
+															fill="#FF0000"
+														>
+															<path d="M27.14,34H8.86A2.93,2.93,0,0,1,6,31V11.23H8V31a.93.93,0,0,0,.86,1H27.14A.93.93,0,0,0,28,31V11.23h2V31A2.93,2.93,0,0,1,27.14,34Z" />
+															<path d="M30.78,9H5A1,1,0,0,1,5,7H30.78a1,1,0,0,1,0,2Z" />
+															<rect
+																x="21"
+																y="13"
+																width="2"
+																height="15"
+															/>
+															<rect
+																x="13"
+																y="13"
+																width="2"
+																height="15"
+															/>
+															<path d="M23,5.86H21.1V4H14.9V5.86H13V4a2,2,0,0,1,1.9-2h6.2A2,2,0,0,1,23,4Z" />
+														</svg>
+													</button>
+												</div>
+											</div>
 										))}
-							</tbody>
-						</table>
+							</div>
+						</div>
 					}
 				/>
 			</div>
