@@ -139,7 +139,7 @@ const AdminDashboardCard = () => {
 			} catch (error) {
 				console.error("Error unbanning user:", error);
 				toast.error(
-					`Error al desbanear el usuario: ${userToEdit.name} ${userToEdit.surname}`,
+					`Error al desbloquear el usuario: ${userToEdit.name} ${userToEdit.surname}`,
 					{
 						className:
 							"w-[28rem] mt-20 text-white bg-red-500 font-semibold text-xl",
@@ -224,22 +224,31 @@ const AdminDashboardCard = () => {
 							</div>
 							<div className="flex-1 text-end">
 								{/*ES NECESARIO AGREGAR CONDICIONALES PARA RENDERIZAR EL BOTON NECESARIO*/}
-								<button onClick={() => handleUnbanClick(user)}>
-									<svg
-										width="20"
-										height="20"
-										viewBox="0 0 36 36"
-										fill="#719a2d"
-										xmlns="http://www.w3.org/2000/svg"
-									>
-										<path
-											d="M18 32V8M10 16L18 8L26 16"
-											stroke="#719a2d"
-											stroke-width="6"
-											fill="none"
-										/>
-									</svg>
-								</button>
+								<ConfirmationActionModal
+									openModalButton={
+										<svg
+											width="20"
+											height="20"
+											viewBox="0 0 36 36"
+											fill="#719a2d"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												d="M18 32V8M10 16L18 8L26 16"
+												stroke="#719a2d"
+												stroke-width="6"
+												fill="none"
+											/>
+										</svg>
+									}
+									cancelButtonText="Cancelar"
+									confirmButtonText="Aceptar"
+									modalTitle="Estás por desbloquear un usuario"
+									modalBody="Deseas continuar?"
+									onConfirm={() => {
+										handleUnbanClick(user);
+									}}
+								/>
 								<ConfirmationActionModal
 									openModalButton={
 										<svg
