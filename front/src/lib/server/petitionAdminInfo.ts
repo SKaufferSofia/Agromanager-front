@@ -84,3 +84,22 @@ export const banUserById = async (userId: string, token: string) => {
   }
 };
 
+export const unbanUserById = async (userId: string, token: string) => {
+  try {
+    const response = await axios.put(
+      `${API_PUBLIC}/users/unban/${userId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error unbanning user:', error);
+    throw error;
+  }
+};
+
+

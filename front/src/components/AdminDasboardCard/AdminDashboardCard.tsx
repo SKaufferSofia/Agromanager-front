@@ -5,6 +5,7 @@ import {
 	deleteUserById,
 	editUserById,
 	fetchAllUsers,
+	unbanUserById,
 } from "@/lib/server/petitionAdminInfo";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -101,13 +102,13 @@ const AdminDashboardCard = () => {
 			console.error("No token available for authentication");
 		}
 	};
-	const handleDeleteClick = async (userToEdit: IUserForAdmin | null) => {
+	const handleBanClick = async (userToEdit: IUserForAdmin | null) => {
 		if (token && userToEdit) {
 			try {
 				await banUserById(userToEdit.id, token);
 				setBannedUser(true);
 				toast.success(
-					`Usuario eliminado correctamente: ${userToEdit.name} ${userToEdit.surname}`,
+					`Usuario bloqueado correctamente: ${userToEdit.name} ${userToEdit.surname}`,
 					{
 						className:
 							"w-[28rem] mt-20 text-white bg-footerColor font-semibold text-xl",
@@ -121,6 +122,39 @@ const AdminDashboardCard = () => {
 			console.error("No token available for authentication");
 		}
 	};
+	const handleUnbanClick = async (userToEdit: IUserForAdmin | null) => {
+		if (token && userToEdit) {
+			try {
+				await unbanUserById(userToEdit.id, token);
+				setBannedUser(false);
+				toast.success(
+					`Usuario desbloqueado correctamente: ${userToEdit.name} ${userToEdit.surname}`,
+					{
+						className:
+							"w-[28rem] mt-20 text-white bg-footerColor font-semibold text-xl",
+						duration: 3000,
+					}
+				);
+			} catch (error) {
+				console.error("Error unbanning user:", error);
+				toast.error(
+					`Error al desbanear el usuario: ${userToEdit.name} ${userToEdit.surname}`,
+					{
+						className:
+							"w-[28rem] mt-20 text-white bg-red-500 font-semibold text-xl",
+						duration: 3000,
+					}
+				);
+			}
+		} else {
+			console.error("No token available for authentication");
+			toast.error("No hay token disponible para autenticación", {
+				className:
+					"w-[28rem] mt-20 text-white bg-errorColor font-semibold text-xl",
+				duration: 3000,
+			});
+		}
+	};
 
 	return (
 		<div>
@@ -132,7 +166,7 @@ const AdminDashboardCard = () => {
 					<div className="flex-1 text-center">Establecimiento</div>
 					<div className="flex-1 text-end">Activo</div>
 					<div className="flex-1 text-end">Editar</div>
-					<div className="flex-1 text-end">Borrar</div>
+					<div className="flex-1 text-end">Control</div>
 				</div>
 				{newArrayUsers &&
 					newArrayUsers.map((user) => (
@@ -188,28 +222,37 @@ const AdminDashboardCard = () => {
 								</button>
 							</div>
 							<div className="flex-1 text-end">
-								<button onClick={() => handleDeleteClick(user)}>
+								{/*ES NECESARIO AGREGAR CONDICIONALES PARA RENDERIZAR EL BOTON NECESARIO*/}
+								<button onClick={() => handleUnbanClick(user)}>
+									<svg
+										width="20"
+										height="20"
+										viewBox="0 0 36 36"
+										fill="#719a2d"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											d="M18 32V8M10 16L18 8L26 16"
+											stroke="#719a2d"
+											stroke-width="6"
+											fill="none"
+										/>
+									</svg>
+								</button>
+								<button onClick={() => handleBanClick(user)}>
 									<svg
 										width="20"
 										height="20"
 										viewBox="0 0 36 36"
 										fill="#FF0000"
+										xmlns="http://www.w3.org/2000/svg"
 									>
-										<path d="M27.14,34H8.86A2.93,2.93,0,0,1,6,31V11.23H8V31a.93.93,0,0,0,.86,1H27.14A.93.93,0,0,0,28,31V11.23h2V31A2.93,2.93,0,0,1,27.14,34Z" />
-										<path d="M30.78,9H5A1,1,0,0,1,5,7H30.78a1,1,0,0,1,0,2Z" />
-										<rect
-											x="21"
-											y="13"
-											width="2"
-											height="15"
+										<path
+											d="M18 4V28M10 20L18 28L26 20"
+											stroke="#FF0000"
+											stroke-width="6"
+											fill="none"
 										/>
-										<rect
-											x="13"
-											y="13"
-											width="2"
-											height="15"
-										/>
-										<path d="M23,5.86H21.1V4H14.9V5.86H13V4a2,2,0,0,1,1.9-2h6.2A2,2,0,0,1,23,4Z" />
 									</svg>
 								</button>
 							</div>
