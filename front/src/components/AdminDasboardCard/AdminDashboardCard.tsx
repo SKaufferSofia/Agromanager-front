@@ -1,6 +1,7 @@
 "use client";
 
 import {
+	banUserById,
 	deleteUserById,
 	editUserById,
 	fetchAllUsers,
@@ -23,7 +24,7 @@ const AdminDashboardCard = () => {
 	});
 	const [showForm, setShowForm] = useState(false);
 	const [userToEdit, setUserToEdit] = useState<IUserForAdmin | null>(null);
-	const [deletedUsers, setDeletedUsers] = useState<boolean>(false);
+	const [bannedUser, setBannedUser] = useState<boolean>(false);
 
 	useEffect(() => {
 		const getAllUsers = async () => {
@@ -37,8 +38,8 @@ const AdminDashboardCard = () => {
 			}
 		};
 		getAllUsers();
-	}, [token, showForm, deletedUsers]);
-
+	}, [token, showForm, bannedUser]);
+	console.log(newArrayUsers);
 	const handleOpenFormClick = (user: any) => {
 		setShowForm(true);
 		setUserToEdit(user);
@@ -103,8 +104,8 @@ const AdminDashboardCard = () => {
 	const handleDeleteClick = async (userToEdit: IUserForAdmin | null) => {
 		if (token && userToEdit) {
 			try {
-				await deleteUserById(userToEdit.id, token);
-				setDeletedUsers(true);
+				await banUserById(userToEdit.id, token);
+				setBannedUser(true);
 				toast.success(
 					`Usuario eliminado correctamente: ${userToEdit.name} ${userToEdit.surname}`,
 					{
