@@ -34,7 +34,7 @@ export default function ProfileMenu() {
     Cookies.remove("token");
     Cookies.remove("userData");
     Cookies.remove("role");
-    router.push("/");
+    router.push("/login");
   };
 
   return (

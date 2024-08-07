@@ -11,7 +11,6 @@ import { IUserForAdmin } from "@/interfaces/interfaces";
 import { IUser } from "@/interfaces/interfacesUser";
 import { toast } from "sonner";
 import ScrollableCard from "../ScrollableCardComponent/ScrollableCardComponent";
-import { DiVim } from "react-icons/di";
 
 const AdminDashboardCard = () => {
 	const token = useSelector((state: any) => state.token);
@@ -23,6 +22,7 @@ const AdminDashboardCard = () => {
 		placeName: "",
 		email: "",
 		active: true,
+
 	});
 	const [showForm, setShowForm] = useState(false);
 	const [userToEdit, setUserToEdit] = useState<IUserForAdmin | null>(null);
@@ -41,7 +41,6 @@ const AdminDashboardCard = () => {
 		};
 		getAllUsers();
 	}, [token, showForm, deletedUsers]);
-	console.log(newArrayUsers);
 	const handleOpenFormClick = (user: any) => {
 		setShowForm(true);
 		setUserToEdit(user);
@@ -82,6 +81,7 @@ const AdminDashboardCard = () => {
 					placeName: "",
 					email: "",
 				});
+
 
 				toast.success(
 					`Usuario editado correctamente:
@@ -391,6 +391,7 @@ const AdminDashboardCard = () => {
 								{editUserData.active ? "Activo" : "Inactivo"}
 							</span>
 						</div>
+
 						<div className="flex justify-around">
 							<div>
 								<button
