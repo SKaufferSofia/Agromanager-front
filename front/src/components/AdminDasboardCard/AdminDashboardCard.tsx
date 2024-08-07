@@ -370,10 +370,10 @@ const AdminDashboardCard = () => {
 						</div>
 						<div className="mb-4">
 							<label
-								className="block text-gray-700 text-sm font-bold mb-2"
+								className="block text-gray-700 text-sm mb-2"
 								htmlFor="active"
 							>
-								Active
+								Activo
 							</label>
 							<input
 								type="checkbox"
@@ -388,7 +388,7 @@ const AdminDashboardCard = () => {
 								className="mr-2 leading-tight"
 							/>
 							<span className="text-sm">
-								{editUserData.active ? "Active" : "Inactive"}
+								{editUserData.active ? "Activo" : "Inactivo"}
 							</span>
 						</div>
 						<div className="flex justify-around">
