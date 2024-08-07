@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { IUserForAdmin } from "@/interfaces/interfaces";
 import { IUser } from "@/interfaces/interfacesUser";
 import { toast } from "sonner";
+import ConfirmationActionModal from "../ConfirmationActionModal/ConfirmationActionModal";
 
 const AdminDashboardCard = () => {
 	const token = useSelector((state: any) => state.token);
@@ -239,22 +240,31 @@ const AdminDashboardCard = () => {
 										/>
 									</svg>
 								</button>
-								<button onClick={() => handleBanClick(user)}>
-									<svg
-										width="20"
-										height="20"
-										viewBox="0 0 36 36"
-										fill="#FF0000"
-										xmlns="http://www.w3.org/2000/svg"
-									>
-										<path
-											d="M18 4V28M10 20L18 28L26 20"
-											stroke="#FF0000"
-											stroke-width="6"
-											fill="none"
-										/>
-									</svg>
-								</button>
+								<ConfirmationActionModal
+									openModalButton={
+										<svg
+											width="20"
+											height="20"
+											viewBox="0 0 36 36"
+											fill="#FF0000"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												d="M18 4V28M10 20L18 28L26 20"
+												stroke="#FF0000"
+												stroke-width="6"
+												fill="none"
+											/>
+										</svg>
+									}
+									cancelButtonText="Cancelar"
+									confirmButtonText="Aceptar"
+									modalTitle="Estás por bloquear un usuario"
+									modalBody="Deseas continuar?"
+									onConfirm={() => {
+										handleBanClick(user);
+									}}
+								/>
 							</div>
 						</div>
 					))}
