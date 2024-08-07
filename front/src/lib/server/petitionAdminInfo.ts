@@ -17,7 +17,6 @@ export const fetchAllUsers = async (token: string) => {
     throw error;
   }
 };
-
 export const editUserById = async (
   userToEditId: string,
   userData: {
@@ -67,3 +66,21 @@ export const deleteUserById = async (userToDeleteId: string, token: string) => {
     throw error;
   }
 };
+export const banUserById = async (userId: string, token: string) => {
+  try {
+    const response = await axios.delete(
+      `${API_PUBLIC}/users/ban/${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.log("Error in banUserById:", error);
+    throw error;
+  }
+};
+
