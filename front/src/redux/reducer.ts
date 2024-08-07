@@ -1,6 +1,5 @@
 import {
   IPlotsDashboardType,
-  IPlotsType,
   Labors,
   Supply,
   SupplyApplied,
@@ -22,7 +21,7 @@ interface InitialState {
     password: string;
   };
   userData: IUser;
-  plot: IPlotsType[];
+  plot: IPlotsDashboardType[];
   stock: Supply[];
   editStock: string[];
   suppliesApplied: SupplyApplied[];
@@ -86,11 +85,11 @@ export const someSlice = createSlice({
     ) => {
       state.registerData = action.payload;
     },
-    savePlot: (state, action: PayloadAction<IPlotsType[]>) => {
+    savePlot: (state, action: PayloadAction<IPlotsDashboardType[]>) => {
       state.plot = action.payload;
     },
 
-    addPlot: (state, action: PayloadAction<IPlotsType>) => {
+    addPlot: (state, action: PayloadAction<IPlotsDashboardType>) => {
       state.plot.push(action.payload);
     },
     saveStock: (state, action: PayloadAction<Supply[]>) => {
@@ -117,8 +116,15 @@ export const someSlice = createSlice({
         plot.labors = labors;
       }
     },
-    updateSupplies: (state, action: PayloadAction<SupplyApplied[]>) => {
-      state.suppliesApplied.push(...action.payload);
+    updateSupplies: (
+      state,
+      action: PayloadAction<{ plotId: string; supplies: SupplyApplied[] }>
+    ) => {
+      const { plotId, supplies } = action.payload;
+      const plot = state.plot.find((plot) => plot.id === plotId);
+      if (plot) {
+        plot.supplies = supplies;
+      }
       console.log(action.payload);
     },
     saveSuppliesApplied: (state, action: PayloadAction<SupplyApplied[]>) => {

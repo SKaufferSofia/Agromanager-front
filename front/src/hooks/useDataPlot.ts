@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { savePlot, saveSuppliesApplied, updateSupplies } from "@/redux/reducer";
 import {
-  IPlotsType,
+  IPlotsDashboardType,
   Labors,
   Supply,
   SupplyApplied,
@@ -45,11 +45,11 @@ const useDataPlot = () => {
     }
   };
 
-  const savePlotsStorage = (plots: IPlotsType[]) => {
+  const savePlotsStorage = (plots: IPlotsDashboardType[]) => {
     localStorage.setItem("plots", JSON.stringify(plots));
   };
 
-  const addPlotsStorage = (plot: IPlotsType) => {
+  const addPlotsStorage = (plot: IPlotsDashboardType) => {
     const plotsStorage = localStorage.getItem("plots");
     if (plotsStorage) {
       const parsedPlotsStorage = JSON.parse(plotsStorage);
@@ -63,7 +63,7 @@ const useDataPlot = () => {
     if (plotsStorage) {
       const parsedPlotsStorage = JSON.parse(plotsStorage);
       const plot = parsedPlotsStorage.find(
-        (plot: IPlotsType) => plot.id === plotId
+        (plot: IPlotsDashboardType) => plot.id === plotId
       );
       if (plot) {
         plot.labors = labors;
@@ -82,7 +82,7 @@ const useDataPlot = () => {
         plotsStorage.length ? plotsStorage : "[]"
       );
       const plot = parsedPlotsStorage.find(
-        (plot: IPlotsType) => plot.id === plotId
+        (plot: IPlotsDashboardType) => plot.id === plotId
       );
       if (plot) {
         plot.supplies.push(...supplies);

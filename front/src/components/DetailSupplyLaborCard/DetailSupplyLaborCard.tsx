@@ -26,6 +26,9 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
   const [suppliesAdded, setFetchedSupplies] = useState<SupplyApplied[]>([]);
   const token = useSelector((state: RootState) => state.token);
   const supplies = useSelector((state: RootState) => state.suppliesApplied);
+  const plots = useSelector((state: any) => state.plot);
+  console.log(plots);
+
   const dispatch = useDispatch();
   const { saveSuppliesAppliedStorage } = useDataPlot();
 
@@ -75,8 +78,8 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
             `Fetched supplies for plot ${id}:`,
             suppliesByIds.push(response.data)
           );
-          dispatch(saveSuppliesApplied(suppliesByIds));
-          saveSuppliesAppliedStorage(suppliesByIds);
+          // dispatch(saveSuppliesApplied(suppliesByIds));
+          // saveSuppliesAppliedStorage(suppliesByIds);
         }
       } catch (error) {
         console.error("Error fetching supplies:", error);

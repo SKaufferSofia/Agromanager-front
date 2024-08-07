@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { IPlotsNavbar, IPlotsType } from "@/interfaces/interfaces";
+import { IPlotsDashboardType, IPlotsNavbar } from "@/interfaces/interfaces";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -49,7 +49,7 @@ const SideNavbar: React.FC<IPlotsNavbar> = ({ plots }) => {
 
         {isLotesOpen && (
           <ul className="pl-4">
-            {plots.map((plot: IPlotsType) => (
+            {plots.map((plot: IPlotsDashboardType) => (
               <li
                 key={plot.id}
                 className="py-2 px-4 rounded poppins-light textColor hover:bg-white hover:text-textGreen"

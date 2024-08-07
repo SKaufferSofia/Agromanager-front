@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IPlotsType, PlotPanelProps } from "@/interfaces/interfaces";
+import { IPlotsDashboardType, PlotPanelProps } from "@/interfaces/interfaces";
 import PlotDetailCard from "./PlotDetailCard/PlotDetailCard";
 import { useSelector } from "react-redux";
 import { createPlot } from "@/lib/server/petitionPlots";
@@ -101,7 +101,7 @@ const PlotPanel: React.FC<PlotPanelProps> = ({ plots, setPlots }) => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-16">
-        {plots.map((plot: IPlotsType) => (
+        {plots.map((plot: IPlotsDashboardType) => (
           <PlotDetailCard
             key={plot.id}
             id={plot.id}
