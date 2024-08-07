@@ -61,7 +61,7 @@ const ConfirmationActionModal: React.FC<ConfirmationActionModalProps> = ({
 						<div className="flex items-center p-4 font-sans text-2xl antialiased font-semibold leading-snug shrink-0 text-blue-gray-900">
 							{modalTitle}
 						</div>
-						<div className="relative p-4 font-sans text-base antialiased font-light leading-relaxed border-t border-b border-t-blue-gray-100 border-b-blue-gray-100 text-blue-gray-500">
+						<div className="relative p-4 font-sans text-center text-lg font-semibold antialiased leading-relaxed border-t border-b border-t-blue-gray-100 border-b-blue-gray-100 text-blue-gray-500">
 							{modalBody}
 						</div>
 						<div className="flex flex-wrap items-center justify-end p-4 shrink-0 text-blue-gray-500">
