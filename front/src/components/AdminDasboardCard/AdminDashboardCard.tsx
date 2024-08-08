@@ -349,11 +349,23 @@ const AdminDashboardCard = () => {
 					</div>
 				</div>
 				{metrics && (
-					<div className="w-1/4">
-						<CircularProgress
-							title="Suscipciones premium"
-							percentage={metrics.Porcents.premiumUsersPercent}
-						/>
+					<div className="flex-col w-1/4">
+						<div>
+							<CircularProgress
+								title="Suscipciones premium"
+								percentage={
+									metrics.Porcents.premiumUsersPercent
+								}
+							/>
+						</div>
+						<div className="mt-10">
+							<CircularProgress
+								title="Usuarios sin suscipciones"
+								percentage={
+									metrics.Porcents.premiumUsersPercent
+								}
+							/>
+						</div>
 					</div>
 				)}
 			</div>
