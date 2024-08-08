@@ -8,6 +8,7 @@ import { fetchPlots } from "@/lib/server/petitionPlots";
 import { savePlot } from "@/redux/reducer";
 import useDataPlot from "@/hooks/useDataPlot";
 import ProfileComponent from "@/components/MyProfile/ProfileComponent";
+import ProfileCard from "@/components/MyProfile/NewProfile";
 
 const MyProfile = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,8 @@ const MyProfile = () => {
       <div className="mt-[86px] h-min-screen bg-sideNavbarColor bg-opacity-10 ">
         <SideNavbar plots={plots} />
       </div>
-      <div className="p-8 flex-grow mt-24 sm:w-3/4">
+      <div className="p-8 mt-[4rem] sm:w-3/4">
+        {/* <ProfileCard /> */}
         <ProfileComponent />
       </div>
     </div>
