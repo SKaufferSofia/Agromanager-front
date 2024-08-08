@@ -32,7 +32,7 @@ const PlotDetailDashboard: React.FC = () => {
       const fetchWeather = async () => {
         try {
           const response = await axios.get(
-            `http://api.weatherapi.com/v1/current.json?key=${API_WEATHER_PROPS}&q=${currentPlot.latitude},${currentPlot.longitude}&lang=es`
+            `https://api.weatherapi.com/v1/current.json?key=${API_WEATHER_PROPS}&q=${currentPlot.latitude},${currentPlot.longitude}&lang=es`
           );
 
           setFetchedWeather(response.data);
