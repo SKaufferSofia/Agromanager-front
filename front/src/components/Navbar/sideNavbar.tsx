@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { IPlotsNavbar, IPlotsType } from "@/interfaces/interfaces";
+import { IPlotsDashboardType, IPlotsNavbar } from "@/interfaces/interfaces";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -8,8 +8,9 @@ const SideNavbar: React.FC<IPlotsNavbar> = ({ plots }) => {
   const [isLotesOpen, setIsLotesOpen] = useState(false);
   const router = useRouter();
 
-  const toggleLotes = () => {
-    setIsLotesOpen(!isLotesOpen);
+  const toggleLotes = (event: React.MouseEvent) => {
+    event.stopPropagation(); // Evita que el clic en el ícono afecte otros elementos
+    setIsLotesOpen((prev) => !prev);
   };
 
   return (
@@ -20,13 +21,13 @@ const SideNavbar: React.FC<IPlotsNavbar> = ({ plots }) => {
         </h3>
       </div>
       <div className="text-gray-800 mb-4">
-        <div className="cursor-pointer poppins-regular text-xl py-2 px-4 rounded hover:bg-white flex justify-between items-center">
-          <a href="/dashboard/plots">
-            <h4 className="hover:text-textGreen">Mis Lotes</h4>
-          </a>
+        <div className="flex justify-between items-center text-xl text-gray-800 py-2 px-4 mt-4 poppins-regular textColor rounded hover:bg-white hover:text-textGreen">
+          <Link href="/dashboard/plots">
+            <h4 className="">Mis Lotes</h4>
+          </Link>
           <div
             onClick={toggleLotes}
-            className="bg-textGreen/50 p-1 rounded-full cursor-pointer"
+            className="flex items-center bg-textGreen/50 p-2 rounded-full cursor-pointer hover:bg-white transition-colors duration-150"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +50,7 @@ const SideNavbar: React.FC<IPlotsNavbar> = ({ plots }) => {
 
         {isLotesOpen && (
           <ul className="pl-4">
-            {plots.map((plot: IPlotsType) => (
+            {plots.map((plot: IPlotsDashboardType) => (
               <li
                 key={plot.id}
                 className="py-2 px-4 rounded poppins-light textColor hover:bg-white hover:text-textGreen"
@@ -61,11 +62,11 @@ const SideNavbar: React.FC<IPlotsNavbar> = ({ plots }) => {
         )}
       </div>
       <div>
-        <a href="/dashboard/stock">
+        <Link href="/dashboard/stock">
           <h4 className="text-xl text-gray-800 py-2 px-4 mt-4 poppins-regular textColor rounded hover:bg-white hover:text-textGreen">
             Inventario
           </h4>
-        </a>
+        </Link>
       </div>
     </div>
   );

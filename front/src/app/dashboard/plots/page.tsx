@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PlotPanel from "@/components/PlotPanel/PlotPanel";
 import SideNavbar from "@/components/Navbar/sideNavbar";
-import { IPlotsType } from "@/interfaces/interfaces";
+import { IPlotsDashboardType } from "@/interfaces/interfaces";
 import { fetchPlots } from "@/lib/server/petitionPlots";
 import { savePlot } from "@/redux/reducer";
 import useDataPlot from "@/hooks/useDataPlot";
@@ -13,7 +13,7 @@ const PlotDashboard: React.FC = () => {
   const { savePlotsStorage } = useDataPlot();
   const userId = useSelector((state: any) => state.userData.id);
   const token = useSelector((state: any) => state.token);
-  const [plots, setPlots] = useState<IPlotsType[]>([]);
+  const [plots, setPlots] = useState<IPlotsDashboardType[]>([]);
 
   useEffect(() => {
     const getPlots = async () => {
