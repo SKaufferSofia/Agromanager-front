@@ -98,7 +98,9 @@ export interface SupplyApplied {
 }
 
 export interface IRole {
-  active: boolean;
+  active: boolean
+  name?:string
+
 }
 export interface IUserForAdmin {
   id: string;

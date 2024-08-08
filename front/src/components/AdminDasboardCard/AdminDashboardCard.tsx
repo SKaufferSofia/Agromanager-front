@@ -1,15 +1,18 @@
 "use client";
 
 import {
-	deleteUserById,
+	banUserById,
 	editUserById,
 	fetchAllUsers,
+	unbanUserById,
 } from "@/lib/server/petitionAdminInfo";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { IUserForAdmin } from "@/interfaces/interfaces";
+import { IRole, IUserForAdmin } from "@/interfaces/interfaces";
 import { IUser } from "@/interfaces/interfacesUser";
 import { toast } from "sonner";
+import ConfirmationActionModal from "../ConfirmationActionModal/ConfirmationActionModal";
+import DataUserCard from "../DataUserCard/DataUserCard";
 
 const AdminDashboardCard = () => {
 	const token = useSelector((state: any) => state.token);
@@ -23,7 +26,7 @@ const AdminDashboardCard = () => {
 	});
 	const [showForm, setShowForm] = useState(false);
 	const [userToEdit, setUserToEdit] = useState<IUserForAdmin | null>(null);
-	const [deletedUsers, setDeletedUsers] = useState<boolean>(false);
+	const [bannedUser, setBannedUser] = useState<boolean>(false);
 
 	useEffect(() => {
 		const getAllUsers = async () => {
@@ -37,17 +40,15 @@ const AdminDashboardCard = () => {
 			}
 		};
 		getAllUsers();
-	}, [token, showForm, deletedUsers]);
-
-	const handleOpenFormClick = (user: any) => {
+	}, [token, showForm, bannedUser]);
+	console.log(newArrayUsers);
+	const handleOpenFormClick = (user: IUserForAdmin) => {
 		setShowForm(true);
 		setUserToEdit(user);
 	};
-
 	const handleCancelButton = () => {
 		setShowForm(false);
 	};
-
 	const handleNewUserData = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 
@@ -100,13 +101,13 @@ const AdminDashboardCard = () => {
 			console.error("No token available for authentication");
 		}
 	};
-	const handleDeleteClick = async (userToEdit: IUserForAdmin | null) => {
+	const handleBanClick = async (userToEdit: IUserForAdmin | null) => {
 		if (token && userToEdit) {
 			try {
-				await deleteUserById(userToEdit.id, token);
-				setDeletedUsers(true);
+				await banUserById(userToEdit.id, token);
+				setBannedUser(true);
 				toast.success(
-					`Usuario eliminado correctamente: ${userToEdit.name} ${userToEdit.surname}`,
+					`Usuario bloqueado correctamente: ${userToEdit.name} ${userToEdit.surname}`,
 					{
 						className:
 							"w-[28rem] mt-20 text-white bg-footerColor font-semibold text-xl",
@@ -120,18 +121,97 @@ const AdminDashboardCard = () => {
 			console.error("No token available for authentication");
 		}
 	};
+	const handleUnbanClick = async (userToEdit: IUserForAdmin | null) => {
+		if (token && userToEdit) {
+			try {
+				await unbanUserById(userToEdit.id, token);
+				setBannedUser(false);
+				toast.success(
+					`Usuario desbloqueado correctamente: ${userToEdit.name} ${userToEdit.surname}`,
+					{
+						className:
+							"w-[28rem] mt-20 text-white bg-footerColor font-semibold text-xl",
+						duration: 3000,
+					}
+				);
+			} catch (error) {
+				console.error("Error unbanning user:", error);
+				toast.error(
+					`Error al desbloquear el usuario: ${userToEdit.name} ${userToEdit.surname}`,
+					{
+						className:
+							"w-[28rem] mt-20 text-white bg-red-500 font-semibold text-xl",
+						duration: 3000,
+					}
+				);
+			}
+		} else {
+			console.error("No token available for authentication");
+			toast.error("No hay token disponible para autenticación", {
+				className:
+					"w-[28rem] mt-20 text-white bg-errorColor font-semibold text-xl",
+				duration: 3000,
+			});
+		}
+	};
+	const totalPlots = newArrayUsers.reduce((total, user) => {
+		return total + user.plots.length;
+	}, 0);
 
 	return (
 		<div>
-			<div className="bg-white shadow-md">
-				<div className="flex font-bold p-4 justify-between bg-altBgColor ">
+			<div className="flex">
+				<div className="flex-1 mr-10">
+					<DataUserCard
+						title={"Total de usuarios"}
+						dataContent={newArrayUsers.length}
+					/>
+				</div>
+				<div className="flex-1 mr-10">
+					<DataUserCard
+						title={"Usuarios activos"}
+						dataContent={
+							newArrayUsers.filter((user) => user.active).length
+						}
+					/>
+				</div>
+				<div className="flex-1 mr-10">
+					<DataUserCard
+						title={"Usuarios inactivos"}
+						dataContent={
+							newArrayUsers.filter((user) => user.active == false)
+								.length
+						}
+					/>
+				</div>
+				<div className="flex-1 mr-10">
+					<DataUserCard
+						title={"Usuarios bloqueados"}
+						dataContent={
+							newArrayUsers.filter((user) =>
+								user.roles.some(
+									(role: IRole) => role.name === "banned"
+								)
+							).length
+						}
+					/>
+				</div>
+				<div className="flex-1">
+					<DataUserCard
+						title={"Lotes activos"}
+						dataContent={totalPlots}
+					/>
+				</div>
+			</div>
+			<div className="bg-white shadow-md rounded-md">
+				<div className="flex font-bold p-4 justify-between   border-b border-gray-200">
 					<div className="flex-1 text-start">Nombre</div>
 					<div className="flex-1 text-start">Apellido</div>
 					<div className="flex-1 text-start">Contacto</div>
 					<div className="flex-1 text-center">Establecimiento</div>
 					<div className="flex-1 text-end">Activo</div>
 					<div className="flex-1 text-end">Editar</div>
-					<div className="flex-1 text-end">Borrar</div>
+					<div className="flex-1 text-end">Control</div>
 				</div>
 				{newArrayUsers &&
 					newArrayUsers.map((user) => (
@@ -152,6 +232,13 @@ const AdminDashboardCard = () => {
 							<div className="flex-1 text-end">
 								{user.active ? "Si" : "No"}
 							</div>
+							{/* <div className="flex-1 text-end">
+								{user.roles.some(
+									(role) => role.name === "banned"
+								)
+									? "si"
+									: "no"}
+							</div> */}
 							<div className="flex-1 text-end">
 								<button
 									onClick={() => handleOpenFormClick(user)}
@@ -187,30 +274,40 @@ const AdminDashboardCard = () => {
 								</button>
 							</div>
 							<div className="flex-1 text-end">
-								<button onClick={() => handleDeleteClick(user)}>
-									<svg
-										width="20"
-										height="20"
-										viewBox="0 0 36 36"
-										fill="#FF0000"
-									>
-										<path d="M27.14,34H8.86A2.93,2.93,0,0,1,6,31V11.23H8V31a.93.93,0,0,0,.86,1H27.14A.93.93,0,0,0,28,31V11.23h2V31A2.93,2.93,0,0,1,27.14,34Z" />
-										<path d="M30.78,9H5A1,1,0,0,1,5,7H30.78a1,1,0,0,1,0,2Z" />
-										<rect
-											x="21"
-											y="13"
-											width="2"
-											height="15"
-										/>
-										<rect
-											x="13"
-											y="13"
-											width="2"
-											height="15"
-										/>
-										<path d="M23,5.86H21.1V4H14.9V5.86H13V4a2,2,0,0,1,1.9-2h6.2A2,2,0,0,1,23,4Z" />
-									</svg>
-								</button>
+								{user.roles.some(
+									(role: IRole) => role.name === "banned"
+								) ? (
+									<ConfirmationActionModal
+										openModalButton={
+											<div className="flex p-2 font-semibold bg-green-500 text-white justify-center rounded-md text-xs  w-24">
+												Desbloquear
+											</div>
+										}
+										cancelButtonText="Cancelar"
+										confirmButtonText="Aceptar"
+										modalTitle="Estás por desbloquear un usuario"
+										modalBody="Deseas continuar?"
+										onConfirm={() => {
+											console.log(user.name);
+											handleUnbanClick(user);
+										}}
+									/>
+								) : (
+									<ConfirmationActionModal
+										openModalButton={
+											<div className="flex p-2 font-semibold bg-red-500 text-white justify-center rounded-md text-xs w-24">
+												Bloquear
+											</div>
+										}
+										cancelButtonText="Cancelar"
+										confirmButtonText="Aceptar"
+										modalTitle="Estás por bloquear un usuario"
+										modalBody="Deseas continuar?"
+										onConfirm={() => {
+											handleBanClick(user);
+										}}
+									/>
+								)}
 							</div>
 						</div>
 					))}
