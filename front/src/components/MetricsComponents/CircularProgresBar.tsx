@@ -5,6 +5,7 @@ interface CircularProgressProps {
 	size?: number;
 	strokeWidth?: number;
 	color?: string;
+	title: string;
 }
 
 const CircularProgress: React.FC<CircularProgressProps> = ({
@@ -12,13 +13,15 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
 	size = 200,
 	strokeWidth = 20,
 	color = "navbarColor",
+	title,
 }) => {
 	const radius = (size - strokeWidth) / 2;
 	const circumference = radius * 2 * Math.PI;
 	const offset = circumference - (percentage / 100) * circumference;
 
 	return (
-		<div className=" border rounded-md shadow-md p-4 bg-white  h-auto m-8">
+		<div className="flex border rounded-md shadow-md p-4 bg-white h-auto ml-10">
+			<div className="font-bold">{title}</div>
 			<div className="relative" style={{ width: size, height: size }}>
 				<svg
 					width={size}

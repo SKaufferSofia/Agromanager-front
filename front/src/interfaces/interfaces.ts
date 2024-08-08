@@ -113,6 +113,17 @@ export interface IUserForAdmin {
   supplies?: SupplyApplied[];
   roles: IRole[];
 }
-
+export interface Metrics {
+	message: string;
+	numbers: {
+		total: number;
+		premiumUsers: number;
+		noPremiumUsers: number;
+	};
+	Porcents: {
+		noPremiumUsersPercent: number;
+		premiumUsersPercent: number;
+	};
+}
 export type SaveDataPlot = (arg: IPlotsDashboardType[]) => void;
 export type AddDataPlot = (arg: IPlotsDashboardType) => void;
