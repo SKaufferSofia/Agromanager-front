@@ -14,4 +14,4 @@ export const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET || "";
 // Claves para la API de clima
 export const API_WEATHER = process.env.API_KEY_WEATHER || "";
 
-export const API_WEATHER_PROPS = process.env.API_KEY_WEATHER_PROPS || "";
+export const API_WEATHER_PROPS = process.env.NEXT_PUBLIC_WEATHER_PROPS || "";
