@@ -7,30 +7,12 @@ import {
 import { IUser } from "@/interfaces/interfacesUser";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ISuscribe } from "@/interfaces/interfacesSupscriptions";
+import { InitialState } from "@/interfaces/interfacesRedux";
 
 const savedSubscription =
   typeof window !== "undefined"
     ? JSON.parse(localStorage.getItem("subscription") || "null")
     : null;
-
-interface InitialState {
-  isLoggin: boolean;
-  token: string;
-  registerData: {
-    email: string;
-    password: string;
-  };
-  userData: IUser;
-  plot: IPlotsDashboardType[];
-  stock: Supply[];
-  editStock: string[];
-  suppliesApplied: SupplyApplied[];
-  selectedSubscription: ISuscribe | null;
-  latitude: string;
-  longitude: string;
-  paymentLink: string;
-  subscription: ISuscribe;
-}
 
 const initialState: InitialState = {
   isLoggin: false,
@@ -116,15 +98,8 @@ export const someSlice = createSlice({
         plot.labors = labors;
       }
     },
-    updateSupplies: (
-      state,
-      action: PayloadAction<{ plotId: string; supplies: SupplyApplied[] }>
-    ) => {
-      const { plotId, supplies } = action.payload;
-      const plot = state.plot.find((plot) => plot.id === plotId);
-      if (plot) {
-        plot.supplies = supplies;
-      }
+    updateSupplies: (state, action: PayloadAction<SupplyApplied[]>) => {
+      state.suppliesApplied.push(...action.payload);
       console.log(action.payload);
     },
     saveSuppliesApplied: (state, action: PayloadAction<SupplyApplied[]>) => {

@@ -100,12 +100,12 @@ const AddSupplyInput: React.FC<AddSupplyInputProps> = ({ plotId }) => {
           },
         }
       );
-      // let updatedSuppliesArray: SupplyApplied[] = [];
+      let updatedSuppliesArray: SupplyApplied[] = [];
 
-      // updatedSuppliesArray = [...updatedSuppliesArray, response.data];
-      // dispatch(updateSupplies(updatedSuppliesArray));
+      updatedSuppliesArray = [...updatedSuppliesArray, response.data];
+      dispatch(updateSupplies(updatedSuppliesArray));
+      updatePlotsStorageWithSupplies(plotId, updatedSuppliesArray);
       // addSuppliesAppliedStorage(response.data);
-      // updatePlotsStorageWithSupplies(plotId, updatedSuppliesArray);
 
       // console.log("Updated supplies:", updatedSupplies);
 

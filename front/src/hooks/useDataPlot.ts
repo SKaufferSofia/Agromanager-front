@@ -78,14 +78,19 @@ const useDataPlot = () => {
   ) => {
     const plotsStorage = localStorage.getItem("plots");
     if (plotsStorage) {
-      const parsedPlotsStorage = JSON.parse(
-        plotsStorage.length ? plotsStorage : "[]"
-      );
+      const parsedPlotsStorage = JSON.parse(plotsStorage);
+
       const plot = parsedPlotsStorage.find(
         (plot: IPlotsDashboardType) => plot.id === plotId
       );
+
       if (plot) {
-        plot.supplies.push(...supplies);
+        if (plot.supplies) {
+          plot.supplies = [...plot.supplies, ...supplies];
+        } else {
+          plot.supplies = supplies;
+        }
+
         localStorage.setItem("plots", JSON.stringify(parsedPlotsStorage));
       }
     }

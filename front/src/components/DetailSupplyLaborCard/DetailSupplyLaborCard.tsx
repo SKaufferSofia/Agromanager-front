@@ -78,9 +78,9 @@ const DetailSupplyLaborCard: React.FC<DetailSupplyLaborCardProps> = ({
             `Fetched supplies for plot ${id}:`,
             suppliesByIds.push(response.data)
           );
-          // dispatch(saveSuppliesApplied(suppliesByIds));
-          // saveSuppliesAppliedStorage(suppliesByIds);
         }
+        dispatch(saveSuppliesApplied(suppliesByIds));
+        saveSuppliesAppliedStorage(suppliesByIds);
       } catch (error) {
         console.error("Error fetching supplies:", error);
       }

@@ -27,15 +27,6 @@ export interface ISupplyEditForm {
   imgUrl?: File | string;
 }
 
-export interface IPlotsType {
-  id: string;
-  surface: string;
-  cereal: string;
-  labors: Labors[] | null;
-  supplies: Supply[] | null;
-  latitude?: string;
-  longitude?: string;
-}
 export interface IPlotsDashboardType {
   id: string;
   surface: string;
