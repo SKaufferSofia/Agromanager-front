@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import ConfirmationActionModal from "../ConfirmationActionModal/ConfirmationActionModal";
 import DataUserCard from "../DataUserCard/DataUserCard";
 import { fetchMembershipMetrics } from "@/lib/server/petitionMetric";
+import CircularProgress from "../MetricsComponents/CircularProgresBar";
 
 const AdminDashboardCard = () => {
 	const token = useSelector((state: any) => state.token);
@@ -328,7 +329,11 @@ const AdminDashboardCard = () => {
 						</div>
 					))}
 			</div>
-
+			<div className="flex justify-center items-center">
+				<div>
+					<CircularProgress percentage={90} />
+				</div>
+			</div>
 			{showForm === true && (
 				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
 					<div className="bg-white w-[80%] max-w-lg p-6 rounded-md shadow-lg relative">
