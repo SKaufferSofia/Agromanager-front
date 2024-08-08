@@ -7,7 +7,7 @@ import DetailSupplyLaborCard from "@/components/DetailSupplyLaborCard/DetailSupp
 import SideNavbar from "@/components/Navbar/sideNavbar";
 import { useSelector } from "react-redux";
 import { usePathname } from "next/navigation";
-import { IPlotsType } from "@/interfaces/interfaces";
+import { IPlotsDashboardType } from "@/interfaces/interfaces";
 import MainButton from "@/components/MainButton/MainButton";
 import { RootState } from "@/redux/store";
 import { API_WEATHER_PROPS } from "@/lib/server/envs";
@@ -24,7 +24,7 @@ const PlotDetailDashboard: React.FC = () => {
   const [fetchedWeather, setFetchedWeather]: any = useState(null);
 
   const currentPlot = plots.find(
-    (plot: IPlotsType) => String(plot.id) === idFromPath
+    (plot: IPlotsDashboardType) => String(plot.id) === idFromPath
   );
 
   useEffect(() => {
