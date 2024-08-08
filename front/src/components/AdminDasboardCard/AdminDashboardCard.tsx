@@ -9,10 +9,11 @@ import {
 } from "@/lib/server/petitionAdminInfo";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { IUserForAdmin } from "@/interfaces/interfaces";
+import { IRole, IUserForAdmin } from "@/interfaces/interfaces";
 import { IUser } from "@/interfaces/interfacesUser";
 import { toast } from "sonner";
 import ConfirmationActionModal from "../ConfirmationActionModal/ConfirmationActionModal";
+import DataUserCard from "../DataUserCard/DataUserCard";
 
 const AdminDashboardCard = () => {
 	const token = useSelector((state: any) => state.token);
@@ -42,15 +43,13 @@ const AdminDashboardCard = () => {
 		getAllUsers();
 	}, [token, showForm, bannedUser]);
 	console.log(newArrayUsers);
-	const handleOpenFormClick = (user: any) => {
+	const handleOpenFormClick = (user: IUserForAdmin) => {
 		setShowForm(true);
 		setUserToEdit(user);
 	};
-
 	const handleCancelButton = () => {
 		setShowForm(false);
 	};
-
 	const handleNewUserData = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 
@@ -156,11 +155,57 @@ const AdminDashboardCard = () => {
 			});
 		}
 	};
+	const totalPlots = newArrayUsers.reduce((total, user) => {
+		return total + user.plots.length;
+	}, 0);
 
 	return (
 		<div>
-			<div className="bg-white shadow-md">
-				<div className="flex font-bold p-4 justify-between bg-altBgColor ">
+			<div className="flex">
+				<div className="flex-1 mr-10">
+					<DataUserCard
+						title={"Total de usuarios"}
+						dataContent={newArrayUsers.length}
+					/>
+				</div>
+				<div className="flex-1 mr-10">
+					<DataUserCard
+						title={"Usuarios activos"}
+						dataContent={
+							newArrayUsers.filter((user) => user.active).length
+						}
+					/>
+				</div>
+				<div className="flex-1 mr-10">
+					<DataUserCard
+						title={"Usuarios inactivos"}
+						dataContent={
+							newArrayUsers.filter((user) => user.active == false)
+								.length
+						}
+					/>
+				</div>
+				<div className="flex-1 mr-10">
+					<DataUserCard
+						title={"Usuarios bloqueados"}
+						dataContent={
+							newArrayUsers.filter((user) =>
+								user.roles.some(
+									(role: IRole) => role.name === "banned"
+								)
+							).length
+						}
+					/>
+				</div>
+				<div className="flex-1">
+					<DataUserCard
+						title={"Lotes activos"}
+						dataContent={totalPlots}
+					/>
+				</div>
+			</div>
+			<div className="bg-white shadow-md rounded-md">
+				<div className="flex font-bold p-4 justify-between   border-b border-gray-200">
 					<div className="flex-1 text-start">Nombre</div>
 					<div className="flex-1 text-start">Apellido</div>
 					<div className="flex-1 text-start">Contacto</div>
@@ -188,6 +233,13 @@ const AdminDashboardCard = () => {
 							<div className="flex-1 text-end">
 								{user.active ? "Si" : "No"}
 							</div>
+							{/* <div className="flex-1 text-end">
+								{user.roles.some(
+									(role) => role.name === "banned"
+								)
+									? "si"
+									: "no"}
+							</div> */}
 							<div className="flex-1 text-end">
 								<button
 									onClick={() => handleOpenFormClick(user)}
@@ -223,57 +275,62 @@ const AdminDashboardCard = () => {
 								</button>
 							</div>
 							<div className="flex-1 text-end">
-								{/*ES NECESARIO AGREGAR CONDICIONALES PARA RENDERIZAR EL BOTON NECESARIO*/}
-								<ConfirmationActionModal
-									openModalButton={
-										<svg
-											width="20"
-											height="20"
-											viewBox="0 0 36 36"
-											fill="#719a2d"
-											xmlns="http://www.w3.org/2000/svg"
-										>
-											<path
-												d="M18 32V8M10 16L18 8L26 16"
-												stroke="#719a2d"
-												stroke-width="6"
-												fill="none"
-											/>
-										</svg>
-									}
-									cancelButtonText="Cancelar"
-									confirmButtonText="Aceptar"
-									modalTitle="Estás por desbloquear un usuario"
-									modalBody="Deseas continuar?"
-									onConfirm={() => {
-										handleUnbanClick(user);
-									}}
-								/>
-								<ConfirmationActionModal
-									openModalButton={
-										<svg
-											width="20"
-											height="20"
-											viewBox="0 0 36 36"
-											fill="#FF0000"
-											xmlns="http://www.w3.org/2000/svg"
-										>
-											<path
-												d="M18 4V28M10 20L18 28L26 20"
-												stroke="#FF0000"
-												stroke-width="6"
-												fill="none"
-											/>
-										</svg>
-									}
-									cancelButtonText="Cancelar"
-									confirmButtonText="Aceptar"
-									modalTitle="Estás por bloquear un usuario"
-									modalBody="Deseas continuar?"
-									onConfirm={() => {
-										handleBanClick(user);
-									}}
-								/>
+								{user.roles.some(
+									(role: IRole) => role.name === "banned"
+								) ? (
+									<ConfirmationActionModal
+										openModalButton={
+											<svg
+												width="20"
+												height="20"
+												viewBox="0 0 36 36"
+												fill="#719a2d"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													d="M18 32V8M10 16L18 8L26 16"
+													stroke="#719a2d"
+													strokeWidth="6"
+													fill="none"
+												/>
+											</svg>
+										}
+										cancelButtonText="Cancelar"
+										confirmButtonText="Aceptar"
+										modalTitle="Estás por desbloquear un usuario"
+										modalBody="Deseas continuar?"
+										onConfirm={() => {
+											console.log(user.name);
+											handleUnbanClick(user);
+										}}
+									/>
+								) : (
+									<ConfirmationActionModal
+										openModalButton={
+											<svg
+												width="20"
+												height="20"
+												viewBox="0 0 36 36"
+												fill="#FF0000"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													d="M18 4V28M10 20L18 28L26 20"
+													stroke="#FF0000"
+													strokeWidth="6"
+													fill="none"
+												/>
+											</svg>
+										}
+										cancelButtonText="Cancelar"
+										confirmButtonText="Aceptar"
+										modalTitle="Estás por bloquear un usuario"
+										modalBody="Deseas continuar?"
+										onConfirm={() => {
+											handleBanClick(user);
+										}}
+									/>
+								)}
 							</div>
 						</div>
 					))}
