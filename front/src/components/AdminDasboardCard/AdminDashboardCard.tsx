@@ -16,7 +16,6 @@ import DataUserCard from "../DataUserCard/DataUserCard";
 import { fetchMembershipMetrics } from "@/lib/server/petitionMetric";
 import CircularProgress from "../MetricsComponents/CircularProgresBar";
 
-
 const AdminDashboardCard = () => {
 	const token = useSelector((state: any) => state.token);
 	const [newArrayUsers, setNewArrayUsers] = useState<IUserForAdmin[]>([]);
@@ -348,17 +347,17 @@ const AdminDashboardCard = () => {
 						<div>
 							<CircularProgress
 								title="Suscipciones premium"
-								percentage={
+								percentage={Math.round(
 									metrics.Porcents.premiumUsersPercent
-								}
+								)}
 							/>
 						</div>
 						<div className="mt-10">
 							<CircularProgress
 								title="Usuarios sin suscipciones"
-								percentage={
-									metrics.Porcents.premiumUsersPercent
-								}
+								percentage={Math.round(
+									metrics.Porcents.noPremiumUsersPercent
+								)}
 							/>
 						</div>
 					</div>
