@@ -100,8 +100,8 @@ export interface SupplyApplied {
 export interface IRole {
   active: boolean
   name?:string
-
 }
+
 export interface IUserForAdmin {
   id: string;
   name: string;
@@ -114,6 +114,17 @@ export interface IUserForAdmin {
   supplies?: SupplyApplied[];
   roles: IRole[];
 }
-
+export interface Metrics {
+	message: string;
+	numbers: {
+		total: number;
+		premiumUsers: number;
+		noPremiumUsers: number;
+	};
+	Porcents: {
+		noPremiumUsersPercent: number;
+		premiumUsersPercent: number;
+	};
+}
 export type SaveDataPlot = (arg: IPlotsDashboardType[]) => void;
 export type AddDataPlot = (arg: IPlotsDashboardType) => void;
