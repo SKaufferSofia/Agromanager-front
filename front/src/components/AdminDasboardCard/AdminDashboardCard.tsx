@@ -58,14 +58,7 @@ const AdminDashboardCard = () => {
 		};
 		getMetrics();
 	}, [token]);
-	useEffect(() => {
-		if (metrics) {
-			console.log(
-				"Premium Users Percent:",
-				metrics.Porcents.premiumUsersPercent
-			);
-		}
-	}, [metrics]);
+
 	const handleOpenFormClick = (user: IUserForAdmin) => {
 		setShowForm(true);
 		setUserToEdit(user);
