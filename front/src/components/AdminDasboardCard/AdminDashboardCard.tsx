@@ -2,6 +2,7 @@
 
 import {
 	banUserById,
+	deleteUserById,
 	editUserById,
 	fetchAllUsers,
 	unbanUserById,
@@ -15,7 +16,8 @@ import ConfirmationActionModal from "../ConfirmationActionModal/ConfirmationActi
 import DataUserCard from "../DataUserCard/DataUserCard";
 import { fetchMembershipMetrics } from "@/lib/server/petitionMetric";
 import CircularProgress from "../MetricsComponents/CircularProgresBar";
-
+import ScrollCard from "../ScrollCard/ScrollCard";
+import { DiVim } from "react-icons/di";
 
 const AdminDashboardCard = () => {
 	const token = useSelector((state: any) => state.token);
@@ -129,7 +131,7 @@ const AdminDashboardCard = () => {
 					{
 						className:
 							"w-[28rem] mt-20 text-white bg-footerColor font-semibold text-xl",
-						duration: 3000,
+						duration: 2000,
 					}
 				);
 			} catch (error) {
@@ -175,6 +177,26 @@ const AdminDashboardCard = () => {
 	const totalPlots = newArrayUsers.reduce((total, user) => {
 		return total + user.plots.length;
 	}, 0);
+	const handleDeleteClick = async (userToDelete: IUserForAdmin | null) => {
+		if (token && userToDelete) {
+			try {
+				await deleteUserById(userToDelete.id, token);
+				toast.success(
+					`Usuario eliminado correctamente: ${userToDelete.name} ${userToDelete.surname}`,
+					{
+						className:
+							"w-[28rem] mt-20 text-white bg-footerColor font-semibold text-xl",
+						duration: 3000,
+					}
+				);
+			} catch (error) {
+				console.error("Error deleting user:", error);
+			}
+		} else {
+			console.error("No token available for authentication");
+		}
+	};
+
 	return (
 		<div>
 			<div className="flex">
@@ -259,13 +281,6 @@ const AdminDashboardCard = () => {
 									<div className="flex-1 text-end">
 										{user.active ? "Si" : "No"}
 									</div>
-									{/* <div className="flex-1 text-end">
-								{user.roles.some(
-									(role) => role.name === "banned"
-								)
-									? "si"
-									: "no"}
-							</div> */}
 									<div className="flex-1 text-end">
 										<button
 											onClick={() =>
@@ -302,6 +317,7 @@ const AdminDashboardCard = () => {
 											</svg>
 										</button>
 									</div>
+
 									<div className="flex-1 text-end">
 										{user.roles.some(
 											(role: IRole) =>
@@ -342,23 +358,105 @@ const AdminDashboardCard = () => {
 								</div>
 							))}
 					</div>
+					<div className="mt-10">
+						<ScrollCard
+							title="Eliminar usarios bloquedos"
+							titleColor="bg-red-300"
+							content={
+								<div>
+									<div className="flex">
+										<div className="flex-1 p-2 border-gray-200 border-b font-semibold text-start">
+											Email
+										</div>
+										<div className="flex-1 p-2 border-gray-200 border-b text-center font-semibold text-start">
+											Establecimiento
+										</div>
+									</div>
+									<div>
+										{newArrayUsers &&
+											newArrayUsers
+												.filter((user) =>
+													user.roles.some(
+														(role) =>
+															role.name ===
+															"banned"
+													)
+												)
+												.map((user) => (
+													<div
+														key={user.id}
+														className="flex border-b border-gray-200"
+													>
+														<div className="py-2 px-4 flex-1 text-start">
+															{user.email}
+														</div>
+														<div className="py-2 px-4 flex-1 text-center">
+															{user.placeName}
+														</div>
+														<ConfirmationActionModal
+															openModalButton={
+																<div className="mt-2 mr-2 text-end">
+																	<svg
+																		width="20"
+																		height="20"
+																		viewBox="0 0 36 36"
+																		fill="#FF0000"
+																	>
+																		<path d="M27.14,34H8.86A2.93,2.93,0,0,1,6,31V11.23H8V31a.93.93,0,0,0,.86,1H27.14A.93.93,0,0,0,28,31V11.23h2V31A2.93,2.93,0,0,1,27.14,34Z" />
+																		<path d="M30.78,9H5A1,1,0,0,1,5,7H30.78a1,1,0,0,1,0,2Z" />
+																		<rect
+																			x="21"
+																			y="13"
+																			width="2"
+																			height="15"
+																		/>
+																		<rect
+																			x="13"
+																			y="13"
+																			width="2"
+																			height="15"
+																		/>
+																		<path d="M23,5.86H21.1V4H14.9V5.86H13V4a2,2,0,0,1,1.9-2h6.2A2,2,0,0,1,23,4Z" />
+																	</svg>
+																</div>
+															}
+															cancelButtonText="Cancelar"
+															confirmButtonText="Aceptar"
+															modalTitle="Estás por eliminar un usuario"
+															modalBody="Esta acción es irreversible. Deseas continuar?"
+															onConfirm={() => {
+																console.log(
+																	user.name
+																);
+																handleDeleteClick(
+																	user
+																);
+															}}
+														/>
+													</div>
+												))}
+									</div>
+								</div>
+							}
+						/>
+					</div>
 				</div>
 				{metrics && (
 					<div className="flex-col w-1/4">
 						<div>
 							<CircularProgress
 								title="Suscipciones premium"
-								percentage={
+								percentage={Math.round(
 									metrics.Porcents.premiumUsersPercent
-								}
+								)}
 							/>
 						</div>
 						<div className="mt-10">
 							<CircularProgress
 								title="Usuarios sin suscipciones"
-								percentage={
-									metrics.Porcents.premiumUsersPercent
-								}
+								percentage={Math.round(
+									metrics.Porcents.noPremiumUsersPercent
+								)}
 							/>
 						</div>
 					</div>
