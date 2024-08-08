@@ -16,6 +16,7 @@ import useUserData from "@/hooks/useUserData";
 import useDataPlot from "@/hooks/useDataPlot";
 import { useRouter } from "next/navigation";
 import ProfileMenu from "./ProfileMenu";
+import Link from "next/link";
 
 const NavbarComponent: React.FC = () => {
   const pathname = usePathname();
@@ -163,12 +164,14 @@ const NavbarComponent: React.FC = () => {
           </div>
         ) : (
           <div className="flex items-center justify-between text-white">
-            <Image
-              src="/image4.png"
-              width={160}
-              height={160}
-              alt="agromanager Logo"
-            />
+            <Link href="/dashboard/plots">
+              <Image
+                src="/image4.png"
+                width={160}
+                height={160}
+                alt="agromanager Logo"
+              />
+            </Link>
             <div className="flex items-center gap-4">
               <ProfileMenu />
             </div>

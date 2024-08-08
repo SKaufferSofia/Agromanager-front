@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { IPlotsType } from "@/interfaces/interfaces";
+import { IPlotsDashboardType } from "@/interfaces/interfaces";
 import { fetchPlots } from "@/lib/server/petitionPlots";
 import { useDispatch } from "react-redux";
 import { savePlot } from "@/redux/reducer";
 
 const useFetchPlots = (userId: string, token: string) => {
-  const [plots, setPlots] = useState<IPlotsType[]>([]);
+  const [plots, setPlots] = useState<IPlotsDashboardType[]>([]);
   const [error, setError] = useState<string | null>(null);
   const dispatch = useDispatch();
 

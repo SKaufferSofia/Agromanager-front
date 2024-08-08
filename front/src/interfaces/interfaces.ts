@@ -27,15 +27,6 @@ export interface ISupplyEditForm {
   imgUrl?: File | string;
 }
 
-export interface IPlotsType {
-  id: string;
-  surface: string;
-  cereal: string;
-  labors: Labors[] | null;
-  supplies: Supply[] | null;
-  latitude?: string;
-  longitude?: string;
-}
 export interface IPlotsDashboardType {
   id: string;
   surface: string;
@@ -52,11 +43,11 @@ export interface Labors {
   contractor: string;
   price: number;
   surface: number;
-  plot: IPlotsType;
+  plot: IPlotsDashboardType;
 }
 
 export interface IPlotsNavbar {
-  plots: IPlotsType[];
+  plots: IPlotsDashboardType[];
 }
 
 export interface PlotDetailCardProps {
@@ -64,12 +55,12 @@ export interface PlotDetailCardProps {
   surface: string;
   cereal: string;
   labors: Labors[] | null;
-  supplies?: Supply[] | null;
+  supplies?: SupplyApplied[] | null;
 }
 
 export interface PlotPanelProps {
-  plots: IPlotsType[];
-  setPlots: React.Dispatch<React.SetStateAction<IPlotsType[]>>;
+  plots: IPlotsDashboardType[];
+  setPlots: React.Dispatch<React.SetStateAction<IPlotsDashboardType[]>>;
 }
 export interface StockPanelProps {
   supplies: Supply[];
@@ -109,6 +100,7 @@ export interface SupplyApplied {
 export interface IRole {
   active: boolean
   name?:string
+
 }
 export interface IUserForAdmin {
   id: string;
@@ -118,10 +110,10 @@ export interface IUserForAdmin {
   placeName: string;
   email: string;
   active: boolean;
-  plots: IPlotsType[];
-  supplies: Supply[];
+  plots: IPlotsDashboardType[];
+  supplies?: SupplyApplied[];
   roles: IRole[];
 }
 
-export type SaveDataPlot = (arg: IPlotsType[]) => void;
-export type AddDataPlot = (arg: IPlotsType) => void;
+export type SaveDataPlot = (arg: IPlotsDashboardType[]) => void;
+export type AddDataPlot = (arg: IPlotsDashboardType) => void;
