@@ -83,7 +83,6 @@ export const banUserById = async (userId: string, token: string) => {
     throw error;
   }
 };
-
 export const unbanUserById = async (userId: string, token: string) => {
   try {
     const response = await axios.put(
