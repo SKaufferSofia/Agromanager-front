@@ -2,7 +2,6 @@
 
 import {
 	banUserById,
-	deleteUserById,
 	editUserById,
 	fetchAllUsers,
 	unbanUserById,
@@ -14,7 +13,6 @@ import { IUser } from "@/interfaces/interfacesUser";
 import { toast } from "sonner";
 import ConfirmationActionModal from "../ConfirmationActionModal/ConfirmationActionModal";
 import DataUserCard from "../DataUserCard/DataUserCard";
-import { DiVim } from "react-icons/di";
 
 const AdminDashboardCard = () => {
 	const token = useSelector((state: any) => state.token);
