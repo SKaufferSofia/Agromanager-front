@@ -23,6 +23,7 @@ const config: Config = withMT({
         footerColor: "#747C5D",
         textGreen: "#70823E",
         sideNavbarColor: "#8B8B8B",
+        nonWhiteBg: "#F2F3F4",
       },
       keyframes: {
         slideIn: {
