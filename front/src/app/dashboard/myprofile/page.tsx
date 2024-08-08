@@ -40,9 +40,9 @@ const MyProfile = () => {
       <div className="mt-[86px] h-min-screen bg-sideNavbarColor bg-opacity-10 ">
         <SideNavbar plots={plots} />
       </div>
-      <div className="p-8 mt-[4rem] sm:w-3/4">
-        {/* <ProfileCard /> */}
-        <ProfileComponent />
+      <div className="w-screen h-full">
+        <ProfileCard />
+        {/* <ProfileComponent /> */}
       </div>
     </div>
   );
