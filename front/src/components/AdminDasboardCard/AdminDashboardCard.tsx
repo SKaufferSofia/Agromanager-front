@@ -14,6 +14,7 @@ import { IUser } from "@/interfaces/interfacesUser";
 import { toast } from "sonner";
 import ConfirmationActionModal from "../ConfirmationActionModal/ConfirmationActionModal";
 import DataUserCard from "../DataUserCard/DataUserCard";
+import { DiVim } from "react-icons/di";
 
 const AdminDashboardCard = () => {
 	const token = useSelector((state: any) => state.token);
@@ -280,20 +281,9 @@ const AdminDashboardCard = () => {
 								) ? (
 									<ConfirmationActionModal
 										openModalButton={
-											<svg
-												width="20"
-												height="20"
-												viewBox="0 0 36 36"
-												fill="#719a2d"
-												xmlns="http://www.w3.org/2000/svg"
-											>
-												<path
-													d="M18 32V8M10 16L18 8L26 16"
-													stroke="#719a2d"
-													strokeWidth="6"
-													fill="none"
-												/>
-											</svg>
+											<div className="flex p-2 font-semibold bg-green-500 text-white justify-center rounded-md text-xs  w-24">
+												Desbloquear
+											</div>
 										}
 										cancelButtonText="Cancelar"
 										confirmButtonText="Aceptar"
@@ -307,20 +297,9 @@ const AdminDashboardCard = () => {
 								) : (
 									<ConfirmationActionModal
 										openModalButton={
-											<svg
-												width="20"
-												height="20"
-												viewBox="0 0 36 36"
-												fill="#FF0000"
-												xmlns="http://www.w3.org/2000/svg"
-											>
-												<path
-													d="M18 4V28M10 20L18 28L26 20"
-													stroke="#FF0000"
-													strokeWidth="6"
-													fill="none"
-												/>
-											</svg>
+											<div className="flex p-2 font-semibold bg-red-500 text-white justify-center rounded-md text-xs w-24">
+												Bloquear
+											</div>
 										}
 										cancelButtonText="Cancelar"
 										confirmButtonText="Aceptar"
