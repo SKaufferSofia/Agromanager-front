@@ -163,7 +163,7 @@ const NavbarComponent: React.FC = () => {
             </div>
           </div>
         ) : (
-          <div className="flex items-center justify-between text-white">
+          <div className="h-16 flex items-center justify-between text-white">
             <Link href="/dashboard/plots">
               <Image
                 src="/image4.png"

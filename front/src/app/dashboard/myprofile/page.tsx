@@ -9,6 +9,7 @@ import { savePlot } from "@/redux/reducer";
 import useDataPlot from "@/hooks/useDataPlot";
 import ProfileComponent from "@/components/MyProfile/ProfileComponent";
 import ProfileCard from "@/components/MyProfile/NewProfile";
+import { DetailProfile } from "@/components/MyProfile/DetailProfile";
 
 const MyProfile = () => {
   const dispatch = useDispatch();
@@ -36,13 +37,16 @@ const MyProfile = () => {
   }, [userId, token, dispatch]);
 
   return (
-    <div className="w-screen h-full flex flex-col sm:flex-row">
+    <div className="w-full h-full flex flex-col sm:flex-row">
       <div className="mt-[86px] h-min-screen bg-sideNavbarColor bg-opacity-10 ">
         <SideNavbar plots={plots} />
       </div>
-      <div className="w-screen h-full">
+      <div className="flex-grow w-screen">
         <ProfileCard />
         {/* <ProfileComponent /> */}
+        <div className="flex justify-center items-center m-10 py-4">
+          <DetailProfile />
+        </div>
       </div>
     </div>
   );
