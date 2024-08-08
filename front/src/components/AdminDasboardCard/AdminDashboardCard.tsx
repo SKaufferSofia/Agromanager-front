@@ -13,6 +13,7 @@ import { IUser } from "@/interfaces/interfacesUser";
 import { toast } from "sonner";
 import ConfirmationActionModal from "../ConfirmationActionModal/ConfirmationActionModal";
 import DataUserCard from "../DataUserCard/DataUserCard";
+import { fetchMembershipMetrics } from "@/lib/server/petitionMetric";
 
 const AdminDashboardCard = () => {
 	const token = useSelector((state: any) => state.token);
@@ -27,6 +28,7 @@ const AdminDashboardCard = () => {
 	const [showForm, setShowForm] = useState(false);
 	const [userToEdit, setUserToEdit] = useState<IUserForAdmin | null>(null);
 	const [bannedUser, setBannedUser] = useState<boolean>(false);
+	const [metrics, setMetrics] = useState({});
 
 	useEffect(() => {
 		const getAllUsers = async () => {
@@ -41,7 +43,22 @@ const AdminDashboardCard = () => {
 		};
 		getAllUsers();
 	}, [token, showForm, bannedUser]);
-	console.log(newArrayUsers);
+
+	useEffect(() => {
+		const getMetrics = async () => {
+			if (token) {
+				try {
+					const fetchedMetrics = await fetchMembershipMetrics(token);
+					setMetrics(fetchedMetrics);
+				} catch (error) {
+					console.error("Error fetching metrics:", error);
+				}
+			}
+		};
+		getMetrics();
+	}, [token]);
+
+	console.log(metrics);
 	const handleOpenFormClick = (user: IUserForAdmin) => {
 		setShowForm(true);
 		setUserToEdit(user);
@@ -157,7 +174,6 @@ const AdminDashboardCard = () => {
 	const totalPlots = newArrayUsers.reduce((total, user) => {
 		return total + user.plots.length;
 	}, 0);
-
 	return (
 		<div>
 			<div className="flex">
