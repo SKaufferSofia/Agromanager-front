@@ -16,6 +16,7 @@ import DataUserCard from "../DataUserCard/DataUserCard";
 import { fetchMembershipMetrics } from "@/lib/server/petitionMetric";
 import CircularProgress from "../MetricsComponents/CircularProgresBar";
 
+
 const AdminDashboardCard = () => {
 	const token = useSelector((state: any) => state.token);
 	const [newArrayUsers, setNewArrayUsers] = useState<IUserForAdmin[]>([]);
@@ -229,6 +230,7 @@ const AdminDashboardCard = () => {
 							<div className="flex-1 text-start">Nombre</div>
 							<div className="flex-1 text-start">Apellido</div>
 							<div className="flex-1 text-start">Contacto</div>
+
 							<div className="flex-1 text-center">
 								Establecimiento
 							</div>

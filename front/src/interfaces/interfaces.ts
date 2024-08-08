@@ -101,6 +101,7 @@ export interface IRole {
   active: boolean
   name?:string
 }
+
 export interface IUserForAdmin {
   id: string;
   name: string;
