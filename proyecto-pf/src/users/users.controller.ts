@@ -3,7 +3,7 @@ import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UUID } from 'crypto';
 import { ChangePasswordDto } from './dto/change-password.dto';
-import { changePasswordDecorator, deleteUserDecorator, getUserByIdDecoractor, getUserDecorator, updateUserDecorator } from './user.decorators';
+import { changePasswordDecorator, deleteUserDecorator, getAllUsersDecorator, getUserByIdDecoractor, getUserDecorator, updateUserDecorator } from './user.decorators';
 import { ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
 import { query, Response } from 'express';
 
@@ -17,6 +17,7 @@ export class UsersController {
   
 
   @Get("getall")
+  @getAllUsersDecorator()
   getUsers() {
     return this.usersService.getUsers();
   }
@@ -32,7 +33,7 @@ export class UsersController {
   makeUserPremiumMonthly(@Param("id", ParseUUIDPipe) id: UUID, @Query() payment: any, @Res() res: Response) {
     if (payment.status === "approved") {
       this.usersService.makeUserPremiumMonthly(id)
-      return res.redirect(`http://localhost:${FrontPORT}/subscriptions/accept-subscription`)
+      return res.redirect(`https://agromanager.vercel.app/subscriptions/accept-subscription`)
     } else {throw new BadRequestException("hubo un error con el metodo de pago")}
   }
 
@@ -41,13 +42,14 @@ export class UsersController {
   makeUserPremiumYearly(@Param("id", ParseUUIDPipe) id: UUID, @Query() payment: any, @Res() res: Response) {
     if (payment.status === "approved") {
       this.usersService.makeUserPremiumYearly(id)
-      return res.redirect(`http://localhost:${FrontPORT}/subscriptions/accept-subscription`)
+      return res.redirect(`https://agromanager.vercel.app/subscriptions/accept-subscription`)
     } else {throw new BadRequestException("hubo un error con el metodo de pago")}
   }
 
   @Get("premium/freetrial/:id")
   freeTrial(@Param("id", ParseUUIDPipe)id: UUID) {
     return this.usersService.freeTrial(id)
+    // return res.redirect(`https://agromanager.vercel.app/subscriptions/accept-subscription`)
   }
 
   @Get(':id')
@@ -62,10 +64,20 @@ export class UsersController {
     return this.usersService.changePasword(id, changePasswordDto)
   }
 
+  @Put("unban/:id")
+  unBanUser(@Param("id", ParseUUIDPipe) id: UUID) {
+    return this.usersService.unBanUser(id)
+  }
+
   @Put(':id')
   @updateUserDecorator()
   updateUser(@Param('id', ParseUUIDPipe) id: UUID, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.updateUser(id, updateUserDto);
+  }
+
+  @Delete("ban/:id")
+  banUser(@Param("id", ParseUUIDPipe) id: UUID) {
+    return this.usersService.banUser(id)
   }
 
   @Delete(':id')

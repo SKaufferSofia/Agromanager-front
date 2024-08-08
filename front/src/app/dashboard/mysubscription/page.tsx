@@ -3,7 +3,7 @@
 import SideNavbar from "@/components/Navbar/sideNavbar";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IPlotsType } from "@/interfaces/interfaces";
+import { IPlotsDashboardType } from "@/interfaces/interfaces";
 import { fetchPlots } from "@/lib/server/petitionPlots";
 import { savePlot } from "@/redux/reducer";
 import useDataPlot from "@/hooks/useDataPlot";
@@ -19,7 +19,7 @@ const MySubscription = () => {
     (state: any) => state.userData.premiumExpiration
   );
   const token = useSelector((state: any) => state.token);
-  const [plots, setPlots] = useState<IPlotsType[]>([]);
+  const [plots, setPlots] = useState<IPlotsDashboardType[]>([]);
   const [subscription, setSubscription] = useState<ISuscribe | null>(null);
 
   useEffect(() => {

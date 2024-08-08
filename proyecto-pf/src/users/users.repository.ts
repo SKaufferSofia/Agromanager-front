@@ -10,10 +10,12 @@ import * as bcrypt from "bcrypt"
 import { ChangePasswordDto } from "./dto/change-password.dto";
 import { isWithinSevenDays } from "src/utils/dateCompare";
 import { EmailsService } from "src/email/email.service";
+import moment from "moment";
 
 
 @Injectable()
 export class UsersRepository {
+  
 
     constructor (
         @InjectRepository(User) private userRepository: Repository<User>,
@@ -139,6 +141,7 @@ export class UsersRepository {
 
         user.roles = [...user.roles, premiumRole]
         user.premiumExpiration = expDate
+        user.premiumDate = new Date()
 
         this.emailService.paymentCheck(user.email, user.name + " " + user.surname)
         await this.userRepository.save(user)
@@ -154,6 +157,7 @@ export class UsersRepository {
       
 
         const expDate = new Date()
+        user.premiumDate = new Date()
 
         expDate.setFullYear(expDate.getFullYear() + 1)
 
@@ -182,6 +186,8 @@ export class UsersRepository {
         user.roles = [...user.roles, premiumRole]
         user.premiumExpiration = expDate
 
+        user.premiumDate = new Date()
+
         user.freeTrialUsed = true
 
         this.emailService.paymentCheck(user.email, user.name + " " + user.surname)
@@ -209,6 +215,40 @@ export class UsersRepository {
         return {message: "El usuario ahora es admiistrador", user}
       }
     
+      async banUser(id: UUID) {
+        console.log(id)
+        const user = await this.userRepository.findOne({where: {id}, relations: {roles: true}})
+        if (!user) {throw new NotFoundException()}
+        if (user.roles.some(role => role.name === RolesEnum.BANNED)) {
+          throw new BadRequestException("el usuario ya se econtraba baneado")
+        }
+      
+        const bannedRole = await this.roleRepository.findOne({where: {name: RolesEnum.BANNED}})
+        user.roles.push(bannedRole)
+        await this.userRepository.save(user)
+        await this.emailService.bannedEmail(user.email, user.name)
+
+        return {message: `El usuario ${user.name} con el id ${user.id} ha sido baneado`, isBanned: true}
+      }
+
+      async unBanUser(id: UUID) {
+        const user = await this.userRepository.findOne({where: {id}, relations: {roles: true}})
+        if (!user) {throw new NotFoundException()}
+
+        const bannedRole = await this.roleRepository.findOne({where: {name: RolesEnum.BANNED}})
+        
+        const indexBannedRole = user.roles.findIndex(role => role.name === bannedRole.name);
+            if (indexBannedRole === -1) {throw new BadRequestException("el usuario no se encontraba baneado")}
+            else {
+              user.roles.splice(indexBannedRole, 1);
+              console.log("El usuario ha sido desbaneado :V")
+              await this.userRepository.save(user)
+            }
+
+            return {message: `el usuario ${user.name} con el id ${user.id} ha sido desbaneado`, isBanned: false}
+      }
+
+
       async deleteUser(id: UUID) {
         const user = await this.userRepository.findOne({where: {id: id, active: true}})
         if (!user){
@@ -328,6 +368,13 @@ export class UsersRepository {
           await this.userRepository.save(user)
         } 
   }
+
+  async updateChangeToday(id: string){
+    const user = await this.userRepository.findOne({where:{id: id}})
+    user.changeToday = true
+    await this.userRepository.save(user)
+  }
+  
 }
 
 
