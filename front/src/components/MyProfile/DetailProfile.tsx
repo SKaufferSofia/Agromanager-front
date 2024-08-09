@@ -83,7 +83,7 @@ export function DetailProfile() {
     },
   ];
   return (
-    <div className="w-full flex flex-col justify-center items-center pb-28 relative -z-10">
+    <div className="w-full flex flex-col justify-center items-center pb-28 relative">
       <Card className="w-96 bg-textGreen/30 text-textBlack">
         <CardBody>
           <div className="mb-4 flex items-center justify-between">
@@ -177,18 +177,21 @@ export function DetailProfile() {
             </Button>
           </div>
         </div> */}
-        <ConfirmationActionModal
-          openModalButton={
-            <div className="flex items-center p-3 font-semibold bg-red-600 text-white justify-center rounded-md text-xs w-32 hover:bg-red-700 hover:transform hover:scale-110">
-              CERRAR CUENTA
-            </div>
-          }
-          cancelButtonText="Cancelar"
-          confirmButtonText="Cerrar Cuenta"
-          modalTitle="¿Estás seguro de cerrar tu cuenta?"
-          modalBody="Al cerrar tu cuenta no podras recuperar tus datos"
-          onConfirm={handleDeleteUser}
-        />
+
+        {!isOpen ? (
+          <ConfirmationActionModal
+            openModalButton={
+              <div className="flex p-3 font-semibold bg-red-600 text-white justify-center items-center rounded-md text-xs  w-32 hover:bg-red-700 hover:transform hover:scale-110">
+                CERRAR CUENTA
+              </div>
+            }
+            cancelButtonText="Cancelar"
+            confirmButtonText="Cerrar Cuenta"
+            modalTitle="¿Estás seguro de cerrar tu cuenta?"
+            modalBody="Al cerrar tu cuenta no podras recuperar tus datos"
+            onConfirm={handleDeleteUser}
+          />
+        ) : null}
       </div>
     </div>
   );
