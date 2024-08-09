@@ -20,7 +20,7 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
 	const offset = circumference - (percentage / 100) * circumference;
 
 	return (
-		<div className="flex border rounded-md shadow-md p-4 bg-white h-auto ml-10">
+		<div className="flex border rounded-md shadow-md p-6 bg-white h-auto">
 			<div className="font-bold">{title}</div>
 			<div className="relative" style={{ width: size, height: size }}>
 				<svg
