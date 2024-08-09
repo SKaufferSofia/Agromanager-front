@@ -177,21 +177,21 @@ export function DetailProfile() {
             </Button>
           </div>
         </div> */}
-        <ConfirmationActionModal
-          openModalButton={
-            <Button
-              className="bg-red-600 hover:bg-red-700 hover:transform hover:scale-110"
-              onClick={toggleModal}
-            >
-              Cerrar Cuenta
-            </Button>
-          }
-          cancelButtonText="Cancelar"
-          confirmButtonText="Cerrar Cuenta"
-          modalTitle="¿Estás seguro de cerrar tu cuenta?"
-          modalBody="Al cerrar tu cuenta no podras recuperar tus datos"
-          onConfirm={handleDeleteUser}
-        />
+
+        {!isOpen ? (
+          <ConfirmationActionModal
+            openModalButton={
+              <div className="flex p-3 font-semibold bg-red-600 text-white justify-center items-center rounded-md text-xs  w-32 hover:bg-red-700 hover:transform hover:scale-110">
+                CERRAR CUENTA
+              </div>
+            }
+            cancelButtonText="Cancelar"
+            confirmButtonText="Cerrar Cuenta"
+            modalTitle="¿Estás seguro de cerrar tu cuenta?"
+            modalBody="Al cerrar tu cuenta no podras recuperar tus datos"
+            onConfirm={handleDeleteUser}
+          />
+        ) : null}
       </div>
     </div>
   );
