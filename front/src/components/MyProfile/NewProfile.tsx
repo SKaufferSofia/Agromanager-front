@@ -3,9 +3,15 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { FaBriefcase, FaEnvelope, FaIndustry, FaTrash } from "react-icons/fa";
 import { Button, IconButton } from "@material-tailwind/react";
+import MainButton from "../MainButton/MainButton";
 
 const ProfileCard = () => {
   const userData = useSelector((state: any) => state.userData);
+  const [showForm, setShowForm] = React.useState(false);
+
+  const handleEditClick = () => {
+    setShowForm(!showForm);
+  };
 
   return (
     <div className="relative h-[27rem] isolate bg-gray-900 py-24 sm:py-32 text-bgColor">
@@ -72,10 +78,108 @@ const ProfileCard = () => {
         </div>
       </div>
       <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 z-10">
-        <Button className="bg-textGreen hover:bg-navbarColor">
+        <Button
+          className="bg-textGreen hover:bg-navbarColor"
+          onClick={handleEditClick}
+        >
           Editar perfil
         </Button>
       </div>
+      {showForm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center  backdrop-blur-sm transition-opacity duration-300 ease-out bg-black bg-opacity-50">
+          <div className="bg-white w-[80%] max-w-lg p-6 rounded-md shadow-lg">
+            <h3 className="text-lg font-bold mb-4 text-textGreen">
+              Editar usuario
+            </h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Nombre
+                </label>
+                {/* <input
+                      type="text"
+                      name="name"
+                      value={editUserData.name}
+                      onChange={handleNewUserData}
+                      placeholder="Nombre"
+                      className="p-2 w-full text-black border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+                    /> */}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Apellido
+                </label>
+                {/* <input
+                      type="text"
+                      name="surname"
+                      value={editUserData.surname}
+                      onChange={handleNewUserData}
+                      placeholder="Apellido"
+                      className="p-2 w-full text-black border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+                    /> */}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Contacto
+                </label>
+                {/* <input
+                      type="text"
+                      name="phone"
+                      value={editUserData.phone}
+                      onChange={handleNewUserData}
+                      placeholder="Contacto"
+                      className="p-2 w-full text-black border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+                    /> */}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Establecimiento
+                </label>
+                {/* <input
+                      type="text"
+                      name="placeName"
+                      value={editUserData.placeName}
+                      onChange={handleNewUserData}
+                      placeholder="Establecimiento"
+                      className="p-2 w-full text-black border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+                    /> */}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Email
+                </label>
+                {/* <input
+                      type="email"
+                      name="email"
+                      value={editUserData.email}
+                      onChange={handleNewUserData}
+                      placeholder="Email"
+                      className="p-2 w-full text-black border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+                    /> */}
+              </div>
+            </div>
+            <div className="flex justify-around mt-4">
+              <MainButton text="Guardar" />
+              <div onClick={handleEditClick}>
+                <MainButton text="Cancelar" />
+              </div>
+
+              {/* <button
+                // onClick={() => handleEditClick(editUserData)}
+                className="p-2 bg-navbarColor text-white rounded shadow-md hover:bg-navbarColorDark transition-colors"
+              >
+                EDITAR
+              </button> */}
+              {/* <button
+                onClick={handleEditClick}
+                className="p-2 bg-navbarColor text-white rounded shadow-md hover:bg-navbarColorDark transition-colors"
+              >
+                CANCELAR
+              </button> */}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

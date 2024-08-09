@@ -10,6 +10,7 @@ import useDataPlot from "@/hooks/useDataPlot";
 import ProfileComponent from "@/components/MyProfile/ProfileComponent";
 import ProfileCard from "@/components/MyProfile/NewProfile";
 import { DetailProfile } from "@/components/MyProfile/DetailProfile";
+import { SidebarWithLogo } from "@/components/Navbar/SideNavbarComponent";
 
 const MyProfile = () => {
   const dispatch = useDispatch();
@@ -37,9 +38,10 @@ const MyProfile = () => {
   }, [userId, token, dispatch]);
 
   return (
-    <div className="w-full h-full flex flex-col sm:flex-row">
-      <div className="mt-[86px] h-min-screen bg-sideNavbarColor bg-opacity-10 ">
+    <div className="flex flex-col sm:flex-row">
+      <div className="mt-[71px] h-min-screen bg-sideNavbarColor bg-opacity-10">
         <SideNavbar plots={plots} />
+        {/* <SidebarWithLogo /> */}
       </div>
       <div className="flex-grow w-screen">
         <ProfileCard />
