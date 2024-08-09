@@ -30,9 +30,8 @@ const AdminDashboardCard = () => {
 	});
 	const [showForm, setShowForm] = useState(false);
 	const [userToEdit, setUserToEdit] = useState<IUserForAdmin | null>(null);
-	const [bannedUser, setBannedUser] = useState<boolean>(false);
 	const [metrics, setMetrics] = useState<Metrics | null>(null);
-	const [deletedUser, setDeletedUser] = useState<boolean>(false);
+	const [trigger, setTrigger] = useState<boolean>(false);
 
 	useEffect(() => {
 		const getAllUsers = async () => {
@@ -46,7 +45,7 @@ const AdminDashboardCard = () => {
 			}
 		};
 		getAllUsers();
-	}, [token, showForm, bannedUser, deletedUser]);
+	}, [token, showForm, trigger]);
 
 	useEffect(() => {
 		const getMetrics = async () => {
@@ -114,6 +113,7 @@ const AdminDashboardCard = () => {
 					}
 				);
 				setShowForm(false);
+				setTrigger((prev) => !prev);
 			} catch (error) {
 				console.error("Error updating user:", error);
 			}
@@ -125,7 +125,6 @@ const AdminDashboardCard = () => {
 		if (token && userToEdit) {
 			try {
 				await banUserById(userToEdit.id, token);
-				setBannedUser(true);
 				toast.success(
 					`Usuario bloqueado correctamente: ${userToEdit.name} ${userToEdit.surname}`,
 					{
@@ -134,6 +133,7 @@ const AdminDashboardCard = () => {
 						duration: 2000,
 					}
 				);
+				setTrigger((prev) => !prev);
 			} catch (error) {
 				console.error("Error updating user:", error);
 			}
@@ -145,7 +145,6 @@ const AdminDashboardCard = () => {
 		if (token && userToEdit) {
 			try {
 				await unbanUserById(userToEdit.id, token);
-				setBannedUser(false);
 				toast.success(
 					`Usuario desbloqueado correctamente: ${userToEdit.name} ${userToEdit.surname}`,
 					{
@@ -154,6 +153,7 @@ const AdminDashboardCard = () => {
 						duration: 3000,
 					}
 				);
+				setTrigger((prev) => !prev);
 			} catch (error) {
 				console.error("Error unbanning user:", error);
 				toast.error(
@@ -181,7 +181,6 @@ const AdminDashboardCard = () => {
 		if (token && userToDelete) {
 			try {
 				await deleteUserById(userToDelete.id, token);
-				setDeletedUser(true);
 				toast.success(
 					`Usuario eliminado correctamente: ${userToDelete.name} ${userToDelete.surname}`,
 					{
@@ -190,6 +189,7 @@ const AdminDashboardCard = () => {
 						duration: 3000,
 					}
 				);
+				setTrigger((prev) => !prev);
 			} catch (error) {
 				console.error("Error deleting user:", error);
 			}
@@ -211,19 +211,27 @@ const AdminDashboardCard = () => {
 						</div>
 						<div className="flex-1 mr-10">
 							<DataUserCard
-								title={"Usuarios activos"}
+								title={"Usuarios suscriptos"}
 								dataContent={
-									newArrayUsers.filter((user) => user.active)
-										.length
+									newArrayUsers.filter((user) =>
+										user.roles.some(
+											(role) => role.name === "premium"
+										)
+									).length
 								}
 							/>
 						</div>
+
 						<div className="flex-1 mr-10">
 							<DataUserCard
-								title={"Usuarios inactivos"}
+								title={"Usuarios no suscritos"}
 								dataContent={
 									newArrayUsers.filter(
-										(user) => user.active == false
+										(user) =>
+											!user.roles.some(
+												(role) =>
+													role.name === "premium"
+											)
 									).length
 								}
 							/>
