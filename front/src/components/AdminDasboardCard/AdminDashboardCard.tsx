@@ -67,9 +67,9 @@ const AdminDashboardCard = () => {
 		setEditUserData({
 			name: user.name,
 			surname: user.surname,
-			phone: user.phone || "", // Handle undefined phone
+			phone: user.phone || "",
 			placeName: user.placeName,
-			email: user.email, // Even though we won't allow editing, we still set it
+			email: user.email,
 		});
 	};
 	const handleCancelButton = () => {
@@ -91,7 +91,6 @@ const AdminDashboardCard = () => {
 			try {
 				const requestBody: any = {};
 
-				// Compare fields and add only changed fields to the requestBody
 				if (editUserData.name !== userToEdit.name)
 					requestBody.name = editUserData.name;
 				if (editUserData.surname !== userToEdit.surname)
@@ -101,7 +100,6 @@ const AdminDashboardCard = () => {
 				if (editUserData.placeName !== userToEdit.placeName)
 					requestBody.placeName = editUserData.placeName;
 
-				// Send the request only if there are changes
 				if (Object.keys(requestBody).length > 0) {
 					await editUserById(userToEdit.id, requestBody, token);
 
