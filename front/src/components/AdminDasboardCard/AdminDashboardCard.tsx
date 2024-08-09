@@ -18,7 +18,6 @@ import { fetchMembershipMetrics } from "@/lib/server/petitionMetric";
 import CircularProgress from "../MetricsComponents/CircularProgresBar";
 import ScrollCard from "../ScrollCard/ScrollCard";
 
-
 const AdminDashboardCard = () => {
 	const token = useSelector((state: any) => state.token);
 	const [newArrayUsers, setNewArrayUsers] = useState<IUserForAdmin[]>([]);
@@ -65,6 +64,13 @@ const AdminDashboardCard = () => {
 	const handleOpenFormClick = (user: IUserForAdmin) => {
 		setShowForm(true);
 		setUserToEdit(user);
+		setEditUserData({
+			name: user.name,
+			surname: user.surname,
+			phone: user.phone || "", // Handle undefined phone
+			placeName: user.placeName,
+			email: user.email, // Even though we won't allow editing, we still set it
+		});
 	};
 	const handleCancelButton = () => {
 		setShowForm(false);
@@ -83,15 +89,36 @@ const AdminDashboardCard = () => {
 	) => {
 		if (token && editUserData && userToEdit) {
 			try {
-				const requestBody = {
-					name: editUserData.name,
-					surname: editUserData.surname,
-					phone: editUserData.phone,
-					placeName: editUserData.placeName,
-					email: editUserData.email,
-				};
+				const requestBody: any = {};
 
-				await editUserById(userToEdit.id, requestBody, token);
+				// Compare fields and add only changed fields to the requestBody
+				if (editUserData.name !== userToEdit.name)
+					requestBody.name = editUserData.name;
+				if (editUserData.surname !== userToEdit.surname)
+					requestBody.surname = editUserData.surname;
+				if (editUserData.phone !== userToEdit.phone)
+					requestBody.phone = editUserData.phone;
+				if (editUserData.placeName !== userToEdit.placeName)
+					requestBody.placeName = editUserData.placeName;
+
+				// Send the request only if there are changes
+				if (Object.keys(requestBody).length > 0) {
+					await editUserById(userToEdit.id, requestBody, token);
+
+					toast.success(
+						`Usuario editado correctamente: 
+                    ${Object.entries(requestBody)
+						.map(([key, value]) => `${key}: ${value}`)
+						.join(", ")}`,
+						{
+							className:
+								"w-[28rem] mt-20 text-white bg-footerColor font-semibold text-xl",
+							duration: 2000,
+						}
+					);
+				} else {
+					toast.info("No se realizaron cambios.");
+				}
 
 				setEditUserData({
 					name: "",
@@ -101,18 +128,6 @@ const AdminDashboardCard = () => {
 					email: "",
 				});
 
-				toast.success(
-					`Usuario editado correctamente:
-				  Nombre: ${requestBody.name} ${requestBody.surname}
-				  Teléfono: ${requestBody.phone}
-				  Establecimiento: ${requestBody.placeName}
-				  Email: ${requestBody.email}`,
-					{
-						className:
-							"w-[28rem] mt-20 text-white bg-footerColor font-semibold text-xl",
-						duration: 3000,
-					}
-				);
 				setShowForm(false);
 				setTrigger((prev) => !prev);
 			} catch (error) {
@@ -122,6 +137,7 @@ const AdminDashboardCard = () => {
 			console.error("No token available for authentication");
 		}
 	};
+
 	const handleBanClick = async (userToEdit: IUserForAdmin | null) => {
 		if (token && userToEdit) {
 			try {
@@ -483,7 +499,7 @@ const AdminDashboardCard = () => {
 				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
 					<div className="bg-white w-[80%] max-w-lg p-6 rounded-md shadow-lg relative">
 						<h3>Editar usuario</h3>
-						<div>
+						<div className="mt-4">
 							<label className="block text-sm font-medium text-gray-700">
 								Nombre
 							</label>
@@ -493,10 +509,10 @@ const AdminDashboardCard = () => {
 								value={editUserData.name}
 								onChange={handleNewUserData}
 								placeholder="Nombre"
-								className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+								className="w-full px-4 py-2 text-sm border rounded-lg text-gray-700 font-medium"
 							/>
 						</div>
-						<div>
+						<div className="mt-4">
 							<label className="block text-sm font-medium text-gray-700">
 								Apellido
 							</label>
@@ -506,10 +522,10 @@ const AdminDashboardCard = () => {
 								value={editUserData.surname}
 								onChange={handleNewUserData}
 								placeholder="Apellido"
-								className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+								className="w-full px-4 py-2 text-sm border rounded-lg text-gray-700 font-medium"
 							/>
 						</div>
-						<div>
+						<div className="mt-4">
 							<label className="block text-sm font-medium text-gray-700">
 								Contacto
 							</label>
@@ -519,10 +535,10 @@ const AdminDashboardCard = () => {
 								value={editUserData.phone}
 								onChange={handleNewUserData}
 								placeholder="Contacto"
-								className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+								className="w-full px-4 py-2 text-sm border rounded-lg text-gray-700 font-medium"
 							/>
 						</div>
-						<div>
+						<div className="mt-4">
 							<label className="block text-sm font-medium text-gray-700">
 								Establecimiento
 							</label>
@@ -532,23 +548,22 @@ const AdminDashboardCard = () => {
 								value={editUserData.placeName}
 								onChange={handleNewUserData}
 								placeholder="Establecimiento"
-								className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+								className="w-full px-4 py-2 text-sm border rounded-lg text-gray-700 font-medium"
 							/>
 						</div>
-						<div>
+						<div className="mt-4">
 							<label className="block text-sm font-medium text-gray-700">
-								Email
+								Email (No editable)
 							</label>
 							<input
 								type="email"
 								name="email"
 								value={editUserData.email}
-								onChange={handleNewUserData}
-								placeholder="Email"
-								className="p-2 w-full flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
+								disabled={true}
+								className="w-full px-4 py-2 text-sm border rounded-lg text-gray-700 font-medium justify-center border-gray-300  shadow-sm  bg-gray-100"
 							/>
 						</div>
-						<div className="flex justify-around">
+						<div className="flex justify-around mt-8">
 							<div>
 								<button
 									onClick={() =>
@@ -557,7 +572,7 @@ const AdminDashboardCard = () => {
 											editUserData
 										)
 									}
-									className="mt-2 p-2 bg-navbarColor text-white rounded"
+									className="w-[9rem] p-2 flex justify-center border-footerColor border-2 rounded-md shadow-sm text-md font-medium text-footerColor hover:bg-footerColor hover:text-white hover:ease-in-out focus:ring-offset-2"
 								>
 									EDITAR
 								</button>
@@ -565,7 +580,7 @@ const AdminDashboardCard = () => {
 
 							<button
 								onClick={handleCancelButton}
-								className="mt-2 p-2 bg-navbarColor text-white rounded"
+								className="w-[9rem] p-2 flex justify-center border-footerColor border-2 rounded-md shadow-sm text-md font-medium text-footerColor hover:bg-footerColor hover:text-white hover:ease-in-out focus:ring-offset-2"
 							>
 								CANCELAR
 							</button>
