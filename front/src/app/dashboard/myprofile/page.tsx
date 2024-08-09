@@ -8,6 +8,9 @@ import { fetchPlots } from "@/lib/server/petitionPlots";
 import { savePlot } from "@/redux/reducer";
 import useDataPlot from "@/hooks/useDataPlot";
 import ProfileComponent from "@/components/MyProfile/ProfileComponent";
+import ProfileCard from "@/components/MyProfile/NewProfile";
+import { DetailProfile } from "@/components/MyProfile/DetailProfile";
+import { SidebarWithLogo } from "@/components/Navbar/SideNavbarComponent";
 
 const MyProfile = () => {
   const dispatch = useDispatch();
@@ -35,12 +38,17 @@ const MyProfile = () => {
   }, [userId, token, dispatch]);
 
   return (
-    <div className="w-screen h-full flex flex-col sm:flex-row">
-      <div className="mt-[86px] h-min-screen bg-sideNavbarColor bg-opacity-10 ">
+    <div className="flex flex-col sm:flex-row">
+      <div className="mt-[71px] h-min-screen bg-sideNavbarColor bg-opacity-10">
         <SideNavbar plots={plots} />
+        {/* <SidebarWithLogo /> */}
       </div>
-      <div className="p-8 flex-grow mt-24 sm:w-3/4">
-        <ProfileComponent />
+      <div className="flex-grow w-screen">
+        <ProfileCard />
+        {/* <ProfileComponent /> */}
+        <div className="flex justify-center items-center m-10 py-4 -z-10">
+          <DetailProfile />
+        </div>
       </div>
     </div>
   );
