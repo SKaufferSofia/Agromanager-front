@@ -1,16 +1,68 @@
 "use client";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaBriefcase, FaEnvelope, FaIndustry, FaTrash } from "react-icons/fa";
 import { Button, IconButton } from "@material-tailwind/react";
 import MainButton from "../MainButton/MainButton";
+import { IUserEdit } from "@/interfaces/interfacesUser";
+import { editProfileUser } from "@/lib/server/petitionUser";
+import useUserData from "@/hooks/useUserData";
+import { toast } from "sonner";
+import { saveUserData } from "@/redux/reducer";
 
 const ProfileCard = () => {
   const userData = useSelector((state: any) => state.userData);
+  const token = useSelector((state: any) => state.token);
+  const userId = useSelector((state: any) => state.userData.id);
   const [showForm, setShowForm] = React.useState(false);
+  const { saveUserDataStorage } = useUserData();
+  const dispatch = useDispatch();
 
   const handleEditClick = () => {
     setShowForm(!showForm);
+    setEditUserData(userData);
+  };
+
+  const [editUserData, setEditUserData] = React.useState<IUserEdit>(userData);
+
+  const handleNewUserData = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setEditUserData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleEditSubmit = async (editUserData: IUserEdit) => {
+    if (token && editUserData) {
+      try {
+        const requestBody = {
+          name: editUserData.name,
+          surname: editUserData.surname,
+          phone: editUserData.phone,
+          placeName: editUserData.placeName,
+        };
+
+        await editProfileUser(userId, requestBody, token);
+
+        dispatch(saveUserData({ ...userData, ...editUserData }));
+        saveUserDataStorage({
+          ...userData,
+          name: editUserData.name,
+          surname: editUserData.surname,
+          phone: editUserData.phone,
+          placeName: editUserData.placeName,
+        });
+
+        toast.success(" Usuario editado correctamente", {
+          className:
+            "w-[28rem] mt-20 text-white bg-footerColor font-semibold text-xl",
+          duration: 3000,
+        });
+        setShowForm(false);
+      } catch (error) {
+        console.error("Error updating user:", error);
+      }
+    } else {
+      console.error("No token available for authentication");
+    }
   };
 
   return (
@@ -96,86 +148,75 @@ const ProfileCard = () => {
                 <label className="block text-sm font-medium text-gray-700">
                   Nombre
                 </label>
-                {/* <input
-                      type="text"
-                      name="name"
-                      value={editUserData.name}
-                      onChange={handleNewUserData}
-                      placeholder="Nombre"
-                      className="p-2 w-full text-black border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-                    /> */}
+                <input
+                  type="text"
+                  name="name"
+                  value={editUserData.name}
+                  onChange={handleNewUserData}
+                  placeholder="Nombre"
+                  className="w-full px-4 py-1 text-sm border rounded-lg text-gray-700 font-medium"
+                />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">
                   Apellido
                 </label>
-                {/* <input
-                      type="text"
-                      name="surname"
-                      value={editUserData.surname}
-                      onChange={handleNewUserData}
-                      placeholder="Apellido"
-                      className="p-2 w-full text-black border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-                    /> */}
+                <input
+                  type="text"
+                  name="surname"
+                  value={editUserData.surname}
+                  onChange={handleNewUserData}
+                  placeholder="Apellido"
+                  className="w-full px-4 py-1 text-sm border rounded-lg text-gray-700 font-medium"
+                />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">
                   Contacto
                 </label>
-                {/* <input
-                      type="text"
-                      name="phone"
-                      value={editUserData.phone}
-                      onChange={handleNewUserData}
-                      placeholder="Contacto"
-                      className="p-2 w-full text-black border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-                    /> */}
+                <input
+                  type="text"
+                  name="phone"
+                  value={editUserData.phone}
+                  onChange={handleNewUserData}
+                  placeholder="Contacto"
+                  className="w-full px-4 py-1 text-sm border rounded-lg text-gray-700 font-medium"
+                />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">
                   Establecimiento
                 </label>
-                {/* <input
-                      type="text"
-                      name="placeName"
-                      value={editUserData.placeName}
-                      onChange={handleNewUserData}
-                      placeholder="Establecimiento"
-                      className="p-2 w-full text-black border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-                    /> */}
+                <input
+                  type="text"
+                  name="placeName"
+                  value={editUserData.placeName}
+                  onChange={handleNewUserData}
+                  placeholder="Establecimiento"
+                  className="w-full px-4 py-1 text-sm border rounded-lg text-gray-700 font-medium"
+                />
               </div>
-              <div>
+              {/* <div>
                 <label className="block text-sm font-medium text-gray-700">
                   Email
                 </label>
-                {/* <input
+                <input
                       type="email"
                       name="email"
                       value={editUserData.email}
                       onChange={handleNewUserData}
                       placeholder="Email"
                       className="p-2 w-full text-black border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-                    /> */}
-              </div>
+                    />
+              </div> */}
             </div>
             <div className="flex justify-around mt-4">
-              <MainButton text="Guardar" />
+              <div onClick={() => handleEditSubmit(editUserData)}>
+                <MainButton text="Guardar" />
+              </div>
               <div onClick={handleEditClick}>
                 <MainButton text="Cancelar" />
               </div>
-
-              {/* <button
-                // onClick={() => handleEditClick(editUserData)}
-                className="p-2 bg-navbarColor text-white rounded shadow-md hover:bg-navbarColorDark transition-colors"
-              >
-                EDITAR
-              </button> */}
-              {/* <button
-                onClick={handleEditClick}
-                className="p-2 bg-navbarColor text-white rounded shadow-md hover:bg-navbarColorDark transition-colors"
-              >
-                CANCELAR
-              </button> */}
             </div>
           </div>
         </div>

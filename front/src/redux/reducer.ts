@@ -4,7 +4,7 @@ import {
   Supply,
   SupplyApplied,
 } from "@/interfaces/interfaces";
-import { IUser } from "@/interfaces/interfacesUser";
+import { IUser, IUserEdit } from "@/interfaces/interfacesUser";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ISuscribe } from "@/interfaces/interfacesSupscriptions";
 import { InitialState } from "@/interfaces/interfacesRedux";

@@ -30,10 +30,7 @@ const ProfileComponent = () => {
 
   const handleNewUserData = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setEditUserData((prevData: IUser) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setEditUserData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleEditClick = async (editUserData: IUser) => {
@@ -140,8 +137,6 @@ const ProfileComponent = () => {
           <div onClick={() => setShowForm(true)}>
             <LandingButton text="Editar perfil" />
           </div>
-
-          {/* */}
         </div>
       </div>
     </div>
