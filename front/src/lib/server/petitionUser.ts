@@ -1,4 +1,5 @@
 import {
+  IContactForm,
   ILoginForm,
   IRegisterForm,
   IUserEdit,
@@ -95,6 +96,16 @@ export const editProfileUser = async (
       duration: 3000,
     });
     throw error;
+  }
+};
+
+export const sendEmailContact = async (dataContact: IContactForm) => {
+  try {
+    const response = await axios.post(`${API}/emails/contact`, dataContact);
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
   }
 };
 

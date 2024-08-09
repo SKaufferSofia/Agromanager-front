@@ -28,6 +28,12 @@ export interface IRoles {
   name: string;
 }
 
+export interface IContactForm {
+  name: string;
+  email: string;
+  message: string;
+}
+
 export interface IRegisterForm {
   name: string;
   surname: string;
