@@ -9,6 +9,13 @@ export interface IUser {
   active?: boolean;
 }
 
+export interface IUserEdit {
+  name?: string;
+  surname?: string;
+  phone?: string;
+  placeName?: string;
+}
+
 export interface IUserGoogle {
   id: string;
   name: string;

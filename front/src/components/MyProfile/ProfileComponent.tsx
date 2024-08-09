@@ -2,9 +2,7 @@
 import { saveUserData } from "@/redux/reducer";
 import { useSelector } from "react-redux";
 import MainButton from "../MainButton/MainButton";
-import Landing from "@/app/page";
 import LandingButton from "../LandingButton/LandingButton";
-import { IUserForAdmin } from "@/interfaces/interfaces";
 import { IUser } from "@/interfaces/interfacesUser";
 import { editUserById } from "@/lib/server/petitionAdminInfo";
 import { useState } from "react";
@@ -32,11 +30,7 @@ const ProfileComponent = () => {
 
   const handleNewUserData = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
-    setEditUserData((prevData: IUser) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setEditUserData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleEditClick = async (editUserData: IUser) => {
@@ -90,27 +84,24 @@ const ProfileComponent = () => {
   };
 
   return (
-    <div className="w-full lg:w-1/2 mx-auto">
-      <div className="card card-profile bg-navbarColor p-6 rounded-xl text-white">
+    <div className="w-1/2 relative">
+      <div className="card card-profile bg-navbarColor p-6 rounded-xl text-white shadow-lg relative">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Sembrado_de_soja_en_argentina.jpg"
           alt="Image placeholder"
-          className="card-img-top w-full h-[15rem] object-cover"
+          className="card-img-top w-full h-[15rem] object-cover rounded-t-xl"
         />
-        <div className="flex justify-center mt-4">
-          <div className="lg:w-1/3">
-            <div className="flex justify-center items-center">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                className="rounded-full w-24 h-24"
-                alt="Profile"
-              />
-            </div>
+        <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2">
+          <div className="flex justify-center">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+              className="rounded-full w-24 h-24 border-4 border-white shadow-md transition-transform duration-300 transform hover:scale-110"
+              alt="Profile"
+            />
           </div>
         </div>
-
         <div className="card-body pt-0">
-          <div className="text-center mt-4">
+          <div className="text-center mt-24">
             <h5 className="text-xl font-bold">
               {userData.name} {userData.surname}
             </h5>
@@ -120,18 +111,21 @@ const ProfileComponent = () => {
             <div className="card-profile-stats flex justify-center space-x-8">
               <div className="text-center">
                 <span className="heading flex flex-col">
-                  Telefono <span className="description">{userData.phone}</span>
+                  Telefono
+                  <span className="description">
+                    {userData.phone} <span>lapiz</span>
+                  </span>
                 </span>
               </div>
-              <div className="text-center p">
+              <div className="text-center">
                 <span className="heading flex flex-col">
-                  Establecimiento{" "}
+                  Establecimiento
                   <span className="description">{userData.placeName}</span>
                 </span>
               </div>
               <div className="text-center">
                 <span className="heading flex flex-col">
-                  Roles{" "}
+                  Roles
                   <span className="description">
                     {userData &&
                       userData.roles.map((role: any) => role.name + " ")}
@@ -141,98 +135,8 @@ const ProfileComponent = () => {
             </div>
           </div>
           <div onClick={() => setShowForm(true)}>
-            <LandingButton text="Editar Perfil" />
+            <LandingButton text="Editar perfil" />
           </div>
-
-          {showForm === true && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-              <div className="bg-white w-[80%] max-w-lg p-6 rounded-md shadow-lg relative">
-                <h3>Editar usuario</h3>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Nombre
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={editUserData.name}
-                    onChange={handleNewUserData}
-                    placeholder="Nombre"
-                    className="p-2 w-full text-black flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Apellido
-                  </label>
-                  <input
-                    type="text"
-                    name="surname"
-                    value={editUserData.surname}
-                    onChange={handleNewUserData}
-                    placeholder="Apellido"
-                    className="p-2 w-full flex text-black justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Contacto
-                  </label>
-                  <input
-                    type="text"
-                    name="phone"
-                    value={editUserData.phone}
-                    onChange={handleNewUserData}
-                    placeholder="Contacto"
-                    className="p-2 w-full flex text-black justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Establecimiento
-                  </label>
-                  <input
-                    type="text"
-                    name="placeName"
-                    value={editUserData.placeName}
-                    onChange={handleNewUserData}
-                    placeholder="Establecimiento"
-                    className="p-2 w-full text-black flex justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={editUserData.email}
-                    onChange={handleNewUserData}
-                    placeholder="Email"
-                    className="p-2 w-full flex text-black justify-center py-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-                  />
-                </div>
-                <div className="flex justify-around">
-                  <div>
-                    <button
-                      onClick={() => handleEditClick(editUserData)}
-                      className="mt-2 p-2 bg-navbarColor text-white rounded"
-                    >
-                      EDITAR
-                    </button>
-                  </div>
-
-                  <button
-                    onClick={handleCancelButton}
-                    className="mt-2 p-2 bg-navbarColor text-white rounded"
-                  >
-                    CANCELAR
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import {
   ILoginForm,
   IRegisterForm,
+  IUserEdit,
   IUserGoogle,
   SaveRoles,
   SaveToken,
@@ -72,6 +73,28 @@ export const loginGoogle = async (
       });
     }
     return false;
+  }
+};
+
+export const editProfileUser = async (
+  userToEditId: string,
+  userData: IUserEdit,
+  token: string
+) => {
+  try {
+    const response = await axios.put(`${API}/users/${userToEditId}`, userData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error: any) {
+    toast.error("Error al editar el usuario", {
+      className: "bg-red-500 text-white text-lg",
+      duration: 3000,
+    });
+    throw error;
   }
 };
 
