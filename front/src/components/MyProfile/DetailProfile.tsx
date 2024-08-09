@@ -1,4 +1,6 @@
 "use client";
+
+import React from "react";
 import {
   Card,
   CardBody,
@@ -10,9 +12,61 @@ import {
   Button,
 } from "@material-tailwind/react";
 import { useSelector } from "react-redux";
+import { signOut } from "next-auth/react";
+import ConfirmationActionModal from "../ConfirmationActionModal/ConfirmationActionModal";
+import { deleteUserById } from "@/lib/server/petitionAdminInfo";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import useUserData from "@/hooks/useUserData";
+import useDataPlot from "@/hooks/useDataPlot";
+import useDataStock from "@/hooks/useDataStock";
+import Cookies from "js-cookie";
 
 export function DetailProfile() {
+  const router = useRouter();
+  const roles = useSelector((state: any) => state.userData.roles);
+  const isAdmin = roles.some((role: any) => role.name === "admin");
+
+  const { logOut } = useUserData();
+  const { clearPlotsStorage } = useDataPlot();
+  const { clearStocksStorage } = useDataStock();
+
   const plots = useSelector((state: any) => state.plot);
+  const token = useSelector((state: any) => state.token);
+  const userId = useSelector((state: any) => state.userData.id);
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const toggleModal = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleDeleteUser = async () => {
+    if (token && userId) {
+      try {
+        const response = await deleteUserById(userId, token);
+        if (response) {
+          toggleModal();
+
+          signOut();
+          logOut();
+          clearPlotsStorage();
+          clearStocksStorage();
+          Cookies.remove("token");
+          Cookies.remove("userData");
+          Cookies.remove("role");
+        }
+        toast.success(
+          "Usuario eliminado exitosamente. Esperamos que vuelvas pronto",
+          {
+            className: "mt-20 text-white bg-footerColor font-semibold text-xl",
+            duration: Infinity,
+          }
+        );
+      } catch (error) {
+        console.error("Error deleting user:", error);
+      }
+    }
+  };
 
   const customers = [
     {
@@ -114,9 +168,30 @@ export function DetailProfile() {
         </CardFooter>
       </Card> */}
       <div className="absolute bottom-0 right-4">
-        <Button className="bg-red-600 hover:bg-red-700 hover:transform hover:scale-110">
-          Cerrar Cuenta
-        </Button>
+        {/* <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-xl font-bold">Este es un modal personalizado</h2>
+            <p className="mt-4">Aquí puedes poner cualquier contenido que desees.</p>
+            <Button color="red" onClick={toggleModal} className="mt-6">
+              Cerrar
+            </Button>
+          </div>
+        </div> */}
+        <ConfirmationActionModal
+          openModalButton={
+            <Button
+              className="bg-red-600 hover:bg-red-700 hover:transform hover:scale-110"
+              onClick={toggleModal}
+            >
+              Cerrar Cuenta
+            </Button>
+          }
+          cancelButtonText="Cancelar"
+          confirmButtonText="Cerrar Cuenta"
+          modalTitle="¿Estás seguro de cerrar tu cuenta?"
+          modalBody="Al cerrar tu cuenta no podras recuperar tus datos"
+          onConfirm={handleDeleteUser}
+        />
       </div>
     </div>
   );

@@ -54,7 +54,7 @@ const ProfileCard = () => {
         toast.success(" Usuario editado correctamente", {
           className:
             "w-[28rem] mt-20 text-white bg-footerColor font-semibold text-xl",
-          duration: 3000,
+          duration: 2000,
         });
         setShowForm(false);
       } catch (error) {
@@ -196,19 +196,6 @@ const ProfileCard = () => {
                   className="w-full px-4 py-1 text-sm border rounded-lg text-gray-700 font-medium"
                 />
               </div>
-              {/* <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Email
-                </label>
-                <input
-                      type="email"
-                      name="email"
-                      value={editUserData.email}
-                      onChange={handleNewUserData}
-                      placeholder="Email"
-                      className="p-2 w-full text-black border border-gray-300 rounded-sm shadow-sm sm:text-sm"
-                    />
-              </div> */}
             </div>
             <div className="flex justify-around mt-4">
               <div onClick={() => handleEditSubmit(editUserData)}>
