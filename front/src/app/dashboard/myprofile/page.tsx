@@ -46,7 +46,7 @@ const MyProfile = () => {
       <div className="flex-grow w-screen">
         <ProfileCard />
         {/* <ProfileComponent /> */}
-        <div className="flex justify-center items-center m-10 py-4 -z-10">
+        <div className="flex justify-center items-center m-10 py-4">
           <DetailProfile />
         </div>
       </div>

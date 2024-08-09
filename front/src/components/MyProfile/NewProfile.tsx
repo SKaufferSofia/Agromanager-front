@@ -138,7 +138,7 @@ const ProfileCard = () => {
         </Button>
       </div>
       {showForm && (
-        <div className="fixed inset-0 z-10 flex items-center justify-center  backdrop-blur-sm transition-opacity duration-300 ease-out bg-black bg-opacity-50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center  backdrop-blur-sm transition-opacity duration-300 ease-out bg-black bg-opacity-50">
           <div className="bg-white w-[80%] max-w-lg p-6 rounded-md shadow-lg">
             <h3 className="text-lg font-bold mb-4 text-textGreen">
               Editar usuario
@@ -154,7 +154,7 @@ const ProfileCard = () => {
                   value={editUserData.name}
                   onChange={handleNewUserData}
                   placeholder="Nombre"
-                  className="w-full px-4 py-2 text-sm border rounded-lg text-gray-700 font-medium"
+                  className="w-full px-4 py-1 text-sm border rounded-lg text-gray-700 font-medium"
                 />
               </div>
               <div>
@@ -167,7 +167,7 @@ const ProfileCard = () => {
                   value={editUserData.surname}
                   onChange={handleNewUserData}
                   placeholder="Apellido"
-                  className="w-full px-4 py-2 text-sm border rounded-lg text-gray-700 font-medium"
+                  className="w-full px-4 py-1 text-sm border rounded-lg text-gray-700 font-medium"
                 />
               </div>
               <div>
@@ -180,7 +180,7 @@ const ProfileCard = () => {
                   value={editUserData.phone}
                   onChange={handleNewUserData}
                   placeholder="Contacto"
-                  className="w-full px-4 py-2 text-sm border rounded-lg text-gray-700 font-medium"
+                  className="w-full px-4 py-1 text-sm border rounded-lg text-gray-700 font-medium"
                 />
               </div>
               <div>
@@ -193,7 +193,7 @@ const ProfileCard = () => {
                   value={editUserData.placeName}
                   onChange={handleNewUserData}
                   placeholder="Establecimiento"
-                  className="w-full px-4 py-2 text-sm border rounded-lg text-gray-700 font-medium"
+                  className="w-full px-4 py-1 text-sm border rounded-lg text-gray-700 font-medium"
                 />
               </div>
             </div>
