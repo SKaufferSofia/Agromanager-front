@@ -12,7 +12,7 @@ const ScrollableCard: React.FC<ScrollableCardProps> = ({
 	titleColor,
 }) => {
 	return (
-		<div className="h-64 bg-white  overflow-auto shadow-md rounded-md w-1/3 ">
+		<div className="h-full bg-white  overflow-auto shadow-md rounded-md ">
 			<div>
 				<div
 					className={`flex font-bold p-4 justify-center ${titleColor}  border-b border-gray-200`}

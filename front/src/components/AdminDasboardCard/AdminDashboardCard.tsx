@@ -17,7 +17,6 @@ import DataUserCard from "../DataUserCard/DataUserCard";
 import { fetchMembershipMetrics } from "@/lib/server/petitionMetric";
 import CircularProgress from "../MetricsComponents/CircularProgresBar";
 import ScrollCard from "../ScrollCard/ScrollCard";
-import { DiVim } from "react-icons/di";
 
 const AdminDashboardCard = () => {
 	const token = useSelector((state: any) => state.token);
@@ -33,6 +32,7 @@ const AdminDashboardCard = () => {
 	const [userToEdit, setUserToEdit] = useState<IUserForAdmin | null>(null);
 	const [bannedUser, setBannedUser] = useState<boolean>(false);
 	const [metrics, setMetrics] = useState<Metrics | null>(null);
+	const [deletedUser, setDeletedUser] = useState<boolean>(false);
 
 	useEffect(() => {
 		const getAllUsers = async () => {
@@ -46,7 +46,7 @@ const AdminDashboardCard = () => {
 			}
 		};
 		getAllUsers();
-	}, [token, showForm, bannedUser]);
+	}, [token, showForm, bannedUser, deletedUser]);
 
 	useEffect(() => {
 		const getMetrics = async () => {
@@ -181,6 +181,7 @@ const AdminDashboardCard = () => {
 		if (token && userToDelete) {
 			try {
 				await deleteUserById(userToDelete.id, token);
+				setDeletedUser(true);
 				toast.success(
 					`Usuario eliminado correctamente: ${userToDelete.name} ${userToDelete.surname}`,
 					{
@@ -200,7 +201,7 @@ const AdminDashboardCard = () => {
 	return (
 		<div>
 			<div className="flex">
-				<div className="w-3/4">
+				<div className="w-full p-4">
 					<div className="flex">
 						<div className="flex-1 mr-10">
 							<DataUserCard
@@ -247,8 +248,8 @@ const AdminDashboardCard = () => {
 							/>
 						</div>
 					</div>
-					<div className="bg-white shadow-md rounded-md">
-						<div className="flex font-bold p-4 justify-between   border-b border-gray-200">
+					<div className="bg-white shadow-md h-64 rounded-md overflow-auto">
+						<div className="flex font-bold p-4 justify-between border-b border-gray-200">
 							<div className="flex-1 text-start">Nombre</div>
 							<div className="flex-1 text-start">Apellido</div>
 							<div className="flex-1 text-start">Contacto</div>
@@ -256,9 +257,9 @@ const AdminDashboardCard = () => {
 							<div className="flex-1 text-center">
 								Establecimiento
 							</div>
-							<div className="flex-1 text-end">Activo</div>
-							<div className="flex-1 text-end">Editar</div>
-							<div className="flex-1 text-end">Control</div>
+							<div className="w-24 text-center">Activo</div>
+							<div className="w-24 text-center">Editar</div>
+							<div className="w-24 text-center">Control</div>
 						</div>
 						{newArrayUsers &&
 							newArrayUsers.map((user) => (
@@ -278,10 +279,10 @@ const AdminDashboardCard = () => {
 									<div className="flex-1 text-center">
 										{user.placeName}
 									</div>
-									<div className="flex-1 text-end">
+									<div className="w-24 text-center">
 										{user.active ? "Si" : "No"}
 									</div>
-									<div className="flex-1 text-end">
+									<div className="w-24 text-center">
 										<button
 											onClick={() =>
 												handleOpenFormClick(user)
@@ -318,7 +319,7 @@ const AdminDashboardCard = () => {
 										</button>
 									</div>
 
-									<div className="flex-1 text-end">
+									<div className="w-24 text-center">
 										{user.roles.some(
 											(role: IRole) =>
 												role.name === "banned"
@@ -334,7 +335,6 @@ const AdminDashboardCard = () => {
 												modalTitle="Estás por desbloquear un usuario"
 												modalBody="Deseas continuar?"
 												onConfirm={() => {
-													console.log(user.name);
 													handleUnbanClick(user);
 												}}
 											/>
@@ -359,108 +359,115 @@ const AdminDashboardCard = () => {
 							))}
 					</div>
 					<div className="mt-10">
-						<ScrollCard
-							title="Eliminar usarios bloquedos"
-							titleColor="bg-red-300"
-							content={
-								<div>
-									<div className="flex">
-										<div className="flex-1 p-2 border-gray-200 border-b font-semibold text-start">
-											Email
-										</div>
-										<div className="flex-1 p-2 border-gray-200 border-b text-center font-semibold text-start">
-											Establecimiento
-										</div>
-									</div>
-									<div>
-										{newArrayUsers &&
-											newArrayUsers
-												.filter((user) =>
-													user.roles.some(
-														(role) =>
-															role.name ===
-															"banned"
-													)
-												)
-												.map((user) => (
-													<div
-														key={user.id}
-														className="flex border-b border-gray-200"
-													>
-														<div className="py-2 px-4 flex-1 text-start">
-															{user.email}
-														</div>
-														<div className="py-2 px-4 flex-1 text-center">
-															{user.placeName}
-														</div>
-														<ConfirmationActionModal
-															openModalButton={
-																<div className="mt-2 mr-2 text-end">
-																	<svg
-																		width="20"
-																		height="20"
-																		viewBox="0 0 36 36"
-																		fill="#FF0000"
-																	>
-																		<path d="M27.14,34H8.86A2.93,2.93,0,0,1,6,31V11.23H8V31a.93.93,0,0,0,.86,1H27.14A.93.93,0,0,0,28,31V11.23h2V31A2.93,2.93,0,0,1,27.14,34Z" />
-																		<path d="M30.78,9H5A1,1,0,0,1,5,7H30.78a1,1,0,0,1,0,2Z" />
-																		<rect
-																			x="21"
-																			y="13"
-																			width="2"
-																			height="15"
-																		/>
-																		<rect
-																			x="13"
-																			y="13"
-																			width="2"
-																			height="15"
-																		/>
-																		<path d="M23,5.86H21.1V4H14.9V5.86H13V4a2,2,0,0,1,1.9-2h6.2A2,2,0,0,1,23,4Z" />
-																	</svg>
+						<div className="flex">
+							<div className="flex-1 mr-4">
+								<ScrollCard
+									title="Eliminar usarios bloquedos"
+									titleColor="bg-red-300"
+									content={
+										<div>
+											<div className="flex">
+												<div className="flex-1 p-2 border-gray-200 border-b font-semibold text-start">
+													Email
+												</div>
+												<div className="flex-1 p-2 border-gray-200 border-b text-center font-semibold text-start">
+													Establecimiento
+												</div>
+											</div>
+											<div>
+												{newArrayUsers &&
+													newArrayUsers
+														.filter((user) =>
+															user.roles.some(
+																(role) =>
+																	role.name ===
+																	"banned"
+															)
+														)
+														.map((user) => (
+															<div
+																key={user.id}
+																className="flex border-b border-gray-200"
+															>
+																<div className="py-2 px-4 flex-1 text-start">
+																	{user.email}
 																</div>
-															}
-															cancelButtonText="Cancelar"
-															confirmButtonText="Aceptar"
-															modalTitle="Estás por eliminar un usuario"
-															modalBody="Esta acción es irreversible. Deseas continuar?"
-															onConfirm={() => {
-																console.log(
-																	user.name
-																);
-																handleDeleteClick(
-																	user
-																);
-															}}
-														/>
-													</div>
-												))}
+																<div className="py-2 px-4 flex-1 text-center">
+																	{
+																		user.placeName
+																	}
+																</div>
+																<ConfirmationActionModal
+																	openModalButton={
+																		<div className="mt-2 mr-2 text-end">
+																			<svg
+																				width="20"
+																				height="20"
+																				viewBox="0 0 36 36"
+																				fill="#FF0000"
+																			>
+																				<path d="M27.14,34H8.86A2.93,2.93,0,0,1,6,31V11.23H8V31a.93.93,0,0,0,.86,1H27.14A.93.93,0,0,0,28,31V11.23h2V31A2.93,2.93,0,0,1,27.14,34Z" />
+																				<path d="M30.78,9H5A1,1,0,0,1,5,7H30.78a1,1,0,0,1,0,2Z" />
+																				<rect
+																					x="21"
+																					y="13"
+																					width="2"
+																					height="15"
+																				/>
+																				<rect
+																					x="13"
+																					y="13"
+																					width="2"
+																					height="15"
+																				/>
+																				<path d="M23,5.86H21.1V4H14.9V5.86H13V4a2,2,0,0,1,1.9-2h6.2A2,2,0,0,1,23,4Z" />
+																			</svg>
+																		</div>
+																	}
+																	cancelButtonText="Cancelar"
+																	confirmButtonText="Aceptar"
+																	modalTitle="Estás por eliminar un usuario"
+																	modalBody="Esta acción es irreversible. Deseas continuar?"
+																	onConfirm={() => {
+																		handleDeleteClick(
+																			user
+																		);
+																	}}
+																/>
+															</div>
+														))}
+											</div>
+										</div>
+									}
+								/>
+							</div>
+							<div className="flex-1 ml-4">
+								{metrics && (
+									<div className="flex">
+										<div className="flex-1 mr-2">
+											<CircularProgress
+												title="Suscipciones pagas"
+												percentage={Math.round(
+													metrics.Porcents
+														.premiumUsersPercent
+												)}
+											/>
+										</div>
+										<div className="flex-1 ml-2">
+											<CircularProgress
+												title="Suscipciones no pagas"
+												percentage={Math.round(
+													metrics.Porcents
+														.noPremiumUsersPercent
+												)}
+											/>
+										</div>
 									</div>
-								</div>
-							}
-						/>
+								)}
+							</div>
+						</div>
 					</div>
 				</div>
-				{metrics && (
-					<div className="flex-col w-1/4">
-						<div>
-							<CircularProgress
-								title="Suscipciones premium"
-								percentage={Math.round(
-									metrics.Porcents.premiumUsersPercent
-								)}
-							/>
-						</div>
-						<div className="mt-10">
-							<CircularProgress
-								title="Usuarios sin suscipciones"
-								percentage={Math.round(
-									metrics.Porcents.noPremiumUsersPercent
-								)}
-							/>
-						</div>
-					</div>
-				)}
 			</div>
 
 			{showForm === true && (
